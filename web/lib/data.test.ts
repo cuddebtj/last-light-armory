@@ -1,0 +1,54 @@
+import { getMeta, getPerks, getWeapon, getWeaponIndex } from "./data";
+
+// These run against the real committed export in web/data/ — the loaders'
+// whole job is reading those exact files.
+describe("data loaders", () => {
+  it("getMeta returns the export metadata", async () => {
+    const meta = await getMeta();
+    expect(meta.manifest_version).toEqual(expect.any(String));
+    expect(meta.weapon_count).toBe(2208);
+    expect(meta.perk_count).toBe(1057);
+    expect(meta.roll_count).toBe(100994);
+  });
+
+  it("getPerks returns every perk with the expected shape", async () => {
+    const perks = await getPerks();
+    expect(perks).toHaveLength(1057);
+    expect(perks[0]).toMatchObject({
+      hash: expect.any(Number),
+      name: expect.any(String),
+      enhanced: expect.any(Boolean),
+      icon: expect.stringContaining("/common/destiny2_content/"),
+    });
+  });
+
+  it("getWeaponIndex returns all weapons sorted by name", async () => {
+    const weapons = await getWeaponIndex();
+    expect(weapons).toHaveLength(2208);
+    const names = weapons.map((w) => w.name);
+    expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b)));
+    expect(weapons[0]).toMatchObject({
+      hash: expect.any(Number),
+      type: expect.any(String),
+      slot: expect.any(String),
+      element: expect.any(String),
+      tier: expect.any(String),
+      roll_count: expect.any(Number),
+    });
+  });
+
+  it("getWeapon loads a detail file by hash", async () => {
+    const weapon = await getWeapon(1006783454);
+    expect(weapon.name).toBe("Timelines' Vertex");
+    expect(weapon.columns.length).toBeGreaterThan(0);
+    expect(weapon.rolls.length).toBeGreaterThan(0);
+    expect(weapon.rolls[0].perks[0]).toMatchObject({
+      column: expect.any(Number),
+      hash: expect.any(Number),
+    });
+  });
+
+  it("getWeapon rejects for an unknown hash", async () => {
+    await expect(getWeapon(999999999999)).rejects.toThrow();
+  });
+});
