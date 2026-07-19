@@ -1,4 +1,4 @@
-import { getMeta, getPerks, getWeapon, getWeaponIndex } from "./data";
+import { getMeta, getPerks, getWeapon, getWeaponIndex, getWeaponOrNull } from "./data";
 
 // These run against the real committed export in web/data/ — the loaders'
 // whole job is reading those exact files.
@@ -50,5 +50,14 @@ describe("data loaders", () => {
 
   it("getWeapon rejects for an unknown hash", async () => {
     await expect(getWeapon(999999999999)).rejects.toThrow();
+  });
+
+  it("getWeaponOrNull resolves the weapon for a known hash", async () => {
+    const weapon = await getWeaponOrNull(1006783454);
+    expect(weapon?.name).toBe("Timelines' Vertex");
+  });
+
+  it("getWeaponOrNull resolves to null for an unknown hash", async () => {
+    await expect(getWeaponOrNull(999999999999)).resolves.toBeNull();
   });
 });

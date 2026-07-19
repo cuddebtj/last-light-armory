@@ -1,8 +1,8 @@
 # last-light-armory
 
-_Last updated: 2026-07-18 — update this line whenever the file changes materially._
+_Last updated: 2026-07-19 — update this line whenever the file changes materially._
 
-## Testing Policy (set 2026-07-18)
+## Testing Policy (set 2026-07-18, e2e added 2026-07-19)
 
 **Test coverage must stay above 98%**, enforced in CI-runnable commands, not
 by convention. `web/` uses Vitest + React Testing Library with v8 coverage
@@ -10,6 +10,38 @@ thresholds (statements/branches/functions/lines ≥ 98) wired into
 `npm run test:coverage` — the command fails if coverage drops. When
 `scoring/` exists, its Go tests are held to the same bar via
 `go test -cover ./...`. New code lands with its tests in the same change.
+
+**e2e (Playwright) is a separate signal, not folded into the 98% number.**
+`web/e2e/**/*.spec.ts` drives a real headless browser against the actual
+production build (`next build` + `next start`, per Next's own testing
+guidance — closer to what ships than `next dev`). It runs in its own CI
+job (`e2e`, alongside `lint`/`test`/`build` in `web-ci.yml`) and catches
+what unit tests structurally can't: real client-side navigation, real
+`bungie.net` asset loading, real static-page output for all 2,208
+generated routes, real HTTP status codes. Coverage thresholds don't apply
+to it — an e2e suite optimizes for a handful of meaningful user flows, not
+line coverage. Several e2e specs assert against specific real weapons
+(e.g. Fatebringer, Timelines' Vertex) rather than fixtures — same
+committed-export coupling as `lib/data.test.ts`; a future re-export that
+renames or removes one of those weapons is the expected reason such a
+test would need updating, not a mystery flake.
+
+**Every generated endpoint is swept, not sampled.** `e2e/all-weapons.spec.ts`
+hits all ~2,208 `/weapons/<hash>` routes plus `/` and an invalid hash,
+against the real running production server. It's HTTP-level (Playwright's
+`request` fixture), not full `page.goto()` rendering — a deliberate
+tradeoff: `app/weapons/[hash]/page.tsx` is a pure Server Component with no
+client-only behavior, so asserting the response is 200 and contains that
+specific weapon's own (HTML-escaped) name already proves what a full
+browser render would for this route shape, at a fraction of the cost
+(~9s for all 2,208 in CI, batched for Playwright's own worker
+parallelism). Full browser rendering — hydration, real navigation, real
+asset loading — stays on the curated specs in `weapon-detail.spec.ts` /
+`navigation.spec.ts` for a representative sample rather than repeating
+that cost 2,208 times. Verified this sweep actually catches drift, not
+just green-by-luck: deliberately mismatched one weapon's index name
+against its detail file and confirmed exactly that weapon's batch failed
+with a precise message, all others stayed green.
 
 ## What This Repo Is
 
@@ -264,8 +296,10 @@ last-light-armory/
       weapons/
         index.json
         <hash>.json
+    e2e/                      // Playwright specs — real browser, real production build
     package.json
     next.config.ts
+    playwright.config.ts
   scoring/                    // private-network Go job — never deployed to Vercel
     cmd/
       score/
@@ -301,6 +335,7 @@ npm run dev
 npm run build
 npm test                # vitest, all suites
 npm run test:coverage   # fails if coverage < 98% (see Testing Policy)
+npm run build && npm run test:e2e   # playwright, real browser against the production build
 
 # publish — separate, manually-triggered step, not chained onto scoring
 ./scripts/publish.sh    # copy ingest's export output in, commit, push

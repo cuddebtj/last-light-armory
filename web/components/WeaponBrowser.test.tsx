@@ -111,6 +111,14 @@ describe("WeaponBrowser", () => {
     expect(screen.getByText("Gjallarhorn")).toBeInTheDocument();
   });
 
+  it("links each row to its weapon detail page", () => {
+    setup();
+    expect(screen.getByRole("link", { name: /Austringer/ })).toHaveAttribute(
+      "href",
+      `/weapons/${weapons[0].hash}`,
+    );
+  });
+
   it("shows Reset only when filters are active, and clears everything", async () => {
     const user = setup();
     expect(screen.queryByRole("button", { name: "Reset" })).not.toBeInTheDocument();

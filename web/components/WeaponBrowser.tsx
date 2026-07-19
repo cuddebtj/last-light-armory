@@ -2,30 +2,14 @@
 
 import { useDeferredValue, useMemo, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { bungieUrl } from "@/lib/bungie";
+import { ELEMENT_TEXT, TIER_BORDER } from "@/lib/style";
 import type { WeaponIndexEntry } from "@/lib/types";
 
 const SLOTS = ["Kinetic", "Energy", "Power"] as const;
 const ELEMENTS = ["Kinetic", "Arc", "Solar", "Void", "Stasis", "Strand"] as const;
 const TIERS = ["Exotic", "Legendary", "Rare", "Uncommon", "Common"] as const;
-
-// Literal class strings so Tailwind's scanner picks them up.
-const ELEMENT_TEXT: Record<string, string> = {
-  Kinetic: "text-kinetic",
-  Arc: "text-arc",
-  Solar: "text-solar",
-  Void: "text-void",
-  Stasis: "text-stasis",
-  Strand: "text-strand",
-};
-
-const TIER_BORDER: Record<string, string> = {
-  Exotic: "border-exotic",
-  Legendary: "border-legendary",
-  Rare: "border-rare",
-  Uncommon: "border-uncommon",
-  Common: "border-common",
-};
 
 const selectClass =
   "rounded-md border border-edge bg-surface px-2.5 py-2 text-sm text-ink outline-none focus:border-gold/60";
@@ -151,47 +135,49 @@ export default function WeaponBrowser({
 
       <ul className="divide-y divide-edge/60">
         {filtered.map((w) => (
-          <li
-            key={w.hash}
-            className="weapon-row grid grid-cols-[3.25rem_1fr_4.5rem] items-center gap-x-3 px-3 py-2 hover:bg-surface sm:grid-cols-[3.25rem_1fr_10rem_6.5rem_4.5rem_4.5rem]"
-          >
-            <span
-              className={`relative block h-11 w-11 overflow-hidden rounded border-l-2 ${TIER_BORDER[w.tier] ?? "border-edge"}`}
+          <li key={w.hash} className="weapon-row">
+            <Link
+              href={`/weapons/${w.hash}`}
+              className="grid grid-cols-[3.25rem_1fr_4.5rem] items-center gap-x-3 px-3 py-2 hover:bg-surface sm:grid-cols-[3.25rem_1fr_10rem_6.5rem_4.5rem_4.5rem]"
             >
-              <Image
-                src={bungieUrl(w.icon)}
-                alt={w.name}
-                width={44}
-                height={44}
-              />
-              <Image
-                src={bungieUrl(w.watermark)}
-                alt=""
-                width={44}
-                height={44}
-                className="absolute inset-0"
-              />
-            </span>
-            <span className="min-w-0">
-              <span className="block truncate font-medium">{w.name}</span>
-              <span className="block truncate text-xs text-muted">
-                {w.frame}
+              <span
+                className={`relative block h-11 w-11 overflow-hidden rounded border-l-2 ${TIER_BORDER[w.tier] ?? "border-edge"}`}
+              >
+                <Image
+                  src={bungieUrl(w.icon)}
+                  alt={w.name}
+                  width={44}
+                  height={44}
+                />
+                <Image
+                  src={bungieUrl(w.watermark)}
+                  alt=""
+                  width={44}
+                  height={44}
+                  className="absolute inset-0"
+                />
               </span>
-            </span>
-            <span className="hidden truncate text-sm text-muted sm:block">
-              {w.type}
-            </span>
-            <span
-              className={`hidden text-sm sm:block ${ELEMENT_TEXT[w.element] ?? "text-muted"}`}
-            >
-              {w.element}
-            </span>
-            <span className="hidden text-right font-mono text-sm text-muted sm:block">
-              {w.rpm ?? "—"}
-            </span>
-            <span className="text-right font-mono text-sm text-muted">
-              {w.roll_count.toLocaleString("en-US")}
-            </span>
+              <span className="min-w-0">
+                <span className="block truncate font-medium">{w.name}</span>
+                <span className="block truncate text-xs text-muted">
+                  {w.frame}
+                </span>
+              </span>
+              <span className="hidden truncate text-sm text-muted sm:block">
+                {w.type}
+              </span>
+              <span
+                className={`hidden text-sm sm:block ${ELEMENT_TEXT[w.element] ?? "text-muted"}`}
+              >
+                {w.element}
+              </span>
+              <span className="hidden text-right font-mono text-sm text-muted sm:block">
+                {w.rpm ?? "—"}
+              </span>
+              <span className="text-right font-mono text-sm text-muted">
+                {w.roll_count.toLocaleString("en-US")}
+              </span>
+            </Link>
           </li>
         ))}
       </ul>
