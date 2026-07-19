@@ -27,3 +27,15 @@ export async function getWeaponIndex(): Promise<WeaponIndexEntry[]> {
 export function getWeapon(hash: number): Promise<WeaponDetail> {
   return readJson<WeaponDetail>("weapons", `${hash}.json`);
 }
+
+// For route boundaries (a URL param) where "no such weapon" is an
+// expected, handleable case rather than an internal error.
+export async function getWeaponOrNull(
+  hash: number,
+): Promise<WeaponDetail | null> {
+  try {
+    return await getWeapon(hash);
+  } catch {
+    return null;
+  }
+}
