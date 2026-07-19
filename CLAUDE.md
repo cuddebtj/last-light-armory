@@ -1,6 +1,15 @@
 # last-light-armory
 
-_Last updated: 2026-07-06 — update this line whenever the file changes materially._
+_Last updated: 2026-07-18 — update this line whenever the file changes materially._
+
+## Testing Policy (set 2026-07-18)
+
+**Test coverage must stay above 98%**, enforced in CI-runnable commands, not
+by convention. `web/` uses Vitest + React Testing Library with v8 coverage
+thresholds (statements/branches/functions/lines ≥ 98) wired into
+`npm run test:coverage` — the command fails if coverage drops. When
+`scoring/` exists, its Go tests are held to the same bar via
+`go test -cover ./...`. New code lands with its tests in the same change.
 
 ## What This Repo Is
 
@@ -290,6 +299,8 @@ go test ./...
 # web/ — Vercel build
 npm run dev
 npm run build
+npm test                # vitest, all suites
+npm run test:coverage   # fails if coverage < 98% (see Testing Policy)
 
 # publish — separate, manually-triggered step, not chained onto scoring
 ./scripts/publish.sh    # copy ingest's export output in, commit, push

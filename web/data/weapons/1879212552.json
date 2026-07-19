@@ -1,0 +1,74 @@
+{
+  "hash": 1879212552,
+  "name": "A Sudden Death",
+  "type": "Shotgun",
+  "slot": "Energy",
+  "element": "Solar",
+  "tier": "Legendary",
+  "frame": "Aggressive Frame",
+  "rpm": 55,
+  "icon": "/common/destiny2_content/icons/c41b9fe80c157e104c32cfbfbb90a7b5.jpg",
+  "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Complete Trials tickets and earn rank-up packages from the Emissary of the Nine.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1300023272,
+        3250034553,
+        3661387068
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        957782887,
+        3161816588
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        4071163871
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "2c6d3cd20bbf764cbc6eaee21afb1f9057511d78649facd423593d035a0fd35f",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 957782887
+        },
+        {
+          "column": 2,
+          "hash": 4071163871
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "31663e04de35c8129fa4499de1f7461681a8a7969e33cc4c92036edc849b7943",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 3161816588
+        },
+        {
+          "column": 2,
+          "hash": 4071163871
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

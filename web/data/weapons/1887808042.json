@@ -1,0 +1,72 @@
+{
+  "hash": 1887808042,
+  "name": "IKELOS_SG_v1.0.1",
+  "type": "Shotgun",
+  "slot": "Energy",
+  "element": "Solar",
+  "tier": "Legendary",
+  "frame": "Rapid-Fire Frame",
+  "rpm": 140,
+  "icon": "/common/destiny2_content/icons/cba43299108f3b5fc2d599b6ec81b3ec.jpg",
+  "watermark": "/common/destiny2_content/icons/da5f961ef97b78293cc498978c10e178.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Escalation Protocol on Mars.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1332244541,
+        1392496348,
+        3250034553
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        806159697
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        106909392
+      ]
+    },
+    {
+      "index": 3,
+      "perks": [
+        588594999,
+        4071163871
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "0d0a09945535fbf1bff1db2e76317a03c6dc57bf50263ee8af2679a8e5dfa6db",
+      "perks": [
+        {
+          "column": 3,
+          "hash": 4071163871
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "ad5e5b2de352ea9cd98d4837d4e67f961c2621badc4917eefa50599001c02a48",
+      "perks": [
+        {
+          "column": 3,
+          "hash": 588594999
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "hash": 2071412133,
+  "name": "A Cold Sweat",
+  "type": "Hand Cannon",
+  "slot": "Energy",
+  "element": "Void",
+  "tier": "Legendary",
+  "frame": "Precision Frame",
+  "rpm": 180,
+  "icon": "/common/destiny2_content/icons/f104ff7eba062e16d9b1a07377ba4560.jpg",
+  "watermark": "/common/destiny2_content/icons/7ba9d804508dd083ec20fcdb8ba0869d.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Complete Trials tickets and earn rank-up packages from the Emissary of the Nine.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1926090090,
+        1926090091,
+        1926090094
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        1168162263,
+        2039302152
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        1631667848
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "7e2e32c16dc78aa5065d0ced99b7fe7158f75e64315c62a4044b7f613403fde3",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 2039302152
+        },
+        {
+          "column": 2,
+          "hash": 1631667848
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "e32901596e0322ba6750973e9967782259eff5ab31e952a4260230d0e2c290ef",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 1168162263
+        },
+        {
+          "column": 2,
+          "hash": 1631667848
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

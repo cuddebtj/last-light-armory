@@ -1,0 +1,915 @@
+{
+  "hash": 1911060537,
+  "name": "Taipan-4fr",
+  "type": "Linear Fusion Rifle",
+  "slot": "Power",
+  "element": "Void",
+  "tier": "Legendary",
+  "frame": "Precision Frame",
+  "rpm": 533,
+  "icon": "/common/destiny2_content/icons/70bea113574eff7b0211a4f28f54b7a3.jpg",
+  "watermark": "/common/destiny2_content/icons/7d815c943977fe71bbf00caf1bd9c514.png",
+  "craftable": true,
+  "enhanceable": true,
+  "obtainable": true,
+  "roll_count": 49,
+  "source": "Source: Open Legendary engrams and earn faction rank-up packages.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        111235976,
+        202670084,
+        839105230,
+        1047830412,
+        1124871858,
+        1147230557,
+        1332244541,
+        1392496348,
+        1467527085,
+        1482024992,
+        1840239774,
+        1871180748,
+        1932356121,
+        1987021001,
+        2860123632,
+        3048246338,
+        3250034553,
+        3311319252,
+        3399528164,
+        3661387068,
+        3966296580,
+        4090651448
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        689005463,
+        1279785143,
+        1483536627,
+        1687452232,
+        2680121939,
+        2777563320,
+        2800182654,
+        2969185026,
+        3081681954,
+        3629421851,
+        3839493627,
+        3868766766
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        573122728,
+        595108252,
+        671806388,
+        1609056795,
+        1658784563,
+        2284787283,
+        2308090567,
+        2451262963,
+        2495011826,
+        2503665585,
+        2621346526,
+        2869569095,
+        3096702027,
+        3400784728,
+        3563868667
+      ]
+    },
+    {
+      "index": 3,
+      "perks": [
+        23371658,
+        47981717,
+        395388285,
+        776531651,
+        957782887,
+        1370847713,
+        1771339417,
+        2402480669,
+        2503665585,
+        2541826827,
+        2551157718,
+        2896038713,
+        3007133316,
+        4104185692,
+        4116820839
+      ]
+    },
+    {
+      "index": 4,
+      "perks": [
+        2542427991
+      ]
+    },
+    {
+      "index": 5,
+      "perks": [
+        16638392,
+        16638393,
+        905869860,
+        1124054883,
+        1187045864,
+        1690059054,
+        2240097604,
+        2302094943,
+        2617715132,
+        2617715133,
+        3349747415,
+        3624435060,
+        3915764593,
+        3915764594,
+        3915764595
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "003861fc97b66a91def028de536c05a02e2854a22246869866d1e2e206cb7f0d",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 595108252
+        },
+        {
+          "column": 3,
+          "hash": 1370847713
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "07d4aa64a49166da23c54d83b1a2abc318297c31f7999b336dae34e3c291b1c3",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 1609056795
+        },
+        {
+          "column": 3,
+          "hash": 2541826827
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "09c4a32dc7a6394858dbf3ac25d8ad39373f3256be976a1900e3f3d8370e47e5",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2495011826
+        },
+        {
+          "column": 3,
+          "hash": 2402480669
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "0f705d3052683b027600b962899873946315bbfa729690dce6fe6a596587f357",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2495011826
+        },
+        {
+          "column": 3,
+          "hash": 23371658
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "29083e7fb45627092f2232c265e02eaef7edcccc74c778c50ff93ecbed290cd8",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 573122728
+        },
+        {
+          "column": 3,
+          "hash": 2402480669
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "290a83a65512b86b9a025bb049d9ad4cbb72dc815d8c7d3f6a09c3de73967fed",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2308090567
+        },
+        {
+          "column": 3,
+          "hash": 3007133316
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "2a57d6752f72b8d74d51985e5473d271bef625217c0a648eeb72d811e739d34b",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 3563868667
+        },
+        {
+          "column": 3,
+          "hash": 1370847713
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "33a3d95c78ecd92fffd8f1a44085ac69ab021ead805ca7e56b7ddb5acc3fd931",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 595108252
+        },
+        {
+          "column": 3,
+          "hash": 2541826827
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "35bd9f979a22dde5b97d8186118c10c74069a43c6096e870d8784d1ec6e40d91",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 595108252
+        },
+        {
+          "column": 3,
+          "hash": 395388285
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "3cba4a7694c898af499dd1bea437e601b44ecd0efb256670c105d5229777f4bc",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 3563868667
+        },
+        {
+          "column": 3,
+          "hash": 2541826827
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "4cbb87d4135e82679c6968bc287a5e3f61f349ac4761f586641911ec22117502",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2308090567
+        },
+        {
+          "column": 3,
+          "hash": 2541826827
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "4fd598bde5d7fb00d8ba73d7e21904bb2d9fc43dfda6a2ce1249ff9591acdb9f",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2308090567
+        },
+        {
+          "column": 3,
+          "hash": 395388285
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "58def4a492af754c92e5dd5c1eceea0e77724bbfbf3e141a0605600ec00710b0",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 3563868667
+        },
+        {
+          "column": 3,
+          "hash": 395388285
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "5a38443719c2fb712bb663808794f772bc91e389abaa6aed2996fca2f97b2d41",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2495011826
+        },
+        {
+          "column": 3,
+          "hash": 3007133316
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "5d9fadef31f9fbe30db566a7c48e7d43b1e5823cc54772a77061580a0cc17746",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 573122728
+        },
+        {
+          "column": 3,
+          "hash": 3007133316
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "5e8307e6b4e92fe2be8829d33e3a8b7cf92dead5bd2a792239324a1faa09aa5a",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 573122728
+        },
+        {
+          "column": 3,
+          "hash": 23371658
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "6119955e5e8f237ae9408ce9fcbdf6238f049be63c83972c78af552daf86d790",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 3563868667
+        },
+        {
+          "column": 3,
+          "hash": 4116820839
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "61cb5f9d7a0c7ed1dedf71ddc7ea25e02a44c128a0509ee613018358317157bb",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 3563868667
+        },
+        {
+          "column": 3,
+          "hash": 23371658
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "688472ef9692848d5d81fbb38657ff4989f5aca421404328bd14ef78bf00da47",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2495011826
+        },
+        {
+          "column": 3,
+          "hash": 2541826827
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "6bd8fcc6b488850e873ac14cf4c3040cb68f24d1a721b207d085e915f63e2c09",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 595108252
+        },
+        {
+          "column": 3,
+          "hash": 3007133316
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "7102aef82a3c40c8e600781886eea761a59c1d55d39175c8920d38818b387b60",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 1658784563
+        },
+        {
+          "column": 3,
+          "hash": 4116820839
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "7a020d7f234f894dc93986a64df4882565b7cea4a823c0373b88d1690c64ac94",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 1658784563
+        },
+        {
+          "column": 3,
+          "hash": 23371658
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "836f42a551bb4933df55928cfb5b5cbb4ef8d592fd500afd4c40f66d997cdf65",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 3563868667
+        },
+        {
+          "column": 3,
+          "hash": 2402480669
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "83d2a794eaeda4b375bbf6ee4f5d2b4c4d7c0bd747246907d04e8a35aa5651c1",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2308090567
+        },
+        {
+          "column": 3,
+          "hash": 23371658
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "84e28af4b925e256a6ef18cbb5767fd7781af4d460b96b6fb5f9d2eea5055917",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 3563868667
+        },
+        {
+          "column": 3,
+          "hash": 3007133316
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "8f58e70c69b8a4d4edccf1fa179fad57bad3eb5cac29aac9965b834bc0ebeeae",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 1609056795
+        },
+        {
+          "column": 3,
+          "hash": 23371658
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "8ff387e97b7e13fa5ec61be6aad1d1430162e9493f9c02715e7dfd1bf9feb208",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2308090567
+        },
+        {
+          "column": 3,
+          "hash": 4116820839
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "9155ecd74ca9d16c183e7cb6b34a74591a072fc08b34a2e9a68a95064f1bb8b1",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 1658784563
+        },
+        {
+          "column": 3,
+          "hash": 395388285
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "9bc7be13dd1a177ab3aaf6652a59aed65ca2a9d4e97a95d30b2225c41ccac899",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 573122728
+        },
+        {
+          "column": 3,
+          "hash": 4116820839
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "9bffc0eaebcb3beb6e9b422d5ae70931b93b34c6125f5bd09712f15c1f8c4629",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 1609056795
+        },
+        {
+          "column": 3,
+          "hash": 2402480669
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "9cf194411f3279266940fb993f714dd34953c5e0f415981bbceed75e60cc961d",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 1609056795
+        },
+        {
+          "column": 3,
+          "hash": 3007133316
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "9d1692e26359900a59c235e8922090dab8ace52d55c116408b38d12ef3278975",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2495011826
+        },
+        {
+          "column": 3,
+          "hash": 395388285
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "b6c7b204c2c214714584d476f04745d2832fce2ec13bcdfdf1fa513b46bc40af",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 1658784563
+        },
+        {
+          "column": 3,
+          "hash": 1370847713
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "bc8cf37dea06bd77169c79cfa3fa1c34d097e0ffa8853115778a27fe2b8a6953",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 1658784563
+        },
+        {
+          "column": 3,
+          "hash": 3007133316
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "c532fed8902a3a64b308faa1f03456cb0c8f5daa678df3be2c1e4810cf658aa3",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2495011826
+        },
+        {
+          "column": 3,
+          "hash": 1370847713
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "c86912d80202ebd6b03b123955d396d81fd9a5fdaf349f16c7c26781fcb31c1b",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 573122728
+        },
+        {
+          "column": 3,
+          "hash": 1370847713
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "cad74a39914d5d2603f8fdef5ae03eaaa27fa42d9eb72c5232f54bedb79b279d",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 1658784563
+        },
+        {
+          "column": 3,
+          "hash": 2541826827
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "d2d422c13ffd32ef95186971ebc0744c504ecb79fda0618726df07991e36a2ce",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2308090567
+        },
+        {
+          "column": 3,
+          "hash": 2402480669
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "d3fa17e85f9e41bdd06e9f916b3d99c765bb7e979b5218a5d11655f841750573",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 595108252
+        },
+        {
+          "column": 3,
+          "hash": 2402480669
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "d457e90014a1549f9bc3a5bb9b1cb1c9444c1c65c86b189b1fe21eaf9e09acea",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2495011826
+        },
+        {
+          "column": 3,
+          "hash": 4116820839
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "d5b6680d0cf88d12b6b5ddadcf84870d7712f65295393b9cc23fec7ae5ba6060",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 1609056795
+        },
+        {
+          "column": 3,
+          "hash": 395388285
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "da9b9fe0f34adba603467d48d6a2a8eef571039815267de14c7788e43a335058",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 595108252
+        },
+        {
+          "column": 3,
+          "hash": 4116820839
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "dfbae536ec723993b12a8bd5cc421a17ad50a5c15c69e840999bfaa304437a4c",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 1658784563
+        },
+        {
+          "column": 3,
+          "hash": 2402480669
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "e0379eb21474d52c6c8500d601ef5d31ee0e86f5bafd0d1048000aa272d2bcd1",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2308090567
+        },
+        {
+          "column": 3,
+          "hash": 1370847713
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "e2e0633a1f168abc6ed8c67dec6ab3109653aed8eef8b2e5be1ad6dacf7d1259",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 595108252
+        },
+        {
+          "column": 3,
+          "hash": 23371658
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "e483a3a4fae7f028613531b6811de69cec335c654daa1517cbb9a516a3f4024a",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 573122728
+        },
+        {
+          "column": 3,
+          "hash": 2541826827
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "eb46364ae53077a50559b593a39c6ff7f017261e72732046f7f70fa6c6a7bec5",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 573122728
+        },
+        {
+          "column": 3,
+          "hash": 395388285
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "ef4185ecdaf3b0fff868fc6d4b1237ac1a450ca998ea4275311342ba949a6ecb",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 1609056795
+        },
+        {
+          "column": 3,
+          "hash": 1370847713
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "f47a1da013d5840894d4001e25336845db400cfd7fed136cda405e242f8027a0",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 1609056795
+        },
+        {
+          "column": 3,
+          "hash": 4116820839
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

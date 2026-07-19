@@ -1,0 +1,67 @@
+{
+  "hash": 4238497225,
+  "name": "D.F.A.",
+  "type": "Hand Cannon",
+  "slot": "Kinetic",
+  "element": "Kinetic",
+  "tier": "Legendary",
+  "frame": "Adaptive Frame",
+  "rpm": 140,
+  "icon": "/common/destiny2_content/icons/daae1c3f913fb646c5bcc31652a132ca.jpg",
+  "watermark": "/common/destiny2_content/icons/7ba9d804508dd083ec20fcdb8ba0869d.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Complete Nightfall strike \"Tree of Probabilities.\"",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        839105230,
+        1392496348,
+        1467527085
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        3142289711,
+        4134353779
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        47981717,
+        3425386926
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "128fa5fb6a8539a587b4c09dfb238cf8aed034f11834bb0c83e67b60d0e3a83e",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 47981717
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "26f5787bab18c144ee19866f1b6853d45cb284a487ad27708a0129e122432d58",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 3425386926
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

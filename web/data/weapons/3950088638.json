@@ -1,0 +1,74 @@
+{
+  "hash": 3950088638,
+  "name": "Motion to Suppress",
+  "type": "Submachine Gun",
+  "slot": "Kinetic",
+  "element": "Kinetic",
+  "tier": "Legendary",
+  "frame": "Lightweight Frame",
+  "rpm": 900,
+  "icon": "/common/destiny2_content/icons/db05503bb6f730600fc04f0d22c86c4b.jpg",
+  "watermark": "/common/destiny2_content/icons/da5f961ef97b78293cc498978c10e178.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Complete Trials tickets and earn rank-up packages from the Emissary of the Nine.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1561002382,
+        1885400500,
+        3721627275
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        1359896290,
+        2039302152
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        2387244414
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "0cdee53caaafbe00331c92c8ee16df469d5b600f490872afe3d20a104e334f97",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 2039302152
+        },
+        {
+          "column": 2,
+          "hash": 2387244414
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "d8f944bd59072ae8f69d8314f643f5e4ccfad6d566e0e784075b926dd0449991",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 1359896290
+        },
+        {
+          "column": 2,
+          "hash": 2387244414
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

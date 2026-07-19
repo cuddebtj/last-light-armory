@@ -1,0 +1,74 @@
+{
+  "hash": 2084611899,
+  "name": "Last of the Legion",
+  "type": "Sidearm",
+  "slot": "Kinetic",
+  "element": "Kinetic",
+  "tier": "Legendary",
+  "frame": "Adaptive Burst",
+  "rpm": 491,
+  "icon": "/common/destiny2_content/icons/9e6b75da73f23824506ffdfcfde44847.jpg",
+  "watermark": "/common/destiny2_content/icons/da5f961ef97b78293cc498978c10e178.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Leviathan, Spire of Stars raid lair.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1840239774,
+        3250034553,
+        4090651448
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        2010801679,
+        2387244414
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        4267945040
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "10bb946acbdb9518ff96a16720870710f59fbadb5490347648a639a1d8b541ed",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 2010801679
+        },
+        {
+          "column": 2,
+          "hash": 4267945040
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "d96965912cb0b3d720d8ae8ad33354ab4cd9df57b20d8146874c71407937b8f5",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 2387244414
+        },
+        {
+          "column": 2,
+          "hash": 4267945040
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

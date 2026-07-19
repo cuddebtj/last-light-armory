@@ -1,0 +1,74 @@
+{
+  "hash": 3854037061,
+  "name": "A Swift Verdict",
+  "type": "Sidearm",
+  "slot": "Energy",
+  "element": "Void",
+  "tier": "Legendary",
+  "frame": "Precision Frame",
+  "rpm": 260,
+  "icon": "/common/destiny2_content/icons/200080943f25aee56427767cc80dc40f.jpg",
+  "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Complete Trials tickets and earn rank-up packages from the Emissary of the Nine.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        445755704,
+        445755705,
+        445755711
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        3161816588,
+        4071163871
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        2387244414
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "2983a3986296e1246a2ab83e60ff7722a24dc370330b1974fb9b61d78a77a105",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 3161816588
+        },
+        {
+          "column": 2,
+          "hash": 2387244414
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "9f39d5915e359cbedb6293d6de1c4f23d1d5c16bccb1ddd6cd22054800dd80cd",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 4071163871
+        },
+        {
+          "column": 2,
+          "hash": 2387244414
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

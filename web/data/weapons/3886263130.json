@@ -1,0 +1,57 @@
+{
+  "hash": 3886263130,
+  "name": "I Am Alive",
+  "type": "Grenade Launcher",
+  "slot": "Power",
+  "element": "Void",
+  "tier": "Legendary",
+  "frame": "Adaptive Frame",
+  "rpm": 120,
+  "icon": "/common/destiny2_content/icons/4e653426fca30011fdeba6eb05f2bac9.jpg",
+  "watermark": "/common/destiny2_content/icons/7ba9d804508dd083ec20fcdb8ba0869d.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 1,
+  "source": "Source: Leviathan, Eater of Worlds raid lair.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1844523823,
+        3525010810,
+        3798852852
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        588594999
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        3300816228
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "17e903d36b02e9b104a0d825192bfb12daf2bca2afe31540d535c11787e4d077",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 588594999
+        },
+        {
+          "column": 2,
+          "hash": 3300816228
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

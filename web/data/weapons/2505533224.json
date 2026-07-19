@@ -1,0 +1,74 @@
+{
+  "hash": 2505533224,
+  "name": "Ghost Primus",
+  "type": "Auto Rifle",
+  "slot": "Kinetic",
+  "element": "Kinetic",
+  "tier": "Legendary",
+  "frame": "Adaptive Frame",
+  "rpm": 600,
+  "icon": "/common/destiny2_content/icons/6cb301481212e5c058b0c87dae1317de.jpg",
+  "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Leviathan raid.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        839105230,
+        1840239774,
+        4090651448
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        2010801679,
+        2213355989
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        1645158859
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "8f818cb50dc030499c7d7ebdb1f0233ece1066d2fec9c724b1e566ddca0225d0",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 2010801679
+        },
+        {
+          "column": 2,
+          "hash": 1645158859
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "c717c9c932e8c4a99eea2aab1165ca622dc0356a0e51a5759ad490087f2c0c96",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 2213355989
+        },
+        {
+          "column": 2,
+          "hash": 1645158859
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

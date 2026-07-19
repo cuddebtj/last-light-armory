@@ -1,0 +1,74 @@
+{
+  "hash": 1825472717,
+  "name": "The End",
+  "type": "Scout Rifle",
+  "slot": "Energy",
+  "element": "Arc",
+  "tier": "Legendary",
+  "frame": "Precision Frame",
+  "rpm": 180,
+  "icon": "/common/destiny2_content/icons/e23f4ba8ef1c1fcea4094e62e85b63b6.jpg",
+  "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Complete Trials tickets and earn rank-up packages from the Emissary of the Nine.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1392496348,
+        3661387068,
+        4090651448
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        2039302152,
+        3300816228
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        972757866
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "89f135cb6d503de753b235798cefbd1d9ef4286b50bf7a10dca0bb63393344f0",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 2039302152
+        },
+        {
+          "column": 2,
+          "hash": 972757866
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "ff7d456a2788bfdaefb8e5741281add09449093118730018af983bd5824ee6e6",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 3300816228
+        },
+        {
+          "column": 2,
+          "hash": 972757866
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

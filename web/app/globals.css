@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0c1015;
+  --color-surface: #131a23;
+  --color-surface-2: #1a2330;
+  --color-edge: #243044;
+  --color-ink: #e6ebf2;
+  --color-muted: #8a94a6;
+  --color-gold: #cbb880;
+
+  --color-arc: #85c5ec;
+  --color-solar: #f2721b;
+  --color-void: #b184c5;
+  --color-stasis: #4d88ff;
+  --color-strand: #3fd780;
+  --color-kinetic: #d5d8dd;
+
+  --color-exotic: #ceae33;
+  --color-legendary: #9d64d0;
+  --color-rare: #5ea3cd;
+  --color-uncommon: #66a86f;
+  --color-common: #c2bcb4;
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Keeps offscreen rows out of layout/paint — 2,208 weapon rows render
+   without virtualization. */
+.weapon-row {
+  content-visibility: auto;
+  contain-intrinsic-block-size: 60px;
+}

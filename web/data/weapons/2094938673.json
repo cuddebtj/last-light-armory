@@ -1,0 +1,74 @@
+{
+  "hash": 2094938673,
+  "name": "Adjudicator",
+  "type": "Submachine Gun",
+  "slot": "Kinetic",
+  "element": "Kinetic",
+  "tier": "Legendary",
+  "frame": "Precision Frame",
+  "rpm": 600,
+  "icon": "/common/destiny2_content/icons/f1a53b2ec55fdce10fe64683e1e8854f.jpg",
+  "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Complete Trials tickets and earn rank-up packages from the Emissary of the Nine.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1392496348,
+        3661387068,
+        4090651448
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        1866048759,
+        2039302152
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        1359896290
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "900b06e689574a8ea54886f3c375a0d78804edc0bf367255cdf299da2828ebfc",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 2039302152
+        },
+        {
+          "column": 2,
+          "hash": 1359896290
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "f9b05963fc14d660f629852501c65aa3cda76aaa3fb27f21984f57eea79c8fb0",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 1866048759
+        },
+        {
+          "column": 2,
+          "hash": 1359896290
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

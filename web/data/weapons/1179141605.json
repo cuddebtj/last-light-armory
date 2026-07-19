@@ -1,0 +1,118 @@
+{
+  "hash": 1179141605,
+  "name": "Felwinter's Lie",
+  "type": "Shotgun",
+  "slot": "Energy",
+  "element": "Solar",
+  "tier": "Legendary",
+  "frame": "Shot Package",
+  "rpm": 55,
+  "icon": "/common/destiny2_content/icons/146b431dc4ea0dbb8c107319ae241487.jpg",
+  "watermark": "/common/destiny2_content/icons/247715dd42abef457b52ef37280c0e42.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 4,
+  "source": "Source: \"The Lie\" Quest",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1047830412
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        3142289711
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        3161816588,
+        3436462433
+      ]
+    },
+    {
+      "index": 3,
+      "perks": [
+        47981717,
+        1546637391
+      ]
+    },
+    {
+      "index": 4,
+      "perks": [
+        905869860,
+        3244015567
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "11df5e652177da9a73f23fc500805277ac8c15dbf243f27667367ca1eb7aa66b",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 3436462433
+        },
+        {
+          "column": 3,
+          "hash": 1546637391
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "693733aa9c532a1911c07f8fcc834b60b9485554b52d481121126a5a43777c6e",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 3161816588
+        },
+        {
+          "column": 3,
+          "hash": 47981717
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "92d8bb320b13aae8df94c664fd570c08370cbea2d858f16e4223830f23888712",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 3161816588
+        },
+        {
+          "column": 3,
+          "hash": 1546637391
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "f0c153311bbe9881e48ed8cd4ef12102650cdb2da1ce59605cd46b7324fc2bc6",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 3436462433
+        },
+        {
+          "column": 3,
+          "hash": 47981717
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

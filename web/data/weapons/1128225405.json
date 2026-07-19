@@ -1,0 +1,74 @@
+{
+  "hash": 1128225405,
+  "name": "Midnight Coup",
+  "type": "Hand Cannon",
+  "slot": "Kinetic",
+  "element": "Kinetic",
+  "tier": "Legendary",
+  "frame": "Adaptive Frame",
+  "rpm": 140,
+  "icon": "/common/destiny2_content/icons/d5c1b1c3eaf09bbf7aa5592490c31aa0.jpg",
+  "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Leviathan raid.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1467527085,
+        1482024992,
+        4090651448
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        2010801679,
+        3425386926
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        1168162263
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "836aac6817f485b50473af1f996d14a95439d6ae23111bcaa82f4bc4fbcf4c5d",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 3425386926
+        },
+        {
+          "column": 2,
+          "hash": 1168162263
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "a31f88975e3cd46be887264bc5287e5a1e7d38e16de159077bab451f4ef728e8",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 2010801679
+        },
+        {
+          "column": 2,
+          "hash": 1168162263
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

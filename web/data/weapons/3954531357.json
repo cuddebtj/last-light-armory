@@ -1,0 +1,74 @@
+{
+  "hash": 3954531357,
+  "name": "Mob Justice",
+  "type": "Submachine Gun",
+  "slot": "Energy",
+  "element": "Solar",
+  "tier": "Legendary",
+  "frame": "Adaptive Frame",
+  "rpm": 900,
+  "icon": "/common/destiny2_content/icons/c8922c900bce5394c4837086eb03e800.jpg",
+  "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Leviathan raid.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        202670084,
+        1840239774,
+        3661387068
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        972757866,
+        2010801679
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        588594999
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "898a7e00be91847f495d7a2cc24bcb20a88016768693636ccdc560121cc5ba8b",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 972757866
+        },
+        {
+          "column": 2,
+          "hash": 588594999
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "95d3af56b0c146b03cb1f7187cc65dd2138af3635161bf5a7f9bdc0f28c68cb0",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 2010801679
+        },
+        {
+          "column": 2,
+          "hash": 588594999
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "hash": 325519402,
+  "name": "Darkest Before",
+  "type": "Pulse Rifle",
+  "slot": "Energy",
+  "element": "Arc",
+  "tier": "Legendary",
+  "frame": "Rapid-Fire Frame",
+  "rpm": 540,
+  "icon": "/common/destiny2_content/icons/285f15a2b4b626e21ad806693da727b7.jpg",
+  "watermark": "/common/destiny2_content/icons/7ba9d804508dd083ec20fcdb8ba0869d.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Complete Trials tickets and earn rank-up packages from the Emissary of the Nine.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        839105230,
+        1482024992,
+        3250034553
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        706527188,
+        3161816588
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        4267945040
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "5b9c79f6a3e44b4052108bd4ca51080a7662f83812951b999da6d26d3f48bb55",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 706527188
+        },
+        {
+          "column": 2,
+          "hash": 4267945040
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "64e02633ab83b64345a1ed36836a7c4cd4bb9f5fcee892c3139d5f41df67e401",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 3161816588
+        },
+        {
+          "column": 2,
+          "hash": 4267945040
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}
