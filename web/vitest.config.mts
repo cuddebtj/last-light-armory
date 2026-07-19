@@ -1,4 +1,4 @@
-import { defineConfig } from "vitest/config";
+import { configDefaults, defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 import path from "node:path";
@@ -16,6 +16,11 @@ export default defineConfig({
     environment: "jsdom",
     globals: true,
     setupFiles: ["./test/setup.ts"],
+    // e2e/**/*.spec.ts are Playwright specs — they use @playwright/test's
+    // own `test`/fixtures (like `page`), not Vitest's, and must only run
+    // via `playwright test`. Vitest's default include glob would
+    // otherwise collect them too, since it also matches *.spec.ts.
+    exclude: [...configDefaults.exclude, "e2e/**"],
     // Date formatting in page.tsx must not depend on the machine's timezone.
     env: { TZ: "UTC" },
     coverage: {
