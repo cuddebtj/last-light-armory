@@ -1,0 +1,118 @@
+{
+  "hash": 4227181568,
+  "name": "Exit Strategy",
+  "type": "Submachine Gun",
+  "slot": "Kinetic",
+  "element": "Kinetic",
+  "tier": "Legendary",
+  "frame": "Adaptive Frame",
+  "rpm": 900,
+  "icon": "/common/destiny2_content/icons/84ef86c66632d3c64aea5741615d8bcd.jpg",
+  "watermark": "/common/destiny2_content/icons/0b212b58a961f150708bca95095e0ecb.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 4,
+  "source": "Source: Complete the \"Clean Getaway\" quest.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        839105230
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        1885400500
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        205890336,
+        4071163871
+      ]
+    },
+    {
+      "index": 3,
+      "perks": [
+        3708227201,
+        4082225868
+      ]
+    },
+    {
+      "index": 4,
+      "perks": [
+        38912240,
+        2302094943
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "105782b88bc77e8547b5f031b4264d63564f14bd5242e84188f7ca47e1b6750b",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 205890336
+        },
+        {
+          "column": 3,
+          "hash": 3708227201
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "10849ad6cc3d81979f31bbd68414b70a7a87bf9532a7c1b55b556aa7fea5bfda",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 4071163871
+        },
+        {
+          "column": 3,
+          "hash": 3708227201
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "b6ebd482a6057d8ee9460b7abaaa1eaa641d6ab24828d64c624bad784ecc2874",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 4071163871
+        },
+        {
+          "column": 3,
+          "hash": 4082225868
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "c2bee47f43f68a23d9f1ea3e1d93ee68b713bebdcd2e82af6b35fc530cb200a0",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 205890336
+        },
+        {
+          "column": 3,
+          "hash": 4082225868
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

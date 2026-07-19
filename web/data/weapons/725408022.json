@@ -1,0 +1,118 @@
+{
+  "hash": 725408022,
+  "name": "Ascendancy",
+  "type": "Rocket Launcher",
+  "slot": "Power",
+  "element": "Solar",
+  "tier": "Legendary",
+  "frame": "Precision Frame",
+  "rpm": 15,
+  "icon": "/common/destiny2_content/icons/d3d80dbad2e6dcea2d7a56dfe27fdc81.jpg",
+  "watermark": "/common/destiny2_content/icons/914322d11262322c839a5388db2a4943.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 4,
+  "source": "Source: Ranks in Vanguard Strikes, Crucible, or Gambit",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        3525010810
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        3796465595
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        951095735,
+        2010801679
+      ]
+    },
+    {
+      "index": 3,
+      "perks": [
+        2396489472,
+        3194351027
+      ]
+    },
+    {
+      "index": 4,
+      "perks": [
+        2240097604,
+        2285636663
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "4eb68331b0dc7f1b4706aad0e61ae6923d57dc727897b062ccfe816065d7fa3d",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 951095735
+        },
+        {
+          "column": 3,
+          "hash": 3194351027
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "bd7512cdedd04af2205b3aa381ff7bd841da1eeb458e5fae18cc87dadff5e7de",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2010801679
+        },
+        {
+          "column": 3,
+          "hash": 2396489472
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "d0c1063d1637deed503ad0e0cc181fb76c42718c4e19f09caeb951c9a6c09540",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2010801679
+        },
+        {
+          "column": 3,
+          "hash": 3194351027
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "d2135b1497b704f7d09544b4b43ebfa6ed437065574f935232efd1e41f2aaaaa",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 951095735
+        },
+        {
+          "column": 3,
+          "hash": 2396489472
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

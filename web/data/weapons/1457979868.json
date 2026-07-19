@@ -1,0 +1,66 @@
+{
+  "hash": 1457979868,
+  "name": "Duty Bound",
+  "type": "Auto Rifle",
+  "slot": "Kinetic",
+  "element": "Kinetic",
+  "tier": "Legendary",
+  "frame": "Adaptive Frame",
+  "rpm": 600,
+  "icon": "/common/destiny2_content/icons/e43645f3b6e5ebea84bfb36e4988dfb1.jpg",
+  "watermark": "/common/destiny2_content/icons/7ba9d804508dd083ec20fcdb8ba0869d.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Complete Nightfall strike \"Savathûn's Song.\"",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        2410284310,
+        2732913579
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        1885400500,
+        3142289711
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        2387244414,
+        3425386926
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "08ad937dccd35271843d99af1f512bdd94dba43fd3511088f8d19ea4761a5a8a",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2387244414
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "26f5787bab18c144ee19866f1b6853d45cb284a487ad27708a0129e122432d58",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 3425386926
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

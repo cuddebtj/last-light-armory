@@ -1,0 +1,66 @@
+{
+  "hash": 3866356643,
+  "name": "IKELOS_HC_v1.0.1",
+  "type": "Hand Cannon",
+  "slot": "Energy",
+  "element": "Void",
+  "tier": "Legendary",
+  "frame": "Precision Frame",
+  "rpm": 180,
+  "icon": "/common/destiny2_content/icons/eb545cf6330f410dfaa5e65412757e5d.jpg",
+  "watermark": "/common/destiny2_content/icons/da5f961ef97b78293cc498978c10e178.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: World Quest \"Data Recovery\" on Mars.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1482024992,
+        1840239774,
+        4090651448
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        1140096971
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        3425386926,
+        4071163871
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "26f5787bab18c144ee19866f1b6853d45cb284a487ad27708a0129e122432d58",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 3425386926
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "d7df0a9ccb726bb7f0ccef648be487eda708792d1c9ece89f584e276eb974180",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 4071163871
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

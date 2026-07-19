@@ -1,0 +1,118 @@
+{
+  "hash": 3434944005,
+  "name": "Point of the Stag",
+  "type": "Combat Bow",
+  "slot": "Energy",
+  "element": "Arc",
+  "tier": "Legendary",
+  "frame": "Precision Frame",
+  "rpm": 667,
+  "icon": "/common/destiny2_content/icons/367dcfa3acb774c2e6b480b33f0f4bfa.jpg",
+  "watermark": "/common/destiny2_content/icons/247715dd42abef457b52ef37280c0e42.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 4,
+  "source": "Source: Associated Iron Banner Quest",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        2801223209
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        1500996326
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        201365942,
+        2866798147
+      ]
+    },
+    {
+      "index": 3,
+      "perks": [
+        699525795,
+        1546637391
+      ]
+    },
+    {
+      "index": 4,
+      "perks": [
+        905869860,
+        3244015567
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "39f3f4824ae3661f0db78a8906533db90403c2759c9ab2a5dc133751d34a3019",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 201365942
+        },
+        {
+          "column": 3,
+          "hash": 699525795
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "5363627fe16f3bfa5d80eb987158e95bc0dd97c190552a8a60af192ba5a606ec",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2866798147
+        },
+        {
+          "column": 3,
+          "hash": 699525795
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "7d5f75fc24ac92f547ea986e662b0b18715e7cd7239dd9c282f479802dee5122",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 201365942
+        },
+        {
+          "column": 3,
+          "hash": 1546637391
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "df1c4c8839ca628dd8520ac0f233275292f4d16fc65102f1bc1ff3db142ac854",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 2866798147
+        },
+        {
+          "column": 3,
+          "hash": 1546637391
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

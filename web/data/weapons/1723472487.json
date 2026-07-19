@@ -1,0 +1,72 @@
+{
+  "hash": 1723472487,
+  "name": "IKELOS_SMG_v1.0.1",
+  "type": "Submachine Gun",
+  "slot": "Energy",
+  "element": "Arc",
+  "tier": "Legendary",
+  "frame": "Aggressive Frame",
+  "rpm": 720,
+  "icon": "/common/destiny2_content/icons/fcb5c23bfb9ce953eae54a812aea6dcb.jpg",
+  "watermark": "/common/destiny2_content/icons/da5f961ef97b78293cc498978c10e178.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Escalation Protocol on Mars.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1482024992,
+        1840239774,
+        4090651448
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        3871884143
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        1140096971
+      ]
+    },
+    {
+      "index": 3,
+      "perks": [
+        1631667848,
+        4071163871
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "0d0a09945535fbf1bff1db2e76317a03c6dc57bf50263ee8af2679a8e5dfa6db",
+      "perks": [
+        {
+          "column": 3,
+          "hash": 4071163871
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "750883490a06f06664f2924264b9f912ac831bf097a0a1f50abb4884cf1fa9fd",
+      "perks": [
+        {
+          "column": 3,
+          "hash": 1631667848
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

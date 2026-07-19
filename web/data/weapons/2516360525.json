@@ -1,0 +1,74 @@
+{
+  "hash": 2516360525,
+  "name": "Purpose",
+  "type": "Scout Rifle",
+  "slot": "Kinetic",
+  "element": "Kinetic",
+  "tier": "Legendary",
+  "frame": "Lightweight Frame",
+  "rpm": 200,
+  "icon": "/common/destiny2_content/icons/3e243f8704e4b7f06fe27db91c860175.jpg",
+  "watermark": "/common/destiny2_content/icons/7ba9d804508dd083ec20fcdb8ba0869d.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Complete Trials tickets and earn rank-up packages from the Emissary of the Nine.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1467527085,
+        1482024992,
+        1840239774
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        1866048759,
+        3161816588
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        3038247973
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "8183cf65f4f2da783c0df78346ba08a504140b1a8e19fb633b9e05c9b48daa81",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 1866048759
+        },
+        {
+          "column": 2,
+          "hash": 3038247973
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "c5659f1140d5d82f8ccbce98cb7dfe96b73b3531d99e826bb551fbf26f25e723",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 3161816588
+        },
+        {
+          "column": 2,
+          "hash": 3038247973
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

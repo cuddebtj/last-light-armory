@@ -1,0 +1,74 @@
+{
+  "hash": 3906942101,
+  "name": "Conspirator",
+  "type": "Scout Rifle",
+  "slot": "Energy",
+  "element": "Solar",
+  "tier": "Legendary",
+  "frame": "Lightweight Frame",
+  "rpm": 200,
+  "icon": "/common/destiny2_content/icons/37f1c019f25826548e24bdedccbe6f99.jpg",
+  "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Leviathan raid.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1392496348,
+        1467527085,
+        1482024992
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        2010801679,
+        4267945040
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        2848615171
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "bb5c9bf73874ead47ba515185c0864ba4e5333a3a01d89be2c9d0233a7c2c261",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 4267945040
+        },
+        {
+          "column": 2,
+          "hash": 2848615171
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "e32dc525ec576e763f237634d234c33f5ab06b12258cba6d7f0897f7526e14c0",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 2010801679
+        },
+        {
+          "column": 2,
+          "hash": 2848615171
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

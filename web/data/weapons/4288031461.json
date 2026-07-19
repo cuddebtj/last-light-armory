@@ -1,0 +1,74 @@
+{
+  "hash": 4288031461,
+  "name": "The Emperor's Envy",
+  "type": "Fusion Rifle",
+  "slot": "Energy",
+  "element": "Void",
+  "tier": "Legendary",
+  "frame": "Precision Frame",
+  "rpm": 800,
+  "icon": "/common/destiny2_content/icons/3b07d774a601a27ad9c9eb3f125cb592.jpg",
+  "watermark": "/common/destiny2_content/icons/da5f961ef97b78293cc498978c10e178.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Leviathan, Spire of Stars raid lair.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1483536627,
+        1687452232,
+        2969185026
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        588594999,
+        2010801679
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        3425386926
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "629423baec406048017e5f22d2445a0ab438c290ee58e5100e9ff31a015ef784",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 588594999
+        },
+        {
+          "column": 2,
+          "hash": 3425386926
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "8ad4a50c474c8a0d097725d39cfdb425fc79a70ec6e30de35daa006958566ef5",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 2010801679
+        },
+        {
+          "column": 2,
+          "hash": 3425386926
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

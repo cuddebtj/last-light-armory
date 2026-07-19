@@ -1,0 +1,74 @@
+{
+  "hash": 2850415209,
+  "name": "Judgment",
+  "type": "Hand Cannon",
+  "slot": "Kinetic",
+  "element": "Kinetic",
+  "tier": "Legendary",
+  "frame": "Adaptive Frame",
+  "rpm": 140,
+  "icon": "/common/destiny2_content/icons/038d5831a7c95696367a8894093d1c5d.jpg",
+  "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Complete Trials tickets and earn rank-up packages from the Emissary of the Nine.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1926090092,
+        1926090093,
+        1926090095
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        47981717,
+        3161816588
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        588594999
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "492d8737d0f62728839d1bb2b93a29af70fe52aa7a4b854e229cb28af1dca8e4",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 3161816588
+        },
+        {
+          "column": 2,
+          "hash": 588594999
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "7cb7f288d83db705d38be668df655fd866bcb9868c48fbd6e9aa6cb041de22ed",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 47981717
+        },
+        {
+          "column": 2,
+          "hash": 588594999
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

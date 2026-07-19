@@ -1,0 +1,74 @@
+{
+  "hash": 1503609584,
+  "name": "The Last Breath",
+  "type": "Auto Rifle",
+  "slot": "Kinetic",
+  "element": "Kinetic",
+  "tier": "Legendary",
+  "frame": "Adaptive Frame",
+  "rpm": 600,
+  "icon": "/common/destiny2_content/icons/b142865fe6d5459a4ccbc32de8b685ac.jpg",
+  "watermark": "/common/destiny2_content/icons/7ba9d804508dd083ec20fcdb8ba0869d.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Complete Trials tickets and earn rank-up packages from the Emissary of the Nine.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        202670084,
+        1467527085,
+        3661387068
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        1359896290,
+        3161816588
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        2010801679
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "8cf746583feb00671ec61f65404a40eac3aa864dc9917a9ceda25a4f6202399e",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 1359896290
+        },
+        {
+          "column": 2,
+          "hash": 2010801679
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "d9cb160d72497a27c1319e196e54951451cc65e8200d249bea04c5abfe9173fc",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 3161816588
+        },
+        {
+          "column": 2,
+          "hash": 2010801679
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "hash": 2707464805,
+  "name": "Zenith of Your Kind",
+  "type": "Shotgun",
+  "slot": "Energy",
+  "element": "Void",
+  "tier": "Legendary",
+  "frame": "Rapid-Fire Frame",
+  "rpm": 140,
+  "icon": "/common/destiny2_content/icons/ff4c10ccb8da555bd64bf15fb0d5d3aa.jpg",
+  "watermark": "/common/destiny2_content/icons/7ba9d804508dd083ec20fcdb8ba0869d.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Leviathan, Eater of Worlds raid lair.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1300023272,
+        1332244541,
+        4090651448
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        972757866,
+        3300816228
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        4071163871
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "13c0030e252aa24d4b616df303121bf09057f6aa769641b7afdfdae3f45c671e",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 972757866
+        },
+        {
+          "column": 2,
+          "hash": 4071163871
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "6267345700fdf000de1a255432d27fc430c69b8bb649d2eb16ed413b4416ea48",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 3300816228
+        },
+        {
+          "column": 2,
+          "hash": 4071163871
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

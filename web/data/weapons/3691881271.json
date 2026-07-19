@@ -1,0 +1,74 @@
+{
+  "hash": 3691881271,
+  "name": "Sins of the Past",
+  "type": "Rocket Launcher",
+  "slot": "Power",
+  "element": "Arc",
+  "tier": "Legendary",
+  "frame": "High-Impact Frame",
+  "rpm": 15,
+  "icon": "/common/destiny2_content/icons/204880460456462deacaa14ecc23ff04.jpg",
+  "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Leviathan raid.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        1441682018,
+        1844523823,
+        3798852852
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        1275731761,
+        2010801679
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        3300816228
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "5d9253e7e80541e1b3ca917d64a7680f27849bbf9fee4d79162e097f508b841d",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 1275731761
+        },
+        {
+          "column": 2,
+          "hash": 3300816228
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "f1a78d10db7ca3761f93ed39c5fb702169cb448125f9f85db6ae9ad1dc69e81b",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 2010801679
+        },
+        {
+          "column": 2,
+          "hash": 3300816228
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

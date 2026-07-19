@@ -1,0 +1,85 @@
+{
+  "hash": 720351794,
+  "name": "No Turning Back",
+  "type": "Combat Bow",
+  "slot": "Kinetic",
+  "element": "Kinetic",
+  "tier": "Legendary",
+  "frame": "Precision Frame",
+  "rpm": 667,
+  "icon": "/common/destiny2_content/icons/84c37b835b621cb8280740ba7ab50738.jpg",
+  "watermark": "/common/destiny2_content/icons/aeb95eb1abe8e45e1fe2573d6b3ab3c5.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Complete wanted escapee bounties for the Spider.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        3371775011
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        3429800428
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        957782887,
+        3365897133
+      ]
+    },
+    {
+      "index": 3,
+      "perks": [
+        1866048759
+      ]
+    },
+    {
+      "index": 4,
+      "perks": [
+        38912240,
+        2302094943
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "70877f847238c1fcfb23566ecf48d662e514686e8f16b1f519c387b75d0805da",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 957782887
+        },
+        {
+          "column": 3,
+          "hash": 1866048759
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "ecbcaf84160df61e923890a40f3b223b113edeecd5d5d8bd5a6f0abb49d5a6d2",
+      "perks": [
+        {
+          "column": 2,
+          "hash": 3365897133
+        },
+        {
+          "column": 3,
+          "hash": 1866048759
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}

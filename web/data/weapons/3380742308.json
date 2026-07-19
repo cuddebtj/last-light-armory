@@ -1,0 +1,74 @@
+{
+  "hash": 3380742308,
+  "name": "Alone as a god",
+  "type": "Sniper Rifle",
+  "slot": "Kinetic",
+  "element": "Kinetic",
+  "tier": "Legendary",
+  "frame": "Rapid-Fire Frame",
+  "rpm": 140,
+  "icon": "/common/destiny2_content/icons/52d2c74f0abbdc5c559822af9863af5e.jpg",
+  "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "craftable": false,
+  "enhanceable": false,
+  "obtainable": true,
+  "roll_count": 2,
+  "source": "Source: Leviathan raid.",
+  "columns": [
+    {
+      "index": 0,
+      "perks": [
+        839105230,
+        1482024992,
+        4090651448
+      ]
+    },
+    {
+      "index": 1,
+      "perks": [
+        2010801679,
+        3400784728
+      ]
+    },
+    {
+      "index": 2,
+      "perks": [
+        957782887
+      ]
+    }
+  ],
+  "rolls": [
+    {
+      "key": "3c17f7a8f3c51f5a8481632dc26a718a7e526100ee00555af69299007c514ba7",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 2010801679
+        },
+        {
+          "column": 2,
+          "hash": 957782887
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    },
+    {
+      "key": "ba4576e2e1cabcfa4b045976fc7f83739ad07a259fb13b96f6c894bda5de40a7",
+      "perks": [
+        {
+          "column": 1,
+          "hash": 3400784728
+        },
+        {
+          "column": 2,
+          "hash": 957782887
+        }
+      ],
+      "pve_score": null,
+      "pvp_score": null,
+      "overall_score": null
+    }
+  ]
+}
