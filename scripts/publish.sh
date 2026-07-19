@@ -78,8 +78,29 @@ else
   cp -r "$tmp_export/weapons/." web/data/weapons/
 fi
 
-if [ -z "$(git status --porcelain -- web/data)" ]; then
-  log "no changes — web/data/ already matches the live export. Nothing to publish."
+# cmd/export stamps meta.json's generated_at with time.Now() on every
+# single run, regardless of whether the underlying weapon/perk/roll data
+# actually changed — so a raw byte diff on web/data would "find changes"
+# on every single invocation, defeating the point of this check. Compare
+# substantively instead: did any weapon/perk file change, or did
+# manifest_version/weapon_count/perk_count/roll_count change?
+old_meta="$tmp_export/old_meta.json"
+git show "HEAD:web/data/meta.json" >"$old_meta" 2>/dev/null || echo '{}' >"$old_meta"
+
+meta_changed="$(python3 -c "
+import json
+old = json.load(open('$old_meta'))
+new = json.load(open('web/data/meta.json'))
+fields = ('manifest_version', 'weapon_count', 'perk_count', 'roll_count')
+print('yes' if any(old.get(f) != new.get(f) for f in fields) else 'no')
+")"
+
+if [ "$meta_changed" = "no" ] &&
+  [ -z "$(git status --porcelain -- web/data/weapons web/data/perks.json)" ]; then
+  # Nothing substantive changed — discard the meaningless generated_at
+  # bump so the working tree stays clean.
+  git checkout -- web/data/meta.json
+  log "no substantive changes (only generated_at differs) — nothing to publish."
   exit 0
 fi
 
@@ -120,5 +141,8 @@ fi
 git push -u origin "$branch"
 
 remote_url="$(git remote get-url origin)"
-slug="$(printf '%s' "$remote_url" | sed -E 's#.*[:/]([^/]+/[^/]+?)(\.git)?$#\1#')"
+# Two plain passes rather than one clever regex — POSIX sed -E doesn't
+# support the lazy quantifier a single-pass version needs, which silently
+# left ".git" in the URL when this was first tried.
+slug="$(printf '%s' "$remote_url" | sed -E 's#\.git$##; s#^.*github\.com[:/]##')"
 log "pushed. Open a PR: https://github.com/$slug/compare/$BASE_BRANCH...$branch?expand=1"
