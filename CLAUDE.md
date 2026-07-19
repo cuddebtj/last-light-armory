@@ -26,6 +26,23 @@ committed-export coupling as `lib/data.test.ts`; a future re-export that
 renames or removes one of those weapons is the expected reason such a
 test would need updating, not a mystery flake.
 
+**Every generated endpoint is swept, not sampled.** `e2e/all-weapons.spec.ts`
+hits all ~2,208 `/weapons/<hash>` routes plus `/` and an invalid hash,
+against the real running production server. It's HTTP-level (Playwright's
+`request` fixture), not full `page.goto()` rendering — a deliberate
+tradeoff: `app/weapons/[hash]/page.tsx` is a pure Server Component with no
+client-only behavior, so asserting the response is 200 and contains that
+specific weapon's own (HTML-escaped) name already proves what a full
+browser render would for this route shape, at a fraction of the cost
+(~9s for all 2,208 in CI, batched for Playwright's own worker
+parallelism). Full browser rendering — hydration, real navigation, real
+asset loading — stays on the curated specs in `weapon-detail.spec.ts` /
+`navigation.spec.ts` for a representative sample rather than repeating
+that cost 2,208 times. Verified this sweep actually catches drift, not
+just green-by-luck: deliberately mismatched one weapon's index name
+against its detail file and confirmed exactly that weapon's batch failed
+with a precise message, all others stayed green.
+
 ## What This Repo Is
 
 Two genuinely different things living in one repo:
