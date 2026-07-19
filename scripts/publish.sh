@@ -118,11 +118,16 @@ git checkout -b "$branch"
 # --- Safety gate: does the site still build and pass with this data? ---
 
 log "verifying the site still builds and passes its tests against the new data..."
+# Explicit && chaining, not just bare sequential statements relying on
+# set -e: a subshell that's the left operand of || does not reliably
+# stop at the first failing command under errexit alone (confirmed live —
+# without this, test:coverage and test:e2e both still ran, wastefully,
+# after a build failure that should have stopped everything immediately).
 (
-  cd web
-  npm run build
-  npm run test:coverage
-  npm run test:e2e
+  cd web &&
+    npm run build &&
+    npm run test:coverage &&
+    npm run test:e2e
 ) || fail "build/test failed against the refreshed data — left on branch '$branch' with the change uncommitted for you to investigate (a hardcoded count in a test, e.g. lib/data.test.ts or e2e/all-weapons.spec.ts, is the most likely cause — see CLAUDE.md's Testing Policy note on committed-export coupling)"
 
 # --- Commit + push ------------------------------------------------------
