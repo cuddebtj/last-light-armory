@@ -263,14 +263,26 @@ unbounded, and it no longer is.
 - Zero environment variables related to Postgres or Bungie — this half of
   the repo has no secrets to manage at all
 
-## Publish Flow
+## Publish Flow (implemented 2026-07-19)
 
-Still explicitly open per ingest's own `todo.md`, which already frames it
-well — adopting its own recommended starting point rather than re-deciding:
-start with a manual copy or a `scripts/publish.sh` (ingest's `cmd/export` →
-copy into this repo's `web/data/` → commit → push → Vercel auto-rebuilds).
-Automate into an unattended sync job later only if re-exports become
-frequent — not worth building now for something evergreen.
+`./scripts/publish.sh`: runs ingest's `cmd/export` against the live
+private-network Postgres, copies the result into `web/data/`, then a
+safety gate (`npm run build && npm run test:coverage && npm run
+test:e2e`) before committing — the e2e sweep in particular is exactly
+what would catch bad/corrupt data here. Must be run from a clean,
+up-to-date `dev` (or `BASE_BRANCH` override); always branches off rather
+than committing directly, and only pushes — it never opens or merges a
+PR, that stays a human step. No-op if nothing substantive changed:
+`cmd/export` stamps a fresh `generated_at` on every run regardless of
+whether the underlying data moved, so the diff check compares
+`manifest_version`/`weapon_count`/`perk_count`/`roll_count` plus the
+actual weapon/perk files, not raw bytes — a naive raw diff would create
+a noise commit on literally every run.
+
+Still manual/on-demand (run by hand when ingest has produced something
+worth publishing) — automate into an unattended sync job later only if
+re-exports become frequent enough to justify it, per ingest's own
+`todo.md` recommendation. Not worth building now for something evergreen.
 
 ## Future: Community Voting (discussed 2026-07-06, not started)
 
