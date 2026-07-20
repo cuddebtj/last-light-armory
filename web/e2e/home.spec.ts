@@ -21,13 +21,13 @@ test.describe("home page", () => {
 
   test("combines type/slot/element/tier filters down to an empty state", async ({ page }) => {
     await page.goto("/");
-    await page.getByLabel("Weapon type").selectOption("Hand Cannon");
-    await page.getByLabel("Element").selectOption("Void");
+    await page.getByLabel("Weapon type", { exact: true }).selectOption("Hand Cannon");
+    await page.getByLabel("Element", { exact: true }).selectOption("Void");
     const someMatches = await page.getByText(COUNT).textContent();
     expect(someMatches).not.toMatch(/^0 of/);
 
     // No Hand Cannon is a Power-slot weapon — a real, guaranteed-empty combination.
-    await page.getByLabel("Slot").selectOption("Power");
+    await page.getByLabel("Slot", { exact: true }).selectOption("Power");
     await expect(page.getByText(COUNT)).toHaveText("0 of 2,208");
     await expect(page.getByText("No weapons match these filters.")).toBeVisible();
     await expect(page.getByRole("button", { name: "Reset" })).toBeVisible();
@@ -36,13 +36,34 @@ test.describe("home page", () => {
   test("reset clears search, filters, and restores the full list", async ({ page }) => {
     await page.goto("/");
     await page.getByPlaceholder("Search weapons…").fill("zzzzqqq");
-    await page.getByLabel("Tier").selectOption("Exotic");
+    await page.getByLabel("Tier", { exact: true }).selectOption("Exotic");
     await expect(page.getByText("No weapons match these filters.")).toBeVisible();
 
     await page.getByRole("button", { name: "Reset" }).click();
     await expect(page.getByPlaceholder("Search weapons…")).toHaveValue("");
-    await expect(page.getByLabel("Tier")).toHaveValue("");
+    await expect(page.getByLabel("Tier", { exact: true })).toHaveValue("");
     await expect(page.getByText(COUNT)).toHaveText("2,208 of 2,208");
+  });
+
+  test("click-to-sort reorders the list by name and by RPM", async ({ page }) => {
+    await page.goto("/");
+    const firstRowName = () => page.getByRole("link").first().locator("span.font-medium");
+
+    // Default sort is name-ascending.
+    await expect(firstRowName()).toHaveText("1000 Yard Stare");
+
+    // Weapon is already the active (default) column — its accessible
+    // name reflects that, so one click flips straight to descending.
+    await page.getByRole("button", { name: "Weapon, sorted ascending" }).click();
+    await expect(firstRowName()).toHaveText("Zephyr");
+
+    // Crown-Splitter (rpm 0) and Leviathan's Breath (rpm 1328) are the
+    // real min/max RPM in the current export — couples to that snapshot,
+    // same as other data-specific e2e assertions.
+    await page.getByRole("button", { name: "Sort by RPM" }).click();
+    await expect(firstRowName()).toHaveText("Crown-Splitter");
+    await page.getByRole("button", { name: "RPM, sorted ascending" }).click();
+    await expect(firstRowName()).toHaveText("Leviathan's Breath");
   });
 
   test("renders correctly on a mobile viewport", async ({ page }) => {
