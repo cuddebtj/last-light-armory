@@ -28,12 +28,14 @@ import (
 	"context"
 	"crypto/rand"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"net/url"
 	"os"
 	"testing"
 	"time"
 
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"github.com/cuddebtj/last-light-armory/scoring/internal/baseline"
@@ -167,9 +169,18 @@ func TestMigrateUpAndDown(t *testing.T) {
 	}
 
 	// Ingest's real, shared migrations table must be completely untouched
-	// by any of this — the whole point of the distinct table name.
+	// by any of this — the whole point of the distinct table name. Only
+	// checkable where ingest's own migrations have actually run (the real
+	// shared database); a from-scratch environment (CI's throwaway
+	// Postgres) has no public.schema_migrations at all, same reason the
+	// public.perk check above skips rather than asserting.
 	var ingestVersion int
-	if err := env.pool.QueryRow(ctx, "SELECT version FROM public.schema_migrations").Scan(&ingestVersion); err != nil {
+	err = env.pool.QueryRow(ctx, "SELECT version FROM public.schema_migrations").Scan(&ingestVersion)
+	var pgErr *pgconn.PgError
+	if errors.As(err, &pgErr) && pgErr.Code == "42P01" {
+		t.Skip("public.schema_migrations doesn't exist in this environment; ingest hasn't run here")
+	}
+	if err != nil {
 		t.Fatalf("reading ingest's schema_migrations: %v", err)
 	}
 	if ingestVersion == 0 {

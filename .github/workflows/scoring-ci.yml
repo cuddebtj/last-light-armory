@@ -1,0 +1,89 @@
+name: scoring CI
+
+on:
+  pull_request:
+    paths:
+      - "scoring/**"
+      - ".github/workflows/scoring-ci.yml"
+  push:
+    branches: [dev]
+    paths:
+      - "scoring/**"
+      - ".github/workflows/scoring-ci.yml"
+
+concurrency:
+  group: scoring-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: scoring
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26"
+          cache-dependency-path: scoring/go.sum
+      - run: go build ./...
+      - run: go vet ./...
+      - name: gofmt check
+        run: |
+          unformatted="$(gofmt -l .)"
+          if [ -n "$unformatted" ]; then
+            echo "$unformatted"
+            echo "::error::gofmt would reformat the above files — run 'gofmt -w .'"
+            exit 1
+          fi
+
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: scoring
+          POSTGRES_PASSWORD: scoring
+          POSTGRES_DB: scoring
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      TEST_DATABASE_URL: postgres://scoring:scoring@localhost:5432/scoring?sslmode=disable
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26"
+          cache-dependency-path: scoring/go.sum
+      # Scoring's own migrations are NOT self-contained (see
+      # internal/db/integration_test.go's doc comment): perk_synergy and
+      # roll_variant carry FKs against perk(id)/roll(id), tables ingest
+      # owns and this repo never creates. testdata/ci_stub_schema.sql is
+      # the minimal shape needed for those FKs to resolve on a from-
+      # scratch database — not a copy of ingest's real migrations, which
+      # stay owned and versioned in that repo.
+      - name: Stub ingest-owned identity tables
+        run: psql "$TEST_DATABASE_URL" -f testdata/ci_stub_schema.sql
+      # Combined unit + integration coverage is the real number CLAUDE.md's
+      # 98% policy measures against — internal/db alone is ~95% on unit
+      # tests only (some paths, like a real unreachable-server connection
+      # failure, aren't meaningfully fakeable via pgxmock). Scoped to
+      # internal/... , not ./... : cmd/score and cmd/import-baseline are
+      # thin main-package orchestration over a live Postgres, verified by
+      # hand against the real database instead — the same "separate
+      # signal" split web/ already draws for its e2e suite vs. its
+      # coverage number.
+      - run: go test -tags integration -coverprofile=coverage.out ./internal/...
+      - name: Enforce 98% coverage threshold
+        run: |
+          total=$(go tool cover -func=coverage.out | tail -1 | awk '{print $3}' | tr -d '%')
+          echo "internal/... coverage: ${total}%"
+          awk -v t="$total" 'BEGIN { exit !(t + 0 >= 98) }'
