@@ -5,6 +5,7 @@ go 1.26.3
 require (
 	github.com/golang-migrate/migrate/v4 v4.19.1
 	github.com/jackc/pgx/v5 v5.10.0
+	github.com/pashagolub/pgxmock/v4 v4.9.0
 )
 
 require (
