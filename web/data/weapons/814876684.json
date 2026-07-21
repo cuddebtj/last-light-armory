@@ -9,11 +9,12 @@
   "rpm": 733,
   "icon": "/common/destiny2_content/icons/8e5d7a68305a0d1e53ccade9398c7e8b.jpg",
   "watermark": "/common/destiny2_content/icons/aeb95eb1abe8e45e1fe2573d6b3ab3c5.png",
+  "ammo_type": "Primary",
+  "breaker_type": "Shield Piercing",
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: An Exotic quest or challenge.",
   "columns": [
     {
       "index": 0,
@@ -41,6 +42,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: An Exotic quest or challenge.",
   "rolls": [
     {
       "key": "045ddbe487dd2ceaa9978175dacab216ee62a7a668c2b94035089de3c5de8570",
@@ -50,9 +56,9 @@
           "hash": 2287699930
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

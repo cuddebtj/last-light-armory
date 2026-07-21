@@ -9,11 +9,12 @@
   "rpm": 600,
   "icon": "/common/destiny2_content/icons/6222347e45729ba9c746b8c3b1e5a435.jpg",
   "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": false,
   "roll_count": 1,
-  "source": null,
   "columns": [
     {
       "index": 0,
@@ -35,6 +36,11 @@
       ]
     }
   ],
+  "overall_score": 44.22,
+  "pve_score": 40.34,
+  "pvp_score": 48.1,
+  "popularity_score": null,
+  "source": null,
   "rolls": [
     {
       "key": "297e5869010eb3f98f72f9a27239d832ab76df202d5fbe8810faefdc3347f49f",
@@ -44,9 +50,9 @@
           "hash": 2213355989
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 40.34,
+      "pvp_score": 48.1,
+      "overall_score": 44.22
     }
   ]
 }

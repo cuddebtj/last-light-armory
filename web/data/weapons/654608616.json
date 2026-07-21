@@ -9,11 +9,12 @@
   "rpm": 72,
   "icon": "/common/destiny2_content/icons/0fd6fe69c154d29d1eab5f5c0a45974a.jpg",
   "watermark": "/common/destiny2_content/icons/58d3ec8338cc9746a2e0cf901fbcec0e.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Complete this weapon's associated Crucible quest.",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 52.75,
+  "pve_score": 55.5,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Complete this weapon's associated Crucible quest.",
   "rolls": [
     {
       "key": "f28acaa97f23ba326329e27155a9bc41e07ff376a45527c75c7de5abd3c6899e",
@@ -60,9 +66,9 @@
           "hash": 136456835
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 55.5,
+      "pvp_score": 50,
+      "overall_score": 52.75
     }
   ]
 }

@@ -9,11 +9,12 @@
   "rpm": 120,
   "icon": "/common/destiny2_content/icons/f7a37e909fe6f923501f2175dc3784b6.jpg",
   "watermark": "/common/destiny2_content/icons/bce51cf90464e28026140df77c4eb6ce.png",
+  "ammo_type": "Heavy",
+  "breaker_type": "Disruption",
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: \"The Stasis Prototype\" Quest",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: \"The Stasis Prototype\" Quest",
   "rolls": [
     {
       "key": "22607254710b9973bb896eede9f82e4d785d98087246b4bdc561914fa19d95ff",
@@ -56,9 +62,9 @@
           "hash": 1549056416
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

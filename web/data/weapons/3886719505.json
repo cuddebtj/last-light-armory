@@ -9,11 +9,12 @@
   "rpm": 100,
   "icon": "/common/destiny2_content/icons/fcae8edcd35227d35fca0a108d831840.jpg",
   "watermark": "/common/destiny2_content/icons/6f17d323d81dd683086d88a9268f8106.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: \"Warlord's Ruin\" Dungeon",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: \"Warlord's Ruin\" Dungeon",
   "rolls": [
     {
       "key": "d3a4e0207d5272253889f04dc123e64a3d38956ef3387522c57a7b27cd348d3f",
@@ -56,9 +62,9 @@
           "hash": 571791574
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

@@ -9,11 +9,12 @@
   "rpm": 533,
   "icon": "/common/destiny2_content/icons/8c750beedde6de756d0b194f262e3372.jpg",
   "watermark": "/common/destiny2_content/icons/36418dde751148bd3b95a023d491ea73.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 4,
-  "source": "Source: \"A Sacred Fusion\" Quest",
   "columns": [
     {
       "index": 0,
@@ -49,6 +50,11 @@
       ]
     }
   ],
+  "overall_score": 56.14,
+  "pve_score": 62.27,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: \"A Sacred Fusion\" Quest",
   "rolls": [
     {
       "key": "13aa8652f31ca719fbb85a97d9cfb3bd4c6e2b501ab50fd86a9d62f25db966f3",
@@ -62,9 +68,9 @@
           "hash": 1427256713
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 62.27,
+      "pvp_score": 50,
+      "overall_score": 56.14
     },
     {
       "key": "423ca2772d65e1752b9dedebc67a3c0fc99585a2f4677dbeb05c93e57aca1411",
@@ -78,9 +84,9 @@
           "hash": 2213355989
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 56.02,
+      "pvp_score": 50,
+      "overall_score": 53.01
     },
     {
       "key": "64f20ea3174e86d95d04d51e0df7bdd0cda64f7f110d2a4a666c462d46ee9b5f",
@@ -94,9 +100,9 @@
           "hash": 1427256713
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 59.77,
+      "pvp_score": 50,
+      "overall_score": 54.89
     },
     {
       "key": "f1689c9907c5717c2cbb84e5a5b4d9a1cfbdce25ad702df1e0f6ee86004203e8",
@@ -110,9 +116,9 @@
           "hash": 2213355989
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 58.52,
+      "pvp_score": 50,
+      "overall_score": 54.26
     }
   ]
 }

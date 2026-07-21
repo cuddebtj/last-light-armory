@@ -9,11 +9,12 @@
   "rpm": 40,
   "icon": "/common/destiny2_content/icons/39a94c98eba4b9e007a76bbc067752f7.jpg",
   "watermark": "/common/destiny2_content/icons/661c84a377389a3b8a1fc38b44189b41.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 5,
-  "source": "Source: Exploring the Pale Heart",
   "columns": [
     {
       "index": 0,
@@ -69,6 +70,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Exploring the Pale Heart",
   "rolls": [
     {
       "key": "0ee98964f197bc67c9159315ef7c1dcc4b1a2ba6367dcf2b3e7fa772ad140b2b",
@@ -82,9 +88,9 @@
           "hash": 2963428707
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     },
     {
       "key": "39f11a6b52de46cd5906ad661803156049bc77932809e8f80b880b0d3c085abf",
@@ -98,9 +104,9 @@
           "hash": 2963428707
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     },
     {
       "key": "3f082f3e7ba06ccb691902c9bd6de92ac2c9c716a7e8a01551d55da1664817f7",
@@ -114,9 +120,9 @@
           "hash": 2963428707
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     },
     {
       "key": "61a706bf3d0adb6a35b74775ee9d41bc513e89d12d8ef04b4424185626254e8d",
@@ -130,9 +136,9 @@
           "hash": 2963428707
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     },
     {
       "key": "7506668673f2a8d722b8afd04874d76a31539fa2352feaf90707639f767b5ace",
@@ -146,9 +152,9 @@
           "hash": 2963428707
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

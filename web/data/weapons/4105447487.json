@@ -9,11 +9,12 @@
   "rpm": 967,
   "icon": "/common/destiny2_content/icons/105612a2203be5f3c17d7cbb8c17212c.jpg",
   "watermark": "/common/destiny2_content/icons/7ba9d804508dd083ec20fcdb8ba0869d.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Complete activities and earn rank-up packages on Mercury.",
   "columns": [
     {
       "index": 0,
@@ -36,6 +37,11 @@
       ]
     }
   ],
+  "overall_score": 62.57,
+  "pve_score": 75.14,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Complete activities and earn rank-up packages on Mercury.",
   "rolls": [
     {
       "key": "e8d58279d108bcf14154f7c140b1a4191ed5f50aae98c0017c53511e72e94a83",
@@ -45,9 +51,9 @@
           "hash": 2869569095
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 75.14,
+      "pvp_score": 50,
+      "overall_score": 62.57
     }
   ]
 }

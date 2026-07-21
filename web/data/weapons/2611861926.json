@@ -9,11 +9,12 @@
   "rpm": 720,
   "icon": "/common/destiny2_content/icons/4d1e0e9b4e84155f9327c11f47cdb38b.jpg",
   "watermark": "/common/destiny2_content/icons/da5f961ef97b78293cc498978c10e178.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Complete Crucible matches and earn rank-up packages from Lord Shaxx.",
   "columns": [
     {
       "index": 0,
@@ -37,6 +38,11 @@
       ]
     }
   ],
+  "overall_score": 41.99,
+  "pve_score": 30.12,
+  "pvp_score": 53.87,
+  "popularity_score": null,
+  "source": "Source: Complete Crucible matches and earn rank-up packages from Lord Shaxx.",
   "rolls": [
     {
       "key": "51cbb121a15f392df748701fa8845433d39fb36f094ea8204c87cd61945770d9",
@@ -46,9 +52,9 @@
           "hash": 1866048759
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 30.12,
+      "pvp_score": 53.87,
+      "overall_score": 41.99
     }
   ]
 }

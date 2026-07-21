@@ -9,11 +9,12 @@
   "rpm": 260,
   "icon": "/common/destiny2_content/icons/48a4691e0794ce71e6882dffd2257f85.jpg",
   "watermark": "/common/destiny2_content/icons/aeb95eb1abe8e45e1fe2573d6b3ab3c5.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Forsaken Campaign",
   "columns": [
     {
       "index": 0,
@@ -49,6 +50,11 @@
       ]
     }
   ],
+  "overall_score": 53.94,
+  "pve_score": 48.24,
+  "pvp_score": 59.64,
+  "popularity_score": null,
+  "source": "Source: Forsaken Campaign",
   "rolls": [
     {
       "key": "18d1c03b6d276381b053d385c3fb6e23774132311b3d40171e2c020fed15adf5",
@@ -62,9 +68,9 @@
           "hash": 2848615171
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 48.24,
+      "pvp_score": 59.64,
+      "overall_score": 53.94
     }
   ]
 }

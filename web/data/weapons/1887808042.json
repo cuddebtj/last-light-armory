@@ -9,11 +9,12 @@
   "rpm": 140,
   "icon": "/common/destiny2_content/icons/cba43299108f3b5fc2d599b6ec81b3ec.jpg",
   "watermark": "/common/destiny2_content/icons/da5f961ef97b78293cc498978c10e178.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 2,
-  "source": "Source: Escalation Protocol on Mars.",
   "columns": [
     {
       "index": 0,
@@ -43,6 +44,11 @@
       ]
     }
   ],
+  "overall_score": 61.46,
+  "pve_score": 72.91,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Escalation Protocol on Mars.",
   "rolls": [
     {
       "key": "0d0a09945535fbf1bff1db2e76317a03c6dc57bf50263ee8af2679a8e5dfa6db",
@@ -52,9 +58,9 @@
           "hash": 4071163871
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 72.91,
+      "pvp_score": 50,
+      "overall_score": 61.46
     },
     {
       "key": "ad5e5b2de352ea9cd98d4837d4e67f961c2621badc4917eefa50599001c02a48",
@@ -64,9 +70,9 @@
           "hash": 588594999
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 52.92,
+      "pvp_score": 50,
+      "overall_score": 51.46
     }
   ]
 }

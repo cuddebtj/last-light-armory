@@ -9,11 +9,12 @@
   "rpm": 450,
   "icon": "/common/destiny2_content/icons/cb964db256a165ad15a67cab852167d0.jpg",
   "watermark": "/common/destiny2_content/icons/e0c16042274fd7d9cbffc4489e340c5d.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Complete the \"Breakneck\" quest from the Drifter.",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 38.89,
+  "pve_score": 29.68,
+  "pvp_score": 48.1,
+  "popularity_score": null,
+  "source": "Source: Complete the \"Breakneck\" quest from the Drifter.",
   "rolls": [
     {
       "key": "db28b9a0ffa70a8bfb7f77d4ab483103afa99af905ec4a88a13eacb421f431ab",
@@ -60,9 +66,9 @@
           "hash": 95528736
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 29.68,
+      "pvp_score": 48.1,
+      "overall_score": 38.89
     }
   ]
 }

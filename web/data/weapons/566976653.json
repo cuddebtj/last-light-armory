@@ -9,11 +9,12 @@
   "rpm": 600,
   "icon": "/common/destiny2_content/icons/a85e5df076afdb0c8fbcb1782b962109.jpg",
   "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Earn rank-up packages from Banshee-44.",
   "columns": [
     {
       "index": 0,
@@ -36,6 +37,11 @@
       ]
     }
   ],
+  "overall_score": 45.25,
+  "pve_score": 42.42,
+  "pvp_score": 48.1,
+  "popularity_score": null,
+  "source": "Source: Earn rank-up packages from Banshee-44.",
   "rolls": [
     {
       "key": "7b225bf0c150a5ca7e38c520bad97b578d69fc9937535288dca48a030182e07c",
@@ -45,9 +51,9 @@
           "hash": 1015611457
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 42.42,
+      "pvp_score": 48.1,
+      "overall_score": 45.25
     }
   ]
 }

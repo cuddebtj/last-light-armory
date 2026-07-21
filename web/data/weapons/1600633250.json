@@ -9,11 +9,12 @@
   "rpm": 900,
   "icon": "/common/destiny2_content/icons/e875d248d8e2fece0117e855edc2dc02.jpg",
   "watermark": "/common/destiny2_content/icons/2c022e452f395db7b1daec1cb44631fc.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Complete this weapon's associated Gambit quest.",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 46.01,
+  "pve_score": 42.03,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Complete this weapon's associated Gambit quest.",
   "rolls": [
     {
       "key": "07b9ec8b809aabb2996a53ca10373d31f2cf3b71aacbe1d8f606483a529c5a82",
@@ -60,9 +66,9 @@
           "hash": 2782457288
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 42.03,
+      "pvp_score": 50,
+      "overall_score": 46.01
     }
   ]
 }

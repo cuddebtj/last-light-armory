@@ -9,11 +9,12 @@
   "rpm": 667,
   "icon": "/common/destiny2_content/icons/397159323a6b39ae40f2631df9b2b9ff.jpg",
   "watermark": "/common/destiny2_content/icons/247715dd42abef457b52ef37280c0e42.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 30,
-  "source": "Source: Open Legendary engrams and earn faction rank-up packages.",
   "columns": [
     {
       "index": 0,
@@ -74,6 +75,11 @@
       ]
     }
   ],
+  "overall_score": 60.55,
+  "pve_score": 71.09,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Open Legendary engrams and earn faction rank-up packages.",
   "rolls": [
     {
       "key": "19db56c8b4a727d46fd088a6bc6d496c1ca31734017c8a1bd000cbc7504ea178",
@@ -87,9 +93,9 @@
           "hash": 1600092898
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 51.09,
+      "pvp_score": 50,
+      "overall_score": 50.55
     },
     {
       "key": "1d8ea257993ba9846f82c28321e16dfc46bdb741f14ad53e550eeed43903a38c",
@@ -103,9 +109,9 @@
           "hash": 3523296417
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 61.09,
+      "pvp_score": 50,
+      "overall_score": 55.55
     },
     {
       "key": "1e7e90de752bc71a548dfbd595ec5c08ab96e97bbeb1f0d8d6963e3c1970a6e9",
@@ -119,9 +125,9 @@
           "hash": 957782887
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 51.09,
+      "pvp_score": 50,
+      "overall_score": 50.55
     },
     {
       "key": "298740895c9493bfb74b5bf8d6b72ea1cf178cd42df538126b7bd7aa1add5dfe",
@@ -135,9 +141,9 @@
           "hash": 1683379515
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 51.09,
+      "pvp_score": 50,
+      "overall_score": 50.55
     },
     {
       "key": "312460761c3da55c925e882e829327189df18d14a8dec9e0a87eb64c883d0172",
@@ -151,9 +157,9 @@
           "hash": 957782887
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 61.09,
+      "pvp_score": 50,
+      "overall_score": 55.55
     },
     {
       "key": "386f531f3893dd0da39b938ce509430ca62e4bb23ec82f128bf2dcdf10caa054",
@@ -167,9 +173,9 @@
           "hash": 1600092898
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 61.09,
+      "pvp_score": 50,
+      "overall_score": 55.55
     },
     {
       "key": "38f6c1dc1bc0fa60b787453c1a039daf13940d9f84448b0dcab964e98b10689e",
@@ -183,9 +189,9 @@
           "hash": 3511092054
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 61.09,
+      "pvp_score": 50,
+      "overall_score": 55.55
     },
     {
       "key": "3aba891537417509326277a6077b7c71316326a01f615ca0bd30c49c59170bc3",
@@ -199,9 +205,9 @@
           "hash": 1683379515
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 61.09,
+      "pvp_score": 50,
+      "overall_score": 55.55
     },
     {
       "key": "4f02dbd3c244d6701a3cc8e3f9c7147ef8fa30c930cb32291efd09863716bced",
@@ -215,9 +221,9 @@
           "hash": 1600092898
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 51.09,
+      "pvp_score": 50,
+      "overall_score": 50.55
     },
     {
       "key": "5213c1322e2b8471b3f3d638ed8aa4f5e943ea2f0594743b16c66b0d418d0fbe",
@@ -231,9 +237,9 @@
           "hash": 1600092898
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 61.09,
+      "pvp_score": 50,
+      "overall_score": 55.55
     },
     {
       "key": "542575971d3617faf9cc98d3ff704c5825e0411f22e7a0dd90c6f57ed32280c1",
@@ -247,9 +253,9 @@
           "hash": 3511092054
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 51.09,
+      "pvp_score": 50,
+      "overall_score": 50.55
     },
     {
       "key": "5b537658f380ea5c43360363554116fa935f6c9bcdb55489993f989c79289fda",
@@ -263,9 +269,9 @@
           "hash": 3511092054
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 61.09,
+      "pvp_score": 50,
+      "overall_score": 55.55
     },
     {
       "key": "619b487956bde96edeccb08e27bb202978b72fbb923403284d13c242e9fd8215",
@@ -279,9 +285,9 @@
           "hash": 3523296417
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 61.09,
+      "pvp_score": 50,
+      "overall_score": 55.55
     },
     {
       "key": "7baa55d229e5648ad22f33fef2bd39bc6daef10ec68e41ad6a9476ebfc706ff0",
@@ -295,9 +301,9 @@
           "hash": 1683379515
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 61.09,
+      "pvp_score": 50,
+      "overall_score": 55.55
     },
     {
       "key": "7fd73b93064eaad8bc6c34e7b30db8cc40f20239856520cd89ab2dd94b77890a",
@@ -311,9 +317,9 @@
           "hash": 1683379515
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 61.09,
+      "pvp_score": 50,
+      "overall_score": 55.55
     },
     {
       "key": "8ac600e688fd1695ae3b990c2ec94033146a026d41ca38837dd6396209747f76",
@@ -327,9 +333,9 @@
           "hash": 3523296417
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 71.09,
+      "pvp_score": 50,
+      "overall_score": 60.55
     },
     {
       "key": "8dbf586b5d8d93b9817cec689dc86dc93568459ccc674f4ac798c88807490a1c",
@@ -343,9 +349,9 @@
           "hash": 1683379515
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 51.09,
+      "pvp_score": 50,
+      "overall_score": 50.55
     },
     {
       "key": "9513f9224eb230186f9b7c5ce47e3be1771607c11494b68de4392e595e872e56",
@@ -359,9 +365,9 @@
           "hash": 3511092054
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 51.09,
+      "pvp_score": 50,
+      "overall_score": 50.55
     },
     {
       "key": "9944ae858ed141f5e8a0491f768950591e809a459a3dd4289060bdb643b63981",
@@ -375,9 +381,9 @@
           "hash": 957782887
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 61.09,
+      "pvp_score": 50,
+      "overall_score": 55.55
     },
     {
       "key": "9f11d5502c4e5bda69d0c00dcd55a3a2223cc9057d73ebdb73c616dc8810de93",
@@ -391,9 +397,9 @@
           "hash": 3511092054
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 61.09,
+      "pvp_score": 50,
+      "overall_score": 55.55
     },
     {
       "key": "a4da3136f1a6ed69223c3fe2a2daddf811b0e7dc585a368303788b85f0e37b36",
@@ -407,9 +413,9 @@
           "hash": 1600092898
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 51.09,
+      "pvp_score": 50,
+      "overall_score": 50.55
     },
     {
       "key": "a87a3f5e5c52a3428c155efac765eeddd57f8eb7d9c85662959c92f8925e6b3b",
@@ -423,9 +429,9 @@
           "hash": 1600092898
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 61.09,
+      "pvp_score": 50,
+      "overall_score": 55.55
     },
     {
       "key": "b0177be3368ad1e4be0bdb1ade16e6b5bad9371522bd27b63a97c9ee827b758e",
@@ -439,9 +445,9 @@
           "hash": 3523296417
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 71.09,
+      "pvp_score": 50,
+      "overall_score": 60.55
     },
     {
       "key": "b4bc68cfd8a5b6d69ae9834f54d63b54c62f4650352153fa88b8ba754bb3784a",
@@ -455,9 +461,9 @@
           "hash": 957782887
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 51.09,
+      "pvp_score": 50,
+      "overall_score": 50.55
     },
     {
       "key": "ba859f494cc5f718a7dc9105797a9a7ea6d87593f8f06cc1bf8173cc51c03505",
@@ -471,9 +477,9 @@
           "hash": 957782887
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 51.09,
+      "pvp_score": 50,
+      "overall_score": 50.55
     },
     {
       "key": "cbdd66fdd1574636df2aef14bb31ad8818f3fc0d55b56207622ca9774db11e3a",
@@ -487,9 +493,9 @@
           "hash": 3523296417
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 71.09,
+      "pvp_score": 50,
+      "overall_score": 60.55
     },
     {
       "key": "cdcc4eb7e76873941a13b7a3d7ae839babba6db92b8f3050a06a38a81894bd58",
@@ -503,9 +509,9 @@
           "hash": 957782887
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 61.09,
+      "pvp_score": 50,
+      "overall_score": 55.55
     },
     {
       "key": "d383771dbfb25fde11f8ffd817ea14a8b2c61a9a84f4385c7e70a020954f02f3",
@@ -519,9 +525,9 @@
           "hash": 1683379515
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 51.09,
+      "pvp_score": 50,
+      "overall_score": 50.55
     },
     {
       "key": "e3d8e75416c9910e13bbdea737791d637cd40227a9d85ee8e7f65cef6199c5f5",
@@ -535,9 +541,9 @@
           "hash": 3523296417
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 61.09,
+      "pvp_score": 50,
+      "overall_score": 55.55
     },
     {
       "key": "e88bc287b0502e744bf8459c6cbf9013c56a34af104b00b939ecb14c3367c19a",
@@ -551,9 +557,9 @@
           "hash": 3511092054
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 51.09,
+      "pvp_score": 50,
+      "overall_score": 50.55
     }
   ]
 }

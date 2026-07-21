@@ -9,11 +9,12 @@
   "rpm": 180,
   "icon": "/common/destiny2_content/icons/7bf3a06db6ab0f6afdf636f01ea1de81.jpg",
   "watermark": "/common/destiny2_content/icons/2c022e452f395db7b1daec1cb44631fc.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Complete this weapon's associated Vanguard quest.",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 23.24,
+  "pve_score": 21.47,
+  "pvp_score": 25,
+  "popularity_score": null,
+  "source": "Source: Complete this weapon's associated Vanguard quest.",
   "rolls": [
     {
       "key": "0874e4afef1e0ce024db00fb319421056bb7fd0270753398d2f928c7923a076c",
@@ -60,9 +66,9 @@
           "hash": 657025441
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 21.47,
+      "pvp_score": 25,
+      "overall_score": 23.24
     }
   ]
 }

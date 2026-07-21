@@ -9,11 +9,12 @@
   "rpm": 533,
   "icon": "/common/destiny2_content/icons/26236480d29663c842b175793bfdd755.jpg",
   "watermark": "/common/destiny2_content/icons/ede19a0e1a54564243b0e5e8a18bde84.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 4,
-  "source": "Source: Associated Crucible Quest",
   "columns": [
     {
       "index": 0,
@@ -49,6 +50,11 @@
       ]
     }
   ],
+  "overall_score": 41.88,
+  "pve_score": 33.76,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Associated Crucible Quest",
   "rolls": [
     {
       "key": "0ae4a13896ea4a10fbbc409f413c040a82ec3e0e10710fe2ad240d66e5e23349",
@@ -62,9 +68,9 @@
           "hash": 2551157718
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 33.76,
+      "pvp_score": 50,
+      "overall_score": 41.88
     },
     {
       "key": "503c479130fdd58a95124ca48033370818676d0e05b73fa9b47cd878ccc494f0",
@@ -78,9 +84,9 @@
           "hash": 2551157718
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 33.76,
+      "pvp_score": 50,
+      "overall_score": 41.88
     },
     {
       "key": "5363627fe16f3bfa5d80eb987158e95bc0dd97c190552a8a60af192ba5a606ec",
@@ -94,9 +100,9 @@
           "hash": 699525795
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 33.76,
+      "pvp_score": 50,
+      "overall_score": 41.88
     },
     {
       "key": "708fe43351577e77f79d73b609c8afb30a9127bea53049f91f629ec94dfa0d3b",
@@ -110,9 +116,9 @@
           "hash": 699525795
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 33.76,
+      "pvp_score": 50,
+      "overall_score": 41.88
     }
   ]
 }

@@ -9,11 +9,12 @@
   "rpm": 40,
   "icon": "/common/destiny2_content/icons/f33692242b0791440d8f66e543962c28.jpg",
   "watermark": "/common/destiny2_content/icons/aeb95eb1abe8e45e1fe2573d6b3ab3c5.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 9,
-  "source": "Source: Complete Crucible matches and earn rank-up packages from Lord Shaxx.",
   "columns": [
     {
       "index": 0,
@@ -69,6 +70,11 @@
       ]
     }
   ],
+  "overall_score": 47.01,
+  "pve_score": 44.02,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Complete Crucible matches and earn rank-up packages from Lord Shaxx.",
   "rolls": [
     {
       "key": "4cb845c494c7bd01f514ddf7adbb4c117eb8561445ad34529697d1e4f8b3d9de",
@@ -82,9 +88,9 @@
           "hash": 3913600130
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 41.52,
+      "pvp_score": 50,
+      "overall_score": 45.76
     },
     {
       "key": "695f692713b17544bfaa31035b7e68478239bfac3ed22835da3bdf3b01ceae1c",
@@ -98,9 +104,9 @@
           "hash": 354401740
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 41.52,
+      "pvp_score": 50,
+      "overall_score": 45.76
     },
     {
       "key": "861d4e96ca3a9431dd2857758337d87c48206b00bc609d42bf6ad230d4e6b898",
@@ -114,9 +120,9 @@
           "hash": 1685431615
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 44.02,
+      "pvp_score": 50,
+      "overall_score": 47.01
     },
     {
       "key": "875c01f5e21d4b341a12f6eb48a6fd271f12b8e2c8fa2710acbf34bf47695e3b",
@@ -130,9 +136,9 @@
           "hash": 3913600130
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 41.52,
+      "pvp_score": 50,
+      "overall_score": 45.76
     },
     {
       "key": "9cc55f6ffa72d178e5eb7b38bd947eaa83714aa354c3f3cf1b2b5be5b6f05a63",
@@ -146,9 +152,9 @@
           "hash": 354401740
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 44.02,
+      "pvp_score": 50,
+      "overall_score": 47.01
     },
     {
       "key": "ac858f65f8327adb85b59284e33c329dfe0013b613434c4caf30bb96bafea5f2",
@@ -162,9 +168,9 @@
           "hash": 3913600130
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 44.02,
+      "pvp_score": 50,
+      "overall_score": 47.01
     },
     {
       "key": "af255dc9c4b531b9ed4a4ce3ec23fce2af3f762b51dde5aa6c75ac3c256c888f",
@@ -178,9 +184,9 @@
           "hash": 354401740
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 41.52,
+      "pvp_score": 50,
+      "overall_score": 45.76
     },
     {
       "key": "ba4c625a210b0a473ef549d2bedb459befd966c448d20d9427171322b52ea81c",
@@ -194,9 +200,9 @@
           "hash": 1685431615
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 41.52,
+      "pvp_score": 50,
+      "overall_score": 45.76
     },
     {
       "key": "c0a51e9f9da4250e653adfdf31c4ca4bff64f9b60af651fa0eee35b3d59990d8",
@@ -210,9 +216,9 @@
           "hash": 1685431615
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 41.52,
+      "pvp_score": 50,
+      "overall_score": 45.76
     }
   ]
 }

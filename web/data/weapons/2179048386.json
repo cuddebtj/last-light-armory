@@ -9,11 +9,12 @@
   "rpm": 200,
   "icon": "/common/destiny2_content/icons/50d67833eda8bb60a81803de7d901457.jpg",
   "watermark": "/common/destiny2_content/icons/bcc26708e314306fb2fc8cb98fcbf47e.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: \"Magnum Opus\" Quest",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: \"Magnum Opus\" Quest",
   "rolls": [
     {
       "key": "131fe418759ae9ef2ca2a004a479d844a4dc9d094fcb0aee951e5245f3ff01c1",
@@ -56,9 +62,9 @@
           "hash": 2795311559
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

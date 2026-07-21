@@ -9,11 +9,12 @@
   "rpm": 140,
   "icon": "/common/destiny2_content/icons/3e81bf7f217d1f7d701d193ae6f1d6d7.jpg",
   "watermark": "/common/destiny2_content/icons/aeb95eb1abe8e45e1fe2573d6b3ab3c5.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Glory Rank of \"Fabled\" in Crucible",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 25.81,
+  "pve_score": 26.62,
+  "pvp_score": 25,
+  "popularity_score": null,
+  "source": "Source: Glory Rank of \"Fabled\" in Crucible",
   "rolls": [
     {
       "key": "e34bdf66270db0af524f93ac62233fd9c9b78991b59cb2a7fb48d3468abc797e",
@@ -60,9 +66,9 @@
           "hash": 2720533289
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 26.62,
+      "pvp_score": 25,
+      "overall_score": 25.81
     }
   ]
 }

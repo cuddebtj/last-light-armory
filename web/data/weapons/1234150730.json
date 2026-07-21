@@ -9,11 +9,12 @@
   "rpm": 491,
   "icon": "/common/destiny2_content/icons/7c997d607157b4f4c9bc5cbd273198e8.jpg",
   "watermark": "/common/destiny2_content/icons/75adde12e4e9c9fb237e492d8258eb73.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Season Pass Reward",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Season Pass Reward",
   "rolls": [
     {
       "key": "9eaeb7dccd82d14a74fa24b3098abed533191b5de070ffcc0c2a4f58949885ff",
@@ -56,9 +62,9 @@
           "hash": 1271851280
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

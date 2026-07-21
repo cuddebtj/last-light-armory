@@ -9,11 +9,12 @@
   "rpm": 533,
   "icon": "/common/destiny2_content/icons/fe16110003f0cc75145eed012458a667.jpg",
   "watermark": "/common/destiny2_content/icons/661c84a377389a3b8a1fc38b44189b41.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: \"Salvation's Edge\" Raid",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: \"Salvation's Edge\" Raid",
   "rolls": [
     {
       "key": "765f4f402ebd2348de163986a56388998348cdf2f2d1b47686d750bc09d31f63",
@@ -56,9 +62,9 @@
           "hash": 1180907940
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

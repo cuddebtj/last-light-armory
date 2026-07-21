@@ -9,11 +9,12 @@
   "rpm": 900,
   "icon": "/common/destiny2_content/icons/84ef86c66632d3c64aea5741615d8bcd.jpg",
   "watermark": "/common/destiny2_content/icons/0b212b58a961f150708bca95095e0ecb.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 4,
-  "source": "Source: Complete the \"Clean Getaway\" quest.",
   "columns": [
     {
       "index": 0,
@@ -49,6 +50,11 @@
       ]
     }
   ],
+  "overall_score": 49.49,
+  "pve_score": 50.88,
+  "pvp_score": 48.1,
+  "popularity_score": null,
+  "source": "Source: Complete the \"Clean Getaway\" quest.",
   "rolls": [
     {
       "key": "105782b88bc77e8547b5f031b4264d63564f14bd5242e84188f7ca47e1b6750b",
@@ -62,9 +68,9 @@
           "hash": 3708227201
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 40.88,
+      "pvp_score": 48.1,
+      "overall_score": 44.49
     },
     {
       "key": "10849ad6cc3d81979f31bbd68414b70a7a87bf9532a7c1b55b556aa7fea5bfda",
@@ -78,9 +84,9 @@
           "hash": 3708227201
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50.88,
+      "pvp_score": 48.1,
+      "overall_score": 49.49
     },
     {
       "key": "b6ebd482a6057d8ee9460b7abaaa1eaa641d6ab24828d64c624bad784ecc2874",
@@ -94,9 +100,9 @@
           "hash": 4082225868
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 40.88,
+      "pvp_score": 48.1,
+      "overall_score": 44.49
     },
     {
       "key": "c2bee47f43f68a23d9f1ea3e1d93ee68b713bebdcd2e82af6b35fc530cb200a0",
@@ -110,9 +116,9 @@
           "hash": 4082225868
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 30.88,
+      "pvp_score": 48.1,
+      "overall_score": 39.49
     }
   ]
 }

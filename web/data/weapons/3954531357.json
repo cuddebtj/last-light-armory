@@ -9,11 +9,12 @@
   "rpm": 900,
   "icon": "/common/destiny2_content/icons/c8922c900bce5394c4837086eb03e800.jpg",
   "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 2,
-  "source": "Source: Leviathan raid.",
   "columns": [
     {
       "index": 0,
@@ -37,6 +38,11 @@
       ]
     }
   ],
+  "overall_score": 41.99,
+  "pve_score": 35.88,
+  "pvp_score": 48.1,
+  "popularity_score": null,
+  "source": "Source: Leviathan raid.",
   "rolls": [
     {
       "key": "898a7e00be91847f495d7a2cc24bcb20a88016768693636ccdc560121cc5ba8b",
@@ -50,9 +56,9 @@
           "hash": 588594999
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 30.88,
+      "pvp_score": 48.1,
+      "overall_score": 39.49
     },
     {
       "key": "95d3af56b0c146b03cb1f7187cc65dd2138af3635161bf5a7f9bdc0f28c68cb0",
@@ -66,9 +72,9 @@
           "hash": 588594999
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 35.88,
+      "pvp_score": 48.1,
+      "overall_score": 41.99
     }
   ]
 }

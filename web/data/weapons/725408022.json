@@ -9,11 +9,12 @@
   "rpm": 15,
   "icon": "/common/destiny2_content/icons/d3d80dbad2e6dcea2d7a56dfe27fdc81.jpg",
   "watermark": "/common/destiny2_content/icons/914322d11262322c839a5388db2a4943.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 4,
-  "source": "Source: Ranks in Vanguard Strikes, Crucible, or Gambit",
   "columns": [
     {
       "index": 0,
@@ -49,6 +50,11 @@
       ]
     }
   ],
+  "overall_score": 58.24,
+  "pve_score": 66.48,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Ranks in Vanguard Strikes, Crucible, or Gambit",
   "rolls": [
     {
       "key": "4eb68331b0dc7f1b4706aad0e61ae6923d57dc727897b062ccfe816065d7fa3d",
@@ -62,9 +68,9 @@
           "hash": 3194351027
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 52.73,
+      "pvp_score": 50,
+      "overall_score": 51.36
     },
     {
       "key": "bd7512cdedd04af2205b3aa381ff7bd841da1eeb458e5fae18cc87dadff5e7de",
@@ -78,9 +84,9 @@
           "hash": 2396489472
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 66.48,
+      "pvp_score": 50,
+      "overall_score": 58.24
     },
     {
       "key": "d0c1063d1637deed503ad0e0cc181fb76c42718c4e19f09caeb951c9a6c09540",
@@ -94,9 +100,9 @@
           "hash": 3194351027
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 62.73,
+      "pvp_score": 50,
+      "overall_score": 56.36
     },
     {
       "key": "d2135b1497b704f7d09544b4b43ebfa6ed437065574f935232efd1e41f2aaaaa",
@@ -110,9 +116,9 @@
           "hash": 2396489472
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 56.48,
+      "pvp_score": 50,
+      "overall_score": 53.24
     }
   ]
 }

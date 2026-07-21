@@ -9,11 +9,12 @@
   "rpm": 140,
   "icon": "/common/destiny2_content/icons/366deccf84567372b87fd9086b1d7de6.jpg",
   "watermark": "/common/destiny2_content/icons/58d3ec8338cc9746a2e0cf901fbcec0e.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: An Exotic quest or challenge.",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 35.33,
+  "pve_score": 30.31,
+  "pvp_score": 40.36,
+  "popularity_score": null,
+  "source": "Source: An Exotic quest or challenge.",
   "rolls": [
     {
       "key": "b8ffb210b78dd88881d197d3e6d1bbdaee75e58f29d6b176c08d748724ac98c8",
@@ -56,9 +62,9 @@
           "hash": 1528281896
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 30.31,
+      "pvp_score": 40.36,
+      "overall_score": 35.33
     }
   ]
 }

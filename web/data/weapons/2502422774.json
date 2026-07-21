@@ -9,11 +9,12 @@
   "rpm": 667,
   "icon": "/common/destiny2_content/icons/bcda4b47e007d5333d9179bc55b9f17b.jpg",
   "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Complete activities and earn rank-up packages on Saturn's Moon, Titan.",
   "columns": [
     {
       "index": 0,
@@ -37,6 +38,11 @@
       ]
     }
   ],
+  "overall_score": 50.55,
+  "pve_score": 51.09,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Complete activities and earn rank-up packages on Saturn's Moon, Titan.",
   "rolls": [
     {
       "key": "51cbb121a15f392df748701fa8845433d39fb36f094ea8204c87cd61945770d9",
@@ -46,9 +52,9 @@
           "hash": 1866048759
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 51.09,
+      "pvp_score": 50,
+      "overall_score": 50.55
     }
   ]
 }

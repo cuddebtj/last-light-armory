@@ -9,11 +9,12 @@
   "rpm": 40,
   "icon": "/common/destiny2_content/icons/773b40d0f5bb8875441447d6bdab8339.jpg",
   "watermark": "/common/destiny2_content/icons/7ba9d804508dd083ec20fcdb8ba0869d.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Complete Osiris' Lost Prophecies for Brother Vance on Mercury.",
   "columns": [
     {
       "index": 0,
@@ -36,6 +37,11 @@
       ]
     }
   ],
+  "overall_score": 45.76,
+  "pve_score": 41.52,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Complete Osiris' Lost Prophecies for Brother Vance on Mercury.",
   "rolls": [
     {
       "key": "240f6604dd491e53c06c5037ecfd6c3334e13680aded14b741a93aaad9180d21",
@@ -45,9 +51,9 @@
           "hash": 1685431615
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 41.52,
+      "pvp_score": 50,
+      "overall_score": 45.76
     }
   ]
 }

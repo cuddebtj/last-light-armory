@@ -9,11 +9,12 @@
   "rpm": 15,
   "icon": "/common/destiny2_content/icons/240697b40e021ac5d9e64fbcd4dc5bbc.jpg",
   "watermark": "/common/destiny2_content/icons/da5f961ef97b78293cc498978c10e178.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Complete Nightfall strike \"Strange Terrain.\"",
   "columns": [
     {
       "index": 0,
@@ -38,6 +39,11 @@
       ]
     }
   ],
+  "overall_score": 53.84,
+  "pve_score": 57.68,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Complete Nightfall strike \"Strange Terrain.\"",
   "rolls": [
     {
       "key": "03a19d4bc2c8391a7fd9467750db6e0b05a885dd95aaf50cb1aaabac4cde3edc",
@@ -47,9 +53,9 @@
           "hash": 1275731761
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 57.68,
+      "pvp_score": 50,
+      "overall_score": 53.84
     }
   ]
 }

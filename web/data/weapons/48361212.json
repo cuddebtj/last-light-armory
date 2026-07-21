@@ -9,11 +9,12 @@
   "rpm": 300,
   "icon": "/common/destiny2_content/icons/f9a3d9d16dabde612fd553532171b39e.jpg",
   "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Earn rank-up packages from Arach Jalaal.",
   "columns": [
     {
       "index": 0,
@@ -37,6 +38,11 @@
       ]
     }
   ],
+  "overall_score": 61.61,
+  "pve_score": 52.04,
+  "pvp_score": 71.19,
+  "popularity_score": null,
+  "source": "Source: Earn rank-up packages from Arach Jalaal.",
   "rolls": [
     {
       "key": "26f5787bab18c144ee19866f1b6853d45cb284a487ad27708a0129e122432d58",
@@ -46,9 +52,9 @@
           "hash": 3425386926
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 52.04,
+      "pvp_score": 71.19,
+      "overall_score": 61.61
     }
   ]
 }

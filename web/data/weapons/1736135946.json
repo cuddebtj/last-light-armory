@@ -9,11 +9,12 @@
   "rpm": 320,
   "icon": "/common/destiny2_content/icons/238e6c3afdc31870d15231656f2d6bcb.jpg",
   "watermark": "/common/destiny2_content/icons/249813e647271a8227bae0d8a39ed505.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Rewards Pass",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Rewards Pass",
   "rolls": [
     {
       "key": "48b4ad4381373756f6dbd553ca7b0170c227f2f2713262c419f4ad1896e8fd00",
@@ -56,9 +62,9 @@
           "hash": 1899803992
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }
