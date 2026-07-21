@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import WeaponBrowser, {
   compareNullableNumber,
 } from "./WeaponBrowser";
-import { makeWeapon } from "@/test/fixtures";
+import { makeScoringConfig, makeWeapon } from "@/test/fixtures";
 import type { Perk, WeaponIndexEntry } from "@/lib/types";
 
 vi.mock("next/image", async () => {
@@ -16,7 +16,7 @@ vi.mock("next/image", async () => {
 });
 
 const perks: Perk[] = [
-  { hash: 1, name: "Explosive Payload", enhanced: false, icon: "/icons/ep.jpg", pve_score: null, pvp_score: null },
+  { hash: 1, name: "Explosive Payload", enhanced: false, icon: "/icons/ep.jpg", pve_score: 100, pvp_score: 0 },
   { hash: 2, name: "Firefly", enhanced: false, icon: "/icons/firefly.jpg", pve_score: null, pvp_score: null },
   { hash: 3, name: "Rangefinder", enhanced: false, icon: "/icons/rf.jpg", pve_score: null, pvp_score: null },
 ];
@@ -47,7 +47,16 @@ const weapons: WeaponIndexEntry[] = [
     ],
     overall_score: 91.2,
   }),
-  makeWeapon({ name: "Cartesian Coordinate", type: "Fusion Rifle", slot: "Energy", element: "Solar", tier: "Legendary", rpm: 660, ammo_type: "Special" }),
+  makeWeapon({
+    name: "Cartesian Coordinate",
+    type: "Fusion Rifle",
+    slot: "Energy",
+    element: "Solar",
+    tier: "Legendary",
+    rpm: 660,
+    ammo_type: "Special",
+    columns: [{ index: 2, perks: [1] }], // Explosive Payload — no archetype_scores match for Fusion Rifle
+  }),
   makeWeapon({
     name: "Gjallarhorn",
     type: "Rocket Launcher",
@@ -72,9 +81,22 @@ const weapons: WeaponIndexEntry[] = [
   } as unknown as Partial<WeaponIndexEntry>),
 ];
 
+const scoringConfig = makeScoringConfig({
+  // Deliberately not averaging to the neutral 50 midpoint (unlike a
+  // symmetric 80/20 pair, which would coincidentally produce the same
+  // combo score whether or not the archetype match applies at all) — see
+  // the combo-score tests below, which rely on Hand Cannon and Fusion
+  // Rifle producing genuinely different scores for the same selected perk.
+  archetype_scores: [
+    { weapon_type: "Hand Cannon", frame: "Adaptive", pve_score: 90, pvp_score: 30 },
+  ],
+});
+
 function setup() {
   const user = userEvent.setup();
-  render(<WeaponBrowser weapons={weapons} perks={perks} />);
+  render(
+    <WeaponBrowser weapons={weapons} perks={perks} scoringConfig={scoringConfig} />,
+  );
   return user;
 }
 
@@ -207,16 +229,19 @@ describe("WeaponBrowser", () => {
       screen.getByLabelText("Add a perk filter"),
       "Explosive Payload",
     );
-    // Both Fatebringer (has it) and Austringer (doesn't) share every other
-    // facet — only the perk pool tells them apart.
-    expect(await screen.findByText("1 of 6")).toBeInTheDocument();
+    // Fatebringer and Cartesian Coordinate both have it (and, sharing
+    // every other facet with Austringer, prove it's the perk pool doing
+    // the narrowing here, not some other filter).
+    expect(await screen.findByText("2 of 6")).toBeInTheDocument();
     expect(screen.getByText("Fatebringer")).toBeInTheDocument();
+    expect(screen.getByText("Cartesian Coordinate")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Explosive Payload/ })).toBeInTheDocument();
 
-    // A second perk Fatebringer also has: still 1 of 6, not 0 — this is an
-    // AND across selections, and Fatebringer satisfies both.
+    // A second perk only Fatebringer also has: narrows to just it — this
+    // is an AND across selections, not an OR.
     await user.selectOptions(screen.getByLabelText("Add a perk filter"), "Firefly");
     expect(await screen.findByText("1 of 6")).toBeInTheDocument();
+    expect(screen.getByText("Fatebringer")).toBeInTheDocument();
 
     // A perk only Austringer has, on top of the above: no weapon can roll
     // all three -> empty state.
@@ -327,6 +352,45 @@ describe("WeaponBrowser", () => {
     const desc = renderedHashOrder();
     expect(desc[0]).toBe(byName("Fatebringer"));
     expect(desc[1]).toBe(byName("Austringer"));
+  });
+
+  it("Score column reflects the combo score, not the weapon's overall_score, once perks are selected", async () => {
+    const user = setup();
+    await user.selectOptions(screen.getByLabelText("Add a perk filter"), "Explosive Payload");
+    await user.selectOptions(screen.getByLabelText("Add a perk filter"), "Firefly");
+    // Only Fatebringer has both.
+    expect(await screen.findByText("1 of 6")).toBeInTheDocument();
+    expect(
+      screen.getByText(/Score reflects the best roll containing your selected perks/),
+    ).toBeInTheDocument();
+
+    // Combo score for exactly {Explosive Payload, Firefly} on a Hand
+    // Cannon/Adaptive weapon with this fixture's archetype (90/30) and
+    // weights (0.5 blend, columns 2/3 weight 0.3 each): 55 — genuinely
+    // different from Fatebringer's own overall_score fixture value (91.2).
+    expect(screen.getByText("55")).toBeInTheDocument();
+    expect(screen.queryByText("91.2")).not.toBeInTheDocument();
+  });
+
+  it("sorts by combo score (not weapon overall_score) once perks are selected, using each weapon's own archetype match", async () => {
+    const user = setup();
+    await user.selectOptions(screen.getByLabelText("Add a perk filter"), "Explosive Payload");
+    // Fatebringer (Hand Cannon, has an archetype match) and Cartesian
+    // Coordinate (Fusion Rifle, no archetype match -> neutral base) both
+    // qualify — same selected perk, genuinely different combo scores
+    // (55 vs 50) because only one gets the archetype bonus.
+    expect(await screen.findByText("2 of 6")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Sort by Score" }));
+    const byName = (n: string) => weapons.find((w) => w.name === n)!.hash;
+    const order = renderedHashOrder();
+    expect(order[0]).toBe(byName("Cartesian Coordinate")); // 50, ascending
+    expect(order[1]).toBe(byName("Fatebringer")); // 55
+
+    await user.click(screen.getByRole("button", { name: "Score, sorted ascending" }));
+    const desc = renderedHashOrder();
+    expect(desc[0]).toBe(byName("Fatebringer")); // 55, descending
+    expect(desc[1]).toBe(byName("Cartesian Coordinate")); // 50
   });
 
   it("sorts alphabetically by type and by element", async () => {

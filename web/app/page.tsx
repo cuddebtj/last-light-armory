@@ -1,11 +1,12 @@
-import { getMeta, getPerks, getWeaponIndex } from "@/lib/data";
+import { getMeta, getPerks, getScoringConfig, getWeaponIndex } from "@/lib/data";
 import WeaponBrowser from "@/components/WeaponBrowser";
 
 export default async function Home() {
-  const [meta, weapons, perks] = await Promise.all([
+  const [meta, weapons, perks, scoringConfig] = await Promise.all([
     getMeta(),
     getWeaponIndex(),
     getPerks(),
+    getScoringConfig(),
   ]);
   const updated = new Date(meta.generated_at).toLocaleDateString("en-US", {
     year: "numeric",
@@ -25,7 +26,7 @@ export default async function Home() {
           {updated}
         </p>
       </header>
-      <WeaponBrowser weapons={weapons} perks={perks} />
+      <WeaponBrowser weapons={weapons} perks={perks} scoringConfig={scoringConfig} />
     </main>
   );
 }

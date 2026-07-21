@@ -66,3 +66,31 @@ export interface WeaponDetail extends WeaponIndexEntry {
   source?: string; // absent/empty for ~357 weapons
   rolls: Roll[]; // empty for 58 weapons
 }
+
+// scoring_config.json — the scoring formula's tunable inputs, owned and
+// exported by last-light-armory's scoring job (scoring/cmd/export-config),
+// not ingest. Lets the client compute an arbitrary perk combo's score
+// (see lib/scoring.ts) instead of only reading the weapon-level
+// overall_score already on WeaponIndexEntry.
+export interface ArchetypeScoreRow {
+  weapon_type: string;
+  frame: string; // already normalized to the sheets' vocabulary — join on weapon.type + NormalizeFrame(weapon.frame)
+  pve_score: number | null;
+  pvp_score: number | null;
+}
+
+export interface PerkSynergyRow {
+  perk_a_hash: number;
+  perk_b_hash: number;
+  pve_bonus: number;
+  pvp_bonus: number;
+}
+
+export interface ScoringConfig {
+  // Column[i] corresponds to weapon_perk.column_index i: 0=barrel,
+  // 1=magazine, 2=trait1, 3=trait2, 4=origin trait.
+  weights: [number, number, number, number, number];
+  base_blend: number;
+  archetype_scores: ArchetypeScoreRow[];
+  perk_synergies: PerkSynergyRow[]; // empty today — curation hasn't started
+}

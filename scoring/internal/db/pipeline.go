@@ -105,6 +105,43 @@ func (s *Store) PerkSynergies(ctx context.Context) (map[scoring.SynergyKey]scori
 	return out, rows.Err()
 }
 
+// PerkSynergyExport is one curated perk_synergy row resolved to Bungie
+// hashes — the join key the website's static JSON understands, unlike
+// PerkSynergies' internal perk ids (which only make sense against this
+// database's own roll_perk rows).
+type PerkSynergyExport struct {
+	PerkAHash int64
+	PerkBHash int64
+	PVEBonus  float64
+	PVPBonus  float64
+}
+
+// PerkSynergiesByHash reads every curated perk_synergy row for export to
+// the website, resolving both perk ids to their Bungie hash the same way
+// ingest's own AllWeaponPerks/AllRollPerks resolve weapon/perk ids.
+func (s *Store) PerkSynergiesByHash(ctx context.Context) ([]PerkSynergyExport, error) {
+	rows, err := s.pool.Query(ctx, `
+		SELECT pa.hash, pb.hash, ps.pve_bonus, ps.pvp_bonus
+		FROM perk_synergy ps
+		JOIN perk pa ON pa.id = ps.perk_a_id
+		JOIN perk pb ON pb.id = ps.perk_b_id
+		ORDER BY pa.hash, pb.hash`)
+	if err != nil {
+		return nil, fmt.Errorf("db: loading perk synergies by hash: %w", err)
+	}
+	defer rows.Close()
+
+	var out []PerkSynergyExport
+	for rows.Next() {
+		var e PerkSynergyExport
+		if err := rows.Scan(&e.PerkAHash, &e.PerkBHash, &e.PVEBonus, &e.PVPBonus); err != nil {
+			return nil, fmt.Errorf("db: scanning perk synergy by hash: %w", err)
+		}
+		out = append(out, e)
+	}
+	return out, rows.Err()
+}
+
 // ScoringConfig reads the singleton scoring_config row.
 func (s *Store) ScoringConfig(ctx context.Context) (weights scoring.Weights, topNVariants int, err error) {
 	err = s.pool.QueryRow(ctx, `

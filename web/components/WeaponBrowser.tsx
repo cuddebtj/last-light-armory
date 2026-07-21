@@ -5,8 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { bungieUrl } from "@/lib/bungie";
 import { toPerkMap, weaponPerkNames, dedupeByName } from "@/lib/perks";
+import { comboScore, toArchetypeMap, toSynergyMap } from "@/lib/scoring";
 import { ELEMENT_TEXT, TIER_BORDER } from "@/lib/style";
-import type { Perk, WeaponIndexEntry } from "@/lib/types";
+import type { Perk, ScoringConfig, WeaponIndexEntry } from "@/lib/types";
 
 const SLOTS = ["Kinetic", "Energy", "Power"] as const;
 const ELEMENTS = ["Kinetic", "Arc", "Solar", "Void", "Stasis", "Strand"] as const;
@@ -155,9 +156,11 @@ function ChipMultiSelect({
 export default function WeaponBrowser({
   weapons,
   perks,
+  scoringConfig,
 }: {
   weapons: WeaponIndexEntry[];
   perks: Perk[];
+  scoringConfig: ScoringConfig;
 }) {
   const [query, setQuery] = useState("");
   const [selectedTypes, setSelectedTypes] = useState<Set<string>>(new Set());
@@ -260,10 +263,60 @@ export default function WeaponBrowser({
     perkNamesByHash,
   ]);
 
-  const sorted = useMemo(
-    () => [...filtered].sort((a, b) => compareWeapons(a, b, sort.key, sort.dir)),
-    [filtered, sort],
+  const archetypeMap = useMemo(
+    () => toArchetypeMap(scoringConfig.archetype_scores),
+    [scoringConfig],
   );
+  const synergyMap = useMemo(
+    () => toSynergyMap(scoringConfig.perk_synergies),
+    [scoringConfig],
+  );
+
+  // Combo-level rank (CLAUDE.md's "ranking semantics for filtered
+  // results"): once the user has named specific perks, the Score column
+  // reflects the best roll containing *those* perks, not the weapon's
+  // overall best roll — a weapon whose god roll is exactly what the user
+  // asked for should outrank one where that combo is merely its 15th-best.
+  // Computed only over already-filtered weapons (every one is guaranteed
+  // to have all selected perks somewhere in its columns) and only when
+  // perks are actually selected — no wasted work on the common browse-
+  // without-filters path.
+  const comboScoreByHash = useMemo(() => {
+    const map = new Map<number, number>();
+    if (selectedPerkNames.size === 0) return map;
+    for (const w of filtered) {
+      const result = comboScore(
+        w,
+        selectedPerkNames,
+        perkMap,
+        archetypeMap,
+        synergyMap,
+        scoringConfig,
+      );
+      map.set(w.hash, result.overall);
+    }
+    return map;
+  }, [filtered, selectedPerkNames, perkMap, archetypeMap, synergyMap, scoringConfig]);
+
+  // comboScoreByHash is always built from this same filtered/sorted
+  // array (see its useMemo above), so a lookup for any weapon rendered or
+  // sorted here is guaranteed present whenever perks are selected.
+  const displayScore = (w: WeaponIndexEntry): number | null =>
+    selectedPerkNames.size > 0 ? comboScoreByHash.get(w.hash)! : w.overall_score;
+
+  const sorted = useMemo(() => {
+    if (sort.key === "overall_score" && selectedPerkNames.size > 0) {
+      const sign = sort.dir === "asc" ? 1 : -1;
+      return [...filtered].sort((a, b) =>
+        compareNullableNumber(
+          comboScoreByHash.get(a.hash)!,
+          comboScoreByHash.get(b.hash)!,
+          sign,
+        ),
+      );
+    }
+    return [...filtered].sort((a, b) => compareWeapons(a, b, sort.key, sort.dir));
+  }, [filtered, sort, selectedPerkNames, comboScoreByHash]);
 
   const hasFilters = Boolean(
     query ||
@@ -425,6 +478,11 @@ export default function WeaponBrowser({
             onRemove={removePerkName}
           />
         </div>
+        {selectedPerkNames.size > 0 && (
+          <p className="mt-1 text-xs text-muted">
+            Score reflects the best roll containing your selected perks.
+          </p>
+        )}
       </div>
 
       <div className="mt-2 hidden grid-cols-[3.25rem_1fr_10rem_6.5rem_4.5rem_4.5rem_4.5rem] gap-x-3 px-3 py-2 text-xs uppercase tracking-wide text-muted sm:grid">
@@ -479,7 +537,7 @@ export default function WeaponBrowser({
                 {w.rpm ?? "—"}
               </span>
               <span className="hidden text-right font-mono text-sm text-muted sm:block">
-                {w.overall_score ?? "—"}
+                {displayScore(w) ?? "—"}
               </span>
               <span className="text-right font-mono text-sm text-muted">
                 {w.roll_count.toLocaleString("en-US")}

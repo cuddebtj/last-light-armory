@@ -1,7 +1,13 @@
 import "server-only";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import type { Meta, Perk, WeaponDetail, WeaponIndexEntry } from "./types";
+import type {
+  Meta,
+  Perk,
+  ScoringConfig,
+  WeaponDetail,
+  WeaponIndexEntry,
+} from "./types";
 
 // process.cwd() is web/ both locally and on Vercel (root directory = web/).
 const DATA_DIR = path.join(process.cwd(), "data");
@@ -17,6 +23,10 @@ export function getMeta(): Promise<Meta> {
 
 export function getPerks(): Promise<Perk[]> {
   return readJson<Perk[]>("perks.json");
+}
+
+export function getScoringConfig(): Promise<ScoringConfig> {
+  return readJson<ScoringConfig>("scoring_config.json");
 }
 
 export async function getWeaponIndex(): Promise<WeaponIndexEntry[]> {

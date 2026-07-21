@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import Home from "./page";
-import { makeMeta, makeWeapon } from "@/test/fixtures";
+import { makeMeta, makeScoringConfig, makeWeapon } from "@/test/fixtures";
 
 vi.mock("next/image", async () => {
   const { createElement } = await import("react");
@@ -18,6 +18,7 @@ vi.mock("@/lib/data", () => ({
     makeWeapon({ name: "Beta Weapon" }),
   ]),
   getPerks: vi.fn(async () => []),
+  getScoringConfig: vi.fn(async () => makeScoringConfig()),
 }));
 
 describe("Home page", () => {

@@ -1,4 +1,11 @@
-import { getMeta, getPerks, getWeapon, getWeaponIndex, getWeaponOrNull } from "./data";
+import {
+  getMeta,
+  getPerks,
+  getScoringConfig,
+  getWeapon,
+  getWeaponIndex,
+  getWeaponOrNull,
+} from "./data";
 
 // These run against the real committed export in web/data/ — the loaders'
 // whole job is reading those exact files.
@@ -20,6 +27,19 @@ describe("data loaders", () => {
       enhanced: expect.any(Boolean),
       icon: expect.stringContaining("/common/destiny2_content/"),
     });
+  });
+
+  it("getScoringConfig returns the scoring formula's tunable inputs", async () => {
+    const config = await getScoringConfig();
+    expect(config.weights).toEqual([0.1, 0.1, 0.3, 0.3, 0.2]);
+    expect(config.base_blend).toBe(0.5);
+    expect(config.archetype_scores.length).toBeGreaterThan(0);
+    expect(config.perk_synergies).toEqual([]); // no curation yet, real value
+    // Same real value scoring/internal/scoring's own tests hand-verify.
+    const handCannonAdaptive = config.archetype_scores.find(
+      (a) => a.weapon_type === "Hand Cannon" && a.frame === "Adaptive",
+    );
+    expect(handCannonAdaptive).toMatchObject({ pve_score: 0.61, pvp_score: 30.72 });
   });
 
   it("getWeaponIndex returns all weapons sorted by name", async () => {
