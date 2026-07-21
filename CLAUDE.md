@@ -52,7 +52,12 @@ Two genuinely different things living in one repo:
    that touch Postgres, ever.
 2. **A scoring job** — code owned by this repo, private-network cron,
    mirroring ingest's operational shape (confirmed 2026-07-06). Never
-   deploys to Vercel.
+   deploys to Vercel. Placement re-examined and re-confirmed 2026-07-21:
+   "why is Go in the frontend repo?" — because the repo boundary is
+   facts-vs-opinions, not language. Ingest stays a pure Bungie mirror
+   (its CLAUDE.md forbids scoring logic outright); every editorial
+   number lives here with the product that renders it. This repo is the
+   product repo, not the frontend repo; web/ is the frontend.
 
 This repo implements Milestones 6–10 of the master spec.
 
