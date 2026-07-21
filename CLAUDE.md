@@ -1,6 +1,6 @@
 # last-light-armory
 
-_Last updated: 2026-07-19 — update this line whenever the file changes materially._
+_Last updated: 2026-07-20 — update this line whenever the file changes materially._
 
 ## Testing Policy (set 2026-07-18, e2e added 2026-07-19)
 
@@ -132,14 +132,51 @@ something already handled.
 
 ## The Scoring Job
 
+**Hybrid scoring (decided 2026-07-20, supersedes the pure-perk plan).** A
+roll's score is a blend of two layers, `scoring_config.base_blend` apiece:
+
+1. **Archetype-intrinsic base** (`archetype_score`, keyed on the
+   `(weapon_type, frame)` pair ingest already stores): imported from the
+   community's *measured* data — boss-DPS sheets for PvE, TTK-breakpoint
+   sheets for PvP. Full-roster reach, real numbers, and final numbers (the
+   game is in maintenance mode, so this is a one-time import, not a feed).
+2. **Perk layer**: the column-weighted perk-score average + `perk_synergy`
+   bonuses, as originally planned. Starts near-neutral (thin inference
+   from curated tier-list sheets where available, flat placeholder
+   elsewhere) and sharpens over time via curation and, later, Phase-6
+   community voting.
+
+Why: the community sheets measure archetype/frame performance, not perk
+quality — pure perk scoring would have left most of 1,057 perks on a flat
+placeholder and most rankings meaningless at launch, while the intrinsic
+data alone can't rank rolls at all (same-archetype weapons and all of a
+weapon's rolls would tie). The blend gets real, differentiated weapon
+rankings on day one from measured data, while keeping rolls rankable and
+improvable. Known limit, on record: ingest stores `rpm` but not
+range/stability/handling stats, so the base layer is archetype-granular —
+same-archetype weapons only separate through the perk layer (or votes).
+Weapons whose `(weapon_type, frame)` miss `archetype_score` (many Exotics
+have unique intrinsic names) fall back to a neutral base; per-weapon
+Exotic overrides from the boss-DPS sheet are a later refinement.
+
+Import sources (Google Sheets, shared 2026-07-20; owners credited in
+`archetype_score.source`): "Destiny 2: Quantum Damage-ics" and "Destiny 2:
+Boss Damage" (PvE DPS by archetype), "Destiny WeaponStat Chart v2.0" (PvP
+TTK by archetype), "Destiny 2: Endgame Analysis" (curated weapon/perk tier
+tables, ~8 weapon types — feeds the thin perk-layer inference). A sixth
+sheet was inaccessible (Workspace generative-AI restriction) and skipped.
+This is curated *opinion/measurement* data feeding score columns this repo
+owns — not a violation of ingest's "never scrape community sites" rule,
+which governs Bungie-sourced identity facts.
+
 **Pipeline (runs on its own cron, decoupled from export/publish — see above)**:
 read weapon/perk/roll identity data (written by ingest) plus this repo's own
-`scoring_config` / `perk_synergy` tables → compute every roll's
-PvE/PvP/overall score → compute weapon-level ranking (best single roll
-represents the weapon — confirmed, see trade-off note below) → write
-`roll.*` and `weapon_ranking.*`. Stops there — exporting and publishing are
-separate, manually-triggered steps (see Publish Flow), not chained onto this
-job.
+`scoring_config` / `archetype_score` / `perk_synergy` tables → compute every
+roll's PvE/PvP/overall score (base blended with perk layer) → compute
+weapon-level ranking (best single roll represents the weapon — confirmed,
+see trade-off note below) → write `roll.*` and `weapon_ranking.*`. Stops
+there — exporting and publishing are separate, manually-triggered steps
+(see Publish Flow), not chained onto this job.
 
 **"Best single roll" trade-off, on record**: this ranks on ceiling, not
 consistency. A weapon with one exceptional roll and an otherwise mediocre
@@ -159,9 +196,10 @@ column1_weight = 0.10   column2_weight = 0.10   column3_weight = 0.30
 column4_weight = 0.30   column5_weight = 0.20
 ```
 
-**"Weapon/frame modifiers" is still undefined** — the spec names it, doesn't
-say what it modifies or by how much. Needs a concrete rule before this job
-is written for real.
+**"Weapon/frame modifiers": resolved 2026-07-20 by the hybrid design.**
+The spec named it without defining it; `archetype_score` *is* the
+weapon/frame modifier, realized as the measured base layer rather than an
+arbitrary multiplier bolted onto perk scores. No separate mechanism needed.
 
 **Exotics and non-craftable Legendaries (confirmed 2026-07-06)**: included,
 scored on base perks as their ceiling — same `preferEnhanced()` fallback
@@ -179,9 +217,25 @@ CREATE TABLE scoring_config (
     column3_weight NUMERIC(4,3) NOT NULL DEFAULT 0.30,
     column4_weight NUMERIC(4,3) NOT NULL DEFAULT 0.30,
     column5_weight NUMERIC(4,3) NOT NULL DEFAULT 0.20,
+    base_blend     NUMERIC(4,3) NOT NULL DEFAULT 0.50,  -- archetype base's share of a roll score; perk layer gets the rest
     top_n_variants SMALLINT NOT NULL DEFAULT 15,  -- trait+origin rolls/weapon expanded into barrel/mag variants
     updated_at     TIMESTAMPTZ NOT NULL DEFAULT now(),
     CHECK (id = 1)
+);
+
+-- Measured archetype-intrinsic base scores (hybrid scoring, 2026-07-20).
+-- Keyed on the (weapon_type, frame) pair ingest already stores; imported
+-- once from the community measurement sheets; 0-100. Weapons that miss
+-- this table (many Exotics have unique intrinsic names) fall back to a
+-- neutral base at scoring time.
+CREATE TABLE archetype_score (
+    weapon_type TEXT NOT NULL,
+    frame       TEXT NOT NULL,
+    pve_score   NUMERIC(5,2),
+    pvp_score   NUMERIC(5,2),
+    source      TEXT,
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    PRIMARY KEY (weapon_type, frame)
 );
 
 -- hand-curated pairwise synergy bonuses (e.g. Rewind Rounds + Feeding Frenzy)
@@ -262,6 +316,52 @@ unbounded, and it no longer is.
   path (ingest's `000003_icons` migration)
 - Zero environment variables related to Postgres or Bungie — this half of
   the repo has no secrets to manage at all
+
+### Advanced filtering (product direction, set 2026-07-20)
+
+Target: answer loadout questions in one query — e.g. *"a Solar weapon, in
+the Energy slot, Primary ammo, that can roll Heal Clip + Incandescent,
+that's an SMG or Auto Rifle"* → the full list of qualifying weapons,
+ranked best to worst. Facets: element, slot, ammo type, weapon type
+(multi-select), frame/archetype, perks per column (1–5), champion/breaker
+capability. Current filter UI covers element/slot/type/tier only.
+
+Data gaps, with owners (do NOT build around these — fix them at the source):
+
+- **Ammo type (Primary/Special/Heavy): missing entirely.** Not in ingest's
+  schema. Slot is NOT a proxy (Energy holds primaries and specials;
+  rocket-sidearms are Special-ammo sidearms; Eriana's Vow is a
+  Special-ammo hand cannon). Bungie's manifest carries it
+  (`equippingBlock.ammoType`) — this is a Bungie identity fact, so the
+  column belongs in **ingest** (`weapon.ammo_type`), then re-ingest,
+  re-export, publish.
+- **Champion/breaker capability: two distinct sources.** Intrinsic breaker
+  types (`breakerType` on the item definition — e.g. Wish-Ender's
+  anti-barrier) are Bungie facts → **ingest**. Perk-derived champion stuns
+  (Voltshot → jolt → anti-overload; Chill Clip → slow → anti-overload/
+  unstoppable; Incandescent → scorch → ignition → anti-unstoppable) are
+  curated verb knowledge → a small curated table in **this repo's scoring
+  job**, exported alongside scores. Verify what the frozen final-state
+  artifact means for champion mods during the ingest work — don't assume.
+- **Per-weapon perk pools aren't in `index.json`** (only in detail files) —
+  perk filtering needs them client-side. Export-shape change → **ingest's
+  `cmd/export`** (a slim per-weapon list of column→perk-hashes, joined
+  client-side against `perks.json` names; ~1–1.5 MB raw, gzips fine).
+
+**Ranking semantics for filtered results** (the part worth getting right):
+when the user names specific perks, rank by the score of the best roll
+*containing those perks*, not the weapon's overall best roll — a weapon
+whose god roll is Heal Clip/Incandescent should outrank one where that
+combo is merely its 15th-best roll. Because the hybrid formula is linear
+(base_blend × archetype base + column-weighted perk scores + synergy),
+the client can compute the named combo's score directly from data already
+in the export (perk scores in `perks.json`, base + weights exported once)
+— no need to ship all 100k roll scores to the browser. v1 may launch on
+weapon-level rank; combo-level rank is the design goal and needs no extra
+export tonnage.
+
+Sequencing: scoring job first (ranked results are its output), then the
+ingest additions (ammo/breaker/export shape), then the filter UI.
 
 ## Publish Flow (implemented 2026-07-19)
 
