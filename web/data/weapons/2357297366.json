@@ -9,11 +9,12 @@
   "rpm": 90,
   "icon": "/common/destiny2_content/icons/3e4fc5bcc1dea42508124e11572367d2.jpg",
   "watermark": "/common/destiny2_content/icons/d105aa342f2d0c53a90a28477552f61f.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Exotic Archive at the Tower",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Exotic Archive at the Tower",
   "rolls": [
     {
       "key": "d3f3a717410f5a48af9772e4f18a0747223ecf03dd6a73e049a887b20a526bf4",
@@ -56,9 +62,9 @@
           "hash": 745965939
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

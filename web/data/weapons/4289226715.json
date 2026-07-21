@@ -9,11 +9,12 @@
   "rpm": null,
   "icon": "/common/destiny2_content/icons/111a10b59029fc6a9ca5e821267e6f6c.jpg",
   "watermark": "/common/destiny2_content/icons/36418dde751148bd3b95a023d491ea73.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: \"Vault of Glass\" Raid",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: \"Vault of Glass\" Raid",
   "rolls": [
     {
       "key": "f0a82f50b88527ac4addf45ba94bd57271b6c77c18cd84dde03ba398dc397b17",
@@ -56,9 +62,9 @@
           "hash": 806917387
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

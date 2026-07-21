@@ -9,11 +9,12 @@
   "rpm": 40,
   "icon": "/common/destiny2_content/icons/6428b32300cdc31155a46f22d22115ae.jpg",
   "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Complete activities and earn rank-up packages in the EDZ.",
   "columns": [
     {
       "index": 0,
@@ -36,6 +37,11 @@
       ]
     }
   ],
+  "overall_score": 45.76,
+  "pve_score": 41.52,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Complete activities and earn rank-up packages in the EDZ.",
   "rolls": [
     {
       "key": "f16fe35b3679f561d36a167c5684112d84f779fe7cbae2bf24c86f0ec100d0e0",
@@ -45,9 +51,9 @@
           "hash": 2590710093
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 41.52,
+      "pvp_score": 50,
+      "overall_score": 45.76
     }
   ]
 }

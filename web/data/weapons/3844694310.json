@@ -9,11 +9,12 @@
   "rpm": 150,
   "icon": "/common/destiny2_content/icons/f513e68c68d76392cffd52d94cc1410a.jpg",
   "watermark": "/common/destiny2_content/icons/7ba9d804508dd083ec20fcdb8ba0869d.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Exotic engrams; extremely rare world drops.",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 60,
+  "pve_score": 70,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Exotic engrams; extremely rare world drops.",
   "rolls": [
     {
       "key": "caf6bb7ed77fd71bbda4ccbb1f4bee2eada9f44dd0e00464b542b6f97d1bd084",
@@ -60,9 +66,9 @@
           "hash": 3824105627
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 70,
+      "pvp_score": 50,
+      "overall_score": 60
     }
   ]
 }

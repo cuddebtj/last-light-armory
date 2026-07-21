@@ -9,11 +9,12 @@
   "rpm": 90,
   "icon": "/common/destiny2_content/icons/588133859fa98c801d8a9d66ea6aae2f.jpg",
   "watermark": "/common/destiny2_content/icons/0b212b58a961f150708bca95095e0ecb.png",
+  "ammo_type": "Special",
+  "breaker_type": "Shield Piercing",
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Exotic Archive at the Tower",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Exotic Archive at the Tower",
   "rolls": [
     {
       "key": "fd545d5cbeded907bc18d1a1cde9db896b89d8ee89e5f6cec2b7c62b6cdd3e90",
@@ -56,9 +62,9 @@
           "hash": 1687327062
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

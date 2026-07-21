@@ -9,11 +9,12 @@
   "rpm": 80,
   "icon": "/common/destiny2_content/icons/6301bf4e6d9d9728aaf5f9bea06c6a1a.jpg",
   "watermark": "/common/destiny2_content/icons/0b441021fbc328e6d0e2abc895f5c96e.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": true,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: \"The Evidence Board\" Exotic Quest",
   "columns": [
     {
       "index": 0,
@@ -79,6 +80,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: \"The Evidence Board\" Exotic Quest",
   "rolls": [
     {
       "key": "19d2dd22c415469c71dca161f817e0a7ffb09f153caf10b6e658ee526e89c673",
@@ -88,9 +94,9 @@
           "hash": 844190854
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

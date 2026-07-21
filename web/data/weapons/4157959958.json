@@ -9,11 +9,12 @@
   "rpm": 90,
   "icon": "/common/destiny2_content/icons/4a7fb700617ae36e8f7e1e53f7000151.jpg",
   "watermark": "/common/destiny2_content/icons/aeb95eb1abe8e45e1fe2573d6b3ab3c5.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Earned while leveling.",
   "columns": [
     {
       "index": 0,
@@ -35,6 +36,11 @@
       ]
     }
   ],
+  "overall_score": 52.42,
+  "pve_score": 54.84,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Earned while leveling.",
   "rolls": [
     {
       "key": "548441fd4bf8cb26cf1ae3bee8d299887c1939521063bae5db42e6be9d722aaf",
@@ -44,9 +50,9 @@
           "hash": 957782887
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 54.84,
+      "pvp_score": 50,
+      "overall_score": 52.42
     }
   ]
 }

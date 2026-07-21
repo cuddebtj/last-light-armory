@@ -9,11 +9,12 @@
   "rpm": 150,
   "icon": "/common/destiny2_content/icons/995ce01c5a16e7794f0751e4fe1d6b50.jpg",
   "watermark": "/common/destiny2_content/icons/da5f961ef97b78293cc498978c10e178.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Complete strikes and earn rank-up packages from Commander Zavala.",
   "columns": [
     {
       "index": 0,
@@ -36,6 +37,11 @@
       ]
     }
   ],
+  "overall_score": 64.73,
+  "pve_score": 79.47,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Complete strikes and earn rank-up packages from Commander Zavala.",
   "rolls": [
     {
       "key": "3f316014cf860c56ec6df711065200e151e7aeda6b9577a5d4d7842a5a3bf97c",
@@ -45,9 +51,9 @@
           "hash": 706527188
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 79.47,
+      "pvp_score": 50,
+      "overall_score": 64.73
     }
   ]
 }

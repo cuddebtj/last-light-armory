@@ -9,11 +9,12 @@
   "rpm": 533,
   "icon": "/common/destiny2_content/icons/c95ea75fe09d9f090a88d5322923d07a.jpg",
   "watermark": "/common/destiny2_content/icons/2c022e452f395db7b1daec1cb44631fc.png",
+  "ammo_type": "Special",
+  "breaker_type": "Shield Piercing",
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Exotic engrams; extremely rare world drops.",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Exotic engrams; extremely rare world drops.",
   "rolls": [
     {
       "key": "4ccddc85010e067d0f305afb1e82143adc7da6648095c608c89b450e5ae34128",
@@ -56,9 +62,9 @@
           "hash": 1683379515
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

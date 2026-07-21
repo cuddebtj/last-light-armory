@@ -9,11 +9,12 @@
   "rpm": 40,
   "icon": "/common/destiny2_content/icons/b3e47e346a6b8b182e49116c632f123a.jpg",
   "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Complete activities and earn rank-up packages on Io.",
   "columns": [
     {
       "index": 0,
@@ -36,6 +37,11 @@
       ]
     }
   ],
+  "overall_score": 48.26,
+  "pve_score": 46.52,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Complete activities and earn rank-up packages on Io.",
   "rolls": [
     {
       "key": "d8afa954cea93ad8de4af30272b88f33c89f633f01952d10208e356cc3aee841",
@@ -45,9 +51,9 @@
           "hash": 1749209109
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 46.52,
+      "pvp_score": 50,
+      "overall_score": 48.26
     }
   ]
 }

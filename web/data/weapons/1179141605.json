@@ -9,11 +9,12 @@
   "rpm": 55,
   "icon": "/common/destiny2_content/icons/146b431dc4ea0dbb8c107319ae241487.jpg",
   "watermark": "/common/destiny2_content/icons/247715dd42abef457b52ef37280c0e42.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 4,
-  "source": "Source: \"The Lie\" Quest",
   "columns": [
     {
       "index": 0,
@@ -49,6 +50,11 @@
       ]
     }
   ],
+  "overall_score": 60,
+  "pve_score": 70,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: \"The Lie\" Quest",
   "rolls": [
     {
       "key": "11df5e652177da9a73f23fc500805277ac8c15dbf243f27667367ca1eb7aa66b",
@@ -62,9 +68,9 @@
           "hash": 1546637391
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 70,
+      "pvp_score": 50,
+      "overall_score": 60
     },
     {
       "key": "693733aa9c532a1911c07f8fcc834b60b9485554b52d481121126a5a43777c6e",
@@ -78,9 +84,9 @@
           "hash": 47981717
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 56.25,
+      "pvp_score": 50,
+      "overall_score": 53.13
     },
     {
       "key": "92d8bb320b13aae8df94c664fd570c08370cbea2d858f16e4223830f23888712",
@@ -94,9 +100,9 @@
           "hash": 1546637391
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 66.25,
+      "pvp_score": 50,
+      "overall_score": 58.13
     },
     {
       "key": "f0c153311bbe9881e48ed8cd4ef12102650cdb2da1ce59605cd46b7324fc2bc6",
@@ -110,9 +116,9 @@
           "hash": 47981717
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 60,
+      "pvp_score": 50,
+      "overall_score": 55
     }
   ]
 }

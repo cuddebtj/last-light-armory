@@ -9,11 +9,12 @@
   "rpm": 300,
   "icon": "/common/destiny2_content/icons/dccbe7cf982472e02a2d7ec56a9d6f55.jpg",
   "watermark": "/common/destiny2_content/icons/ede19a0e1a54564243b0e5e8a18bde84.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 4,
-  "source": "Source: Associated Vanguard Quest",
   "columns": [
     {
       "index": 0,
@@ -49,6 +50,11 @@
       ]
     }
   ],
+  "overall_score": 56.61,
+  "pve_score": 42.04,
+  "pvp_score": 71.19,
+  "popularity_score": null,
+  "source": "Source: Associated Vanguard Quest",
   "rolls": [
     {
       "key": "105074fb4ed5f3d2943041836e62fb9daf1469b5d5e4a214839acc6a1933d2e8",
@@ -62,9 +68,9 @@
           "hash": 4082225868
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 42.04,
+      "pvp_score": 71.19,
+      "overall_score": 56.61
     },
     {
       "key": "2680f9753d7c502e7641b3d8d5b31b3e33f4fd11bc287f749796302a6a5a200f",
@@ -78,9 +84,9 @@
           "hash": 4082225868
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 34.54,
+      "pvp_score": 71.19,
+      "overall_score": 52.86
     },
     {
       "key": "3e1917916a0ca6c2f95ff344377334beb4c793f26a3329cc62fdaddb173a1a16",
@@ -94,9 +100,9 @@
           "hash": 1774574192
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 34.54,
+      "pvp_score": 71.19,
+      "overall_score": 52.86
     },
     {
       "key": "b3e185f5c74d64c9c0589f325bfe381f8a84394190accc65ebdca34dc972277a",
@@ -110,9 +116,9 @@
           "hash": 1774574192
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 42.04,
+      "pvp_score": 71.19,
+      "overall_score": 56.61
     }
   ]
 }

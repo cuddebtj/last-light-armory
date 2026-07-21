@@ -9,11 +9,12 @@
   "rpm": 633,
   "icon": "/common/destiny2_content/icons/cc919daae4f005e9da7f2065fe8e29c4.jpg",
   "watermark": "/common/destiny2_content/icons/aeb95eb1abe8e45e1fe2573d6b3ab3c5.png",
+  "ammo_type": "Heavy",
+  "breaker_type": "Stagger",
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 2,
-  "source": "Source: Exotic engrams; extremely rare world drops.",
   "columns": [
     {
       "index": 0,
@@ -49,6 +50,11 @@
       ]
     }
   ],
+  "overall_score": 52.5,
+  "pve_score": 55,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Exotic engrams; extremely rare world drops.",
   "rolls": [
     {
       "key": "3f316014cf860c56ec6df711065200e151e7aeda6b9577a5d4d7842a5a3bf97c",
@@ -58,9 +64,9 @@
           "hash": 706527188
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 55,
+      "pvp_score": 50,
+      "overall_score": 52.5
     },
     {
       "key": "51cbb121a15f392df748701fa8845433d39fb36f094ea8204c87cd61945770d9",
@@ -70,9 +76,9 @@
           "hash": 1866048759
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

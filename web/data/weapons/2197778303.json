@@ -9,11 +9,12 @@
   "rpm": 1066,
   "icon": "/common/destiny2_content/icons/b91b241c65b5743e4ac89ba77fda551b.jpg",
   "watermark": "/common/destiny2_content/icons/e78fd9419f99464816ac8f628bc3c4af.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Monument of Triumph",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Monument of Triumph",
   "rolls": [
     {
       "key": "3dd81a39da62fdd8a39e932e37b7a06afbe21ef0529daf6870e12ab316c275ca",
@@ -56,9 +62,9 @@
           "hash": 3223187793
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

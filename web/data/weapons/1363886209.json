@@ -9,11 +9,12 @@
   "rpm": 15,
   "icon": "/common/destiny2_content/icons/b62083eed6a4708e581fc9a061bcc8e9.jpg",
   "watermark": "/common/destiny2_content/icons/bcc26708e314306fb2fc8cb98fcbf47e.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: \"And Out Fly the Wolves\" Quest",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: \"And Out Fly the Wolves\" Quest",
   "rolls": [
     {
       "key": "f25109c5f9fb5101fb51308b3042a01492387ab5eeb960206b558e236991f1c3",
@@ -56,9 +62,9 @@
           "hash": 3874977694
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

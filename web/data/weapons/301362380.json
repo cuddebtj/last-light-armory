@@ -9,11 +9,12 @@
   "rpm": 150,
   "icon": "/common/destiny2_content/icons/255c95c09ed2394c7c96dfb557a076b2.jpg",
   "watermark": "/common/destiny2_content/icons/aeb95eb1abe8e45e1fe2573d6b3ab3c5.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Complete wanted escapee bounties for the Spider.",
   "columns": [
     {
       "index": 0,
@@ -48,6 +49,11 @@
       ]
     }
   ],
+  "overall_score": 68.48,
+  "pve_score": 86.97,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Complete wanted escapee bounties for the Spider.",
   "rolls": [
     {
       "key": "3d692f2162bcda38e80cdabd2b4d30e72bac6c1cb17335842c198eed372db98d",
@@ -61,9 +67,9 @@
           "hash": 3425386926
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 86.97,
+      "pvp_score": 50,
+      "overall_score": 68.48
     }
   ]
 }

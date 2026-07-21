@@ -9,11 +9,12 @@
   "rpm": 140,
   "icon": "/common/destiny2_content/icons/4cf3ca730c2b4b5bc95a73f7282d0d3a.jpg",
   "watermark": "/common/destiny2_content/icons/da5f961ef97b78293cc498978c10e178.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Complete Iron Banner matches and earn rank-up packages from Lord Saladin.",
   "columns": [
     {
       "index": 0,
@@ -36,6 +37,11 @@
       ]
     }
   ],
+  "overall_score": 32.83,
+  "pve_score": 25.31,
+  "pvp_score": 40.36,
+  "popularity_score": null,
+  "source": "Source: Complete Iron Banner matches and earn rank-up packages from Lord Saladin.",
   "rolls": [
     {
       "key": "548441fd4bf8cb26cf1ae3bee8d299887c1939521063bae5db42e6be9d722aaf",
@@ -45,9 +51,9 @@
           "hash": 957782887
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 25.31,
+      "pvp_score": 40.36,
+      "overall_score": 32.83
     }
   ]
 }

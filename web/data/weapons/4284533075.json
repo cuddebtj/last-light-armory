@@ -9,11 +9,12 @@
   "rpm": 360,
   "icon": "/common/destiny2_content/icons/e7d4497fbdd8339eaf9da4b9151c9559.jpg",
   "watermark": "/common/destiny2_content/icons/4376a7d734583ae347acf9732aa3bb43.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Rewards Pass",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Rewards Pass",
   "rolls": [
     {
       "key": "8e58008c0b9707a466e4c60c9e225c34c0a7897ba6796e6fa8fcc75111a4cc6b",
@@ -56,9 +62,9 @@
           "hash": 2057080438
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

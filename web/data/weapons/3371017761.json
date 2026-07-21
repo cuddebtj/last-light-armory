@@ -9,11 +9,12 @@
   "rpm": 55,
   "icon": "/common/destiny2_content/icons/c9b4d65adcdfcadde871e5961ce912fb.jpg",
   "watermark": "/common/destiny2_content/icons/fc02418ad2002351a3f88faa5b14eb88.png",
+  "ammo_type": "Special",
+  "breaker_type": "Stagger",
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: \"Root of Nightmares\" Raid",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: \"Root of Nightmares\" Raid",
   "rolls": [
     {
       "key": "878ce6e70936982877362e5351e862ada6880b8e6c3482f2c9dd2cb1fb4555e5",
@@ -56,9 +62,9 @@
           "hash": 1105347996
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

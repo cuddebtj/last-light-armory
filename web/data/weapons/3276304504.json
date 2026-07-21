@@ -9,11 +9,12 @@
   "rpm": 600,
   "icon": "/common/destiny2_content/icons/fcc70cc3dc941e73d3c3787f11a23e96.jpg",
   "watermark": "/common/destiny2_content/icons/9bfaa5536772e2f3ef1252813a21c4d1.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 0,
-  "source": "Source: Earn Ranks in Vanguard, Crucible, or Gambit Playlists",
   "columns": [
     {
       "index": 0,
@@ -56,5 +57,10 @@
       ]
     }
   ],
+  "overall_score": null,
+  "pve_score": null,
+  "pvp_score": null,
+  "popularity_score": null,
+  "source": "Source: Earn Ranks in Vanguard, Crucible, or Gambit Playlists",
   "rolls": []
 }

@@ -9,11 +9,12 @@
   "rpm": 1000,
   "icon": "/common/destiny2_content/icons/8fc373a11adc417aab9a3ef4bab3bbe3.jpg",
   "watermark": "/common/destiny2_content/icons/661c84a377389a3b8a1fc38b44189b41.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Exploring the Pale Heart",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Exploring the Pale Heart",
   "rolls": [
     {
       "key": "d1be9bd41d3ec1564b69cba5d1402c7a0031d1edc968384c38bd91157a1b7f7e",
@@ -56,9 +62,9 @@
           "hash": 877533329
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

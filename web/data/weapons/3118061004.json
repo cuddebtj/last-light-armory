@@ -9,11 +9,12 @@
   "rpm": 45,
   "icon": "/common/destiny2_content/icons/fdc14f2b28c77f9627f0629fdb540b76.jpg",
   "watermark": "/common/destiny2_content/icons/fc02418ad2002351a3f88faa5b14eb88.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Strider Exotic Quest",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Strider Exotic Quest",
   "rolls": [
     {
       "key": "583aa5c93354074f6bbadb0bdc0d36d2e7a1572f378ae1f049160172878f408d",
@@ -60,9 +66,9 @@
           "hash": 3526486541
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

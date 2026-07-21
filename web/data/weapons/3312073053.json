@@ -9,11 +9,12 @@
   "rpm": 90,
   "icon": "/common/destiny2_content/icons/33f1ad0d62716355acf8e0ac9ae151f1.jpg",
   "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Complete activities and earn rank-up packages on Nessus.",
   "columns": [
     {
       "index": 0,
@@ -36,6 +37,11 @@
       ]
     }
   ],
+  "overall_score": 52.42,
+  "pve_score": 54.84,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Complete activities and earn rank-up packages on Nessus.",
   "rolls": [
     {
       "key": "91bbd232f16368096b0ecfb90513e5ce0216bacf8ad8f9159230e93bf69aa36d",
@@ -45,9 +51,9 @@
           "hash": 588594999
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 54.84,
+      "pvp_score": 50,
+      "overall_score": 52.42
     }
   ]
 }

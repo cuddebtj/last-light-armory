@@ -9,11 +9,12 @@
   "rpm": 600,
   "icon": "/common/destiny2_content/icons/b142865fe6d5459a4ccbc32de8b685ac.jpg",
   "watermark": "/common/destiny2_content/icons/7ba9d804508dd083ec20fcdb8ba0869d.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 2,
-  "source": "Source: Complete Trials tickets and earn rank-up packages from the Emissary of the Nine.",
   "columns": [
     {
       "index": 0,
@@ -37,6 +38,11 @@
       ]
     }
   ],
+  "overall_score": 47.03,
+  "pve_score": 45.96,
+  "pvp_score": 48.1,
+  "popularity_score": null,
+  "source": "Source: Complete Trials tickets and earn rank-up packages from the Emissary of the Nine.",
   "rolls": [
     {
       "key": "8cf746583feb00671ec61f65404a40eac3aa864dc9917a9ceda25a4f6202399e",
@@ -50,9 +56,9 @@
           "hash": 2010801679
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 42.84,
+      "pvp_score": 48.1,
+      "overall_score": 45.47
     },
     {
       "key": "d9cb160d72497a27c1319e196e54951451cc65e8200d249bea04c5abfe9173fc",
@@ -66,9 +72,9 @@
           "hash": 2010801679
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 45.96,
+      "pvp_score": 48.1,
+      "overall_score": 47.03
     }
   ]
 }

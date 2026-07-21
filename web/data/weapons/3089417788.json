@@ -9,11 +9,12 @@
   "rpm": 900,
   "icon": "/common/destiny2_content/icons/fbd267e600a0ae6eb1096e7d4548779d.jpg",
   "watermark": "/common/destiny2_content/icons/4f28dc0f39238fe25d298a894ea71389.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: World Quest \"Enhance!\" in the European Dead Zone.",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 53.13,
+  "pve_score": 56.25,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: World Quest \"Enhance!\" in the European Dead Zone.",
   "rolls": [
     {
       "key": "66c5c593d3d563bfac44d7106878c16f77f9636ad49fc032c5cd58c439ae3c31",
@@ -60,9 +66,9 @@
           "hash": 1015611457
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 56.25,
+      "pvp_score": 50,
+      "overall_score": 53.13
     }
   ]
 }

@@ -9,11 +9,12 @@
   "rpm": 260,
   "icon": "/common/destiny2_content/icons/106a8a40a6e55b5ec5088a26d1ed979d.jpg",
   "watermark": "/common/destiny2_content/icons/7d815c943977fe71bbf00caf1bd9c514.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: \"King's Fall\" Raid",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: \"King's Fall\" Raid",
   "rolls": [
     {
       "key": "7263765a8f98dc04130fbe34bed82f2b78c0a9b229bb91ad8aa17a5b29c7bb60",
@@ -56,9 +62,9 @@
           "hash": 2094939076
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

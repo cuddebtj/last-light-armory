@@ -9,11 +9,12 @@
   "rpm": 260,
   "icon": "/common/destiny2_content/icons/0b506106c2cc195aaad59280be3b1fcc.jpg",
   "watermark": "/common/destiny2_content/icons/ae5c7f708a36f754c2f68c65c88ab9aa.png",
+  "ammo_type": "Primary",
+  "breaker_type": "Disruption",
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Season of the Deep",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Season of the Deep",
   "rolls": [
     {
       "key": "56e9ac3ba894bc86f73ac71638ea6856f12b356d4facf340c9b6641c8082c912",
@@ -56,9 +62,9 @@
           "hash": 3782773412
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

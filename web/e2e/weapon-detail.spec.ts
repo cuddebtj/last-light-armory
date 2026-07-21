@@ -13,8 +13,11 @@ test("perk pool shows no duplicate perk names despite duplicate-hash entries", a
   await expect(perkPool.getByText("Full Bore", { exact: true })).toHaveCount(1);
 });
 
-test("renders the curated rolls table with perks and score placeholders", async ({ page }) => {
+test("renders the curated rolls table with perks and real scores", async ({ page }) => {
   // Timelines' Vertex (hash 1006783454) has exactly one recorded roll.
+  // Its scores used to be null placeholders before the scoring job
+  // (Milestones 6-10) existed; it's now scored like every other roll, so
+  // this asserts real values from the current export rather than "—".
   await page.goto("/weapons/1006783454");
   await expect(page.getByRole("heading", { name: "Rolls (1)" })).toBeVisible();
 
@@ -23,9 +26,10 @@ test("renders the curated rolls table with perks and score placeholders", async 
   await expect(table.getByRole("columnheader", { name: "PvP" })).toBeVisible();
   await expect(table.getByRole("columnheader", { name: "Overall" })).toBeVisible();
 
-  // Scores are all null until the scoring job (Milestones 6-10) exists.
   const firstDataRow = table.getByRole("row").nth(1);
-  await expect(firstDataRow.getByText("—")).toHaveCount(3);
+  await expect(firstDataRow.getByText("51.09", { exact: true })).toBeVisible();
+  await expect(firstDataRow.getByText("50", { exact: true })).toBeVisible();
+  await expect(firstDataRow.getByText("50.55", { exact: true })).toBeVisible();
 });
 
 // Traveler's Chosen has no recorded rolls in the current export — a real

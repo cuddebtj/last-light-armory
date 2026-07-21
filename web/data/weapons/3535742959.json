@@ -9,11 +9,12 @@
   "rpm": 260,
   "icon": "/common/destiny2_content/icons/c60428b6bec9379191f6a423c6333db5.jpg",
   "watermark": "/common/destiny2_content/icons/0b212b58a961f150708bca95095e0ecb.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 4,
-  "source": "Source: Complete the \"Reconnaissance by Fire\" quest.",
   "columns": [
     {
       "index": 0,
@@ -49,6 +50,11 @@
       ]
     }
   ],
+  "overall_score": 34.38,
+  "pve_score": 36.03,
+  "pvp_score": 32.74,
+  "popularity_score": null,
+  "source": "Source: Complete the \"Reconnaissance by Fire\" quest.",
   "rolls": [
     {
       "key": "01f5a40acf426da386e7dd51726959edc1599ad2bd209b067fef3121fb9c896d",
@@ -62,9 +68,9 @@
           "hash": 1015611457
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 33.53,
+      "pvp_score": 32.74,
+      "overall_score": 33.13
     },
     {
       "key": "112b4d289309c619fe7148d4081dac28a67174525d66d7603e07d10cbf9d1b2d",
@@ -78,9 +84,9 @@
           "hash": 2387244414
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 29.78,
+      "pvp_score": 32.74,
+      "overall_score": 31.26
     },
     {
       "key": "2c506803b3cb5b50871f93134acb1be14414cea428c90b10646e9cb3ca0be4de",
@@ -94,9 +100,9 @@
           "hash": 1015611457
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 36.03,
+      "pvp_score": 32.74,
+      "overall_score": 34.38
     },
     {
       "key": "497bf1a326828aa4569c9ef78dbbe7892f03fd9039c7e6fcf9b4d665a972508f",
@@ -110,9 +116,9 @@
           "hash": 2387244414
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 27.28,
+      "pvp_score": 32.74,
+      "overall_score": 30.01
     }
   ]
 }

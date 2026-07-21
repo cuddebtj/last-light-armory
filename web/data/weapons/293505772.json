@@ -9,11 +9,12 @@
   "rpm": 491,
   "icon": "/common/destiny2_content/icons/00a269571904bff3d4abb858f80461ac.jpg",
   "watermark": "/common/destiny2_content/icons/da5f961ef97b78293cc498978c10e178.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Earn rank-up packages from Lakshmi-2.",
   "columns": [
     {
       "index": 0,
@@ -37,6 +38,11 @@
       ]
     }
   ],
+  "overall_score": 51.05,
+  "pve_score": 46.27,
+  "pvp_score": 55.83,
+  "popularity_score": null,
+  "source": "Source: Earn rank-up packages from Lakshmi-2.",
   "rolls": [
     {
       "key": "7b225bf0c150a5ca7e38c520bad97b578d69fc9937535288dca48a030182e07c",
@@ -46,9 +52,9 @@
           "hash": 1015611457
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 46.27,
+      "pvp_score": 55.83,
+      "overall_score": 51.05
     }
   ]
 }

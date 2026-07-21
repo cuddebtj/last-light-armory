@@ -9,11 +9,12 @@
   "rpm": 90,
   "icon": "/common/destiny2_content/icons/840764c42e649e88b96e0e7ca4ccf1c6.jpg",
   "watermark": "/common/destiny2_content/icons/7b48b09fbb50634680168d5880b16bc9.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 4,
-  "source": "Source: Salvager's Salvo Armament Quest",
   "columns": [
     {
       "index": 0,
@@ -49,6 +50,11 @@
       ]
     }
   ],
+  "overall_score": 52.89,
+  "pve_score": 55.79,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Salvager's Salvo Armament Quest",
   "rolls": [
     {
       "key": "1f0fd6e80cf21289d1e0f7a32605ac36091a40463b5811f07255dc90dfa8d764",
@@ -62,9 +68,9 @@
           "hash": 2396489472
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 55.79,
+      "pvp_score": 50,
+      "overall_score": 52.89
     },
     {
       "key": "57444741b4cadb10b4d531af2fde988497f224a4c51e97485b1c1ce7fd00c9cf",
@@ -78,9 +84,9 @@
           "hash": 1546637391
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 55.79,
+      "pvp_score": 50,
+      "overall_score": 52.89
     },
     {
       "key": "81ceef577f9099aac3938896e6909d10a5bb43a815e095c2314bdfda08b71dbb",
@@ -94,9 +100,9 @@
           "hash": 1546637391
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 55.79,
+      "pvp_score": 50,
+      "overall_score": 52.89
     },
     {
       "key": "bd7512cdedd04af2205b3aa381ff7bd841da1eeb458e5fae18cc87dadff5e7de",
@@ -110,9 +116,9 @@
           "hash": 2396489472
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 55.79,
+      "pvp_score": 50,
+      "overall_score": 52.89
     }
   ]
 }

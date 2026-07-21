@@ -9,11 +9,12 @@
   "rpm": 180,
   "icon": "/common/destiny2_content/icons/ffb76ccca387a1ac3a1cf53b5cffad15.jpg",
   "watermark": "/common/destiny2_content/icons/da5f961ef97b78293cc498978c10e178.png",
+  "ammo_type": "Primary",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 2,
-  "source": "Source: Complete activities and earn rank-up packages on Mars.",
   "columns": [
     {
       "index": 0,
@@ -38,6 +39,11 @@
       ]
     }
   ],
+  "overall_score": 31.99,
+  "pve_score": 38.97,
+  "pvp_score": 25,
+  "popularity_score": null,
+  "source": "Source: Complete activities and earn rank-up packages on Mars.",
   "rolls": [
     {
       "key": "128fa5fb6a8539a587b4c09dfb238cf8aed034f11834bb0c83e67b60d0e3a83e",
@@ -47,9 +53,9 @@
           "hash": 47981717
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 26.47,
+      "pvp_score": 25,
+      "overall_score": 25.74
     },
     {
       "key": "7b225bf0c150a5ca7e38c520bad97b578d69fc9937535288dca48a030182e07c",
@@ -59,9 +65,9 @@
           "hash": 1015611457
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 38.97,
+      "pvp_score": 25,
+      "overall_score": 31.99
     }
   ]
 }

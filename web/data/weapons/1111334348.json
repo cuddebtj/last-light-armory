@@ -9,11 +9,12 @@
   "rpm": 49,
   "icon": "/common/destiny2_content/icons/5f3f44c8ec720f4ece9a8903ae29df60.jpg",
   "watermark": "/common/destiny2_content/icons/5232219633cc4d90570bffda36caccf4.png",
+  "ammo_type": "Special",
+  "breaker_type": null,
   "craftable": false,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 1,
-  "source": "Source: Vesper's Host",
   "columns": [
     {
       "index": 0,
@@ -47,6 +48,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": "Source: Vesper's Host",
   "rolls": [
     {
       "key": "b07079812adfcf1a1825867b0145ec2a260ece096bd6e3b4b0e018ddbc9b5f52",
@@ -56,9 +62,9 @@
           "hash": 2848175214
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }

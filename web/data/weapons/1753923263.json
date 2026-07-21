@@ -9,11 +9,12 @@
   "rpm": 40,
   "icon": "/common/destiny2_content/icons/6acdff9af5ae274c70055f816aab2389.jpg",
   "watermark": "/common/destiny2_content/icons/249813e647271a8227bae0d8a39ed505.png",
+  "ammo_type": "Heavy",
+  "breaker_type": null,
   "craftable": true,
   "enhanceable": false,
   "obtainable": true,
   "roll_count": 2,
-  "source": null,
   "columns": [
     {
       "index": 0,
@@ -66,6 +67,11 @@
       ]
     }
   ],
+  "overall_score": 50,
+  "pve_score": 50,
+  "pvp_score": 50,
+  "popularity_score": null,
+  "source": null,
   "rolls": [
     {
       "key": "1e426fb026752a88aa3df9ef147fe5786bfd9b15a3ce52fc03d75dc2eeca2724",
@@ -75,9 +81,9 @@
           "hash": 2503665585
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     },
     {
       "key": "7186e9841ef1533b2a2bb9a25b9bf9a4b72b00ba2211c449a7472bab3cc67629",
@@ -87,9 +93,9 @@
           "hash": 1166233619
         }
       ],
-      "pve_score": null,
-      "pvp_score": null,
-      "overall_score": null
+      "pve_score": 50,
+      "pvp_score": 50,
+      "overall_score": 50
     }
   ]
 }
