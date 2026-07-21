@@ -1,7 +1,10 @@
 // Command score recomputes every roll's PvE/PvP/overall score and each
 // weapon's ranking, unconditionally, every run — see CLAUDE.md: unlike
 // ingest, there's no external API to rate-limit and no expensive fetch, so
-// there's no version-check gate to skip unchanged work.
+// there's no version-check gate to skip unchanged work. It also expands
+// each weapon's top-N rolls (by scoring_config.top_n_variants) across every
+// barrel x magazine combination into roll_variant — see CLAUDE.md's
+// "prune before you expand" design.
 //
 // Usage:
 //
@@ -18,6 +21,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/cuddebtj/last-light-armory/scoring/internal/baseline"
 	"github.com/cuddebtj/last-light-armory/scoring/internal/config"
 	"github.com/cuddebtj/last-light-armory/scoring/internal/db"
 	"github.com/cuddebtj/last-light-armory/scoring/internal/scoring"
@@ -55,7 +59,7 @@ func run() int {
 	defer pool.Close()
 	store := db.NewStore(pool)
 
-	weights, _, err := store.ScoringConfig(ctx)
+	weights, topNVariants, err := store.ScoringConfig(ctx)
 	if err != nil {
 		log.Error("reading scoring config", "error", err)
 		return 1
@@ -90,6 +94,19 @@ func run() int {
 		log.Error("reading roll perks", "error", err)
 		return 1
 	}
+	barrelsAndMagazines, err := store.BarrelsAndMagazines(ctx)
+	if err != nil {
+		log.Error("reading barrel/magazine perks", "error", err)
+		return 1
+	}
+
+	// weapon.id -> its archetype base, resolved once per weapon (not once
+	// per roll) since it depends only on weapon identity.
+	archetypeBase := func(w db.WeaponRow) (pve, pvp *float64, ok bool) {
+		key := scoring.ArchetypeKey{WeaponType: w.WeaponType, Frame: scoring.NormalizeFrame(w.Frame)}
+		base, found := archetypes[key]
+		return base.PVE, base.PVP, found
+	}
 
 	// weapon_id -> its best roll's scores so far ("best single roll
 	// represents the weapon" — confirmed trade-off, see CLAUDE.md). Weapons
@@ -100,6 +117,7 @@ func run() int {
 	// stale ranking rather than being cleaned up.
 	rollUpdates := make([]db.RollScoreUpdate, 0, len(rolls))
 	bestPerWeapon := make(map[int64]db.WeaponRankingUpdate, len(weapons))
+	rollsByWeapon := make(map[int64][]scoring.RollForExpansion, len(weapons))
 	archetypeHits := 0
 
 	for _, roll := range rolls {
@@ -113,10 +131,8 @@ func run() int {
 		}
 
 		weapon := weapons[roll.WeaponID]
-		key := scoring.ArchetypeKey{WeaponType: weapon.WeaponType, Frame: scoring.NormalizeFrame(weapon.Frame)}
-		var archPVE, archPVP *float64
-		if base, ok := archetypes[key]; ok {
-			archPVE, archPVP = base.PVE, base.PVP
+		archPVE, archPVP, matched := archetypeBase(weapon)
+		if matched {
 			archetypeHits++
 		}
 
@@ -126,11 +142,47 @@ func run() int {
 		if best, ok := bestPerWeapon[roll.WeaponID]; !ok || overall > best.Overall {
 			bestPerWeapon[roll.WeaponID] = db.WeaponRankingUpdate{WeaponID: roll.WeaponID, PVE: pve, PVP: pvp, Overall: overall}
 		}
+
+		rollsByWeapon[roll.WeaponID] = append(rollsByWeapon[roll.WeaponID], scoring.RollForExpansion{
+			RollID: roll.ID, Overall: overall, Perks: perks, PerkIDs: perkIDs,
+		})
 	}
 
 	rankings := make([]db.WeaponRankingUpdate, 0, len(bestPerWeapon))
 	for _, r := range bestPerWeapon {
 		rankings = append(rankings, r)
+	}
+
+	// roll_variant: expand only each weapon's top-N scored rolls (by
+	// overall_score) across every distinct barrel x magazine combination —
+	// "prune before you expand" (see CLAUDE.md), avoiding the 1-2 billion
+	// row unpruned alternative.
+	var variantInserts []db.RollVariantInsert
+	for weaponID, weaponRolls := range rollsByWeapon {
+		weapon := weapons[weaponID]
+		archPVE, archPVP, _ := archetypeBase(weapon)
+
+		var barrelNamed, magNamed []scoring.NamedPerk
+		for _, c := range barrelsAndMagazines[weaponID] {
+			named := scoring.NamedPerk{PerkID: c.PerkID, Name: c.Name}
+			if c.ColumnIndex == 0 {
+				barrelNamed = append(barrelNamed, named)
+			} else {
+				magNamed = append(magNamed, named)
+			}
+		}
+		barrelOptions := toVariantOptions(scoring.DedupeByName(barrelNamed), perkScores)
+		magOptions := toVariantOptions(scoring.DedupeByName(magNamed), perkScores)
+
+		for _, roll := range scoring.TopNRolls(weaponRolls, topNVariants) {
+			variants := scoring.ExpandVariants(roll, barrelOptions, magOptions, synergies, archPVE, archPVP, weights)
+			for _, v := range variants {
+				variantInserts = append(variantInserts, db.RollVariantInsert{
+					RollID: v.RollID, BarrelPerkID: v.BarrelPerkID, MagazinePerkID: v.MagazinePerkID,
+					PVE: v.PVEScore, PVP: v.PVPScore, Overall: v.OverallScore,
+				})
+			}
+		}
 	}
 
 	if err := store.WriteRollScores(ctx, rollUpdates); err != nil {
@@ -141,11 +193,27 @@ func run() int {
 		log.Error("writing weapon rankings", "error", err)
 		return 1
 	}
+	if err := store.WriteRollVariants(ctx, variantInserts); err != nil {
+		log.Error("writing roll variants", "error", err)
+		return 1
+	}
 
 	log.Info("scoring complete",
 		"rolls_scored", len(rollUpdates),
 		"weapons_ranked", len(rankings),
 		"weapons_total", len(weapons),
-		"rolls_with_archetype_match", archetypeHits)
+		"rolls_with_archetype_match", archetypeHits,
+		"roll_variants_written", len(variantInserts))
 	return 0
+}
+
+// toVariantOptions resolves deduped named barrel/magazine perks to their
+// baseline pve/pvp scores, the shape scoring.ExpandVariants needs.
+func toVariantOptions(named []scoring.NamedPerk, perkScores map[int64]baseline.PerkScore) []scoring.VariantOption {
+	options := make([]scoring.VariantOption, len(named))
+	for i, n := range named {
+		sc := perkScores[n.PerkID]
+		options[i] = scoring.VariantOption{PerkID: n.PerkID, PVEScore: sc.PVE, PVPScore: sc.PVP}
+	}
+	return options
 }

@@ -1,6 +1,6 @@
 # last-light-armory
 
-_Last updated: 2026-07-20 — update this line whenever the file changes materially._
+_Last updated: 2026-07-21 — update this line whenever the file changes materially._
 
 ## Testing Policy (set 2026-07-18, e2e added 2026-07-19)
 
@@ -296,9 +296,16 @@ resolution: **prune before you expand.**
    full independent score per combination.
 4. Store the result in `roll_variant`.
 
-Real numbers: 15 × ~4 barrels × ~4 magazines × 2,208 weapons ≈ 530k rows —
-nowhere near the unpruned 1–2 billion, and comfortably within what Postgres
-and static export already handle.
+Real numbers, implemented and measured (2026-07-21): 2,168,944
+`roll_variant` rows on the live import, well above the original napkin
+estimate (~530k) because post-dedup barrel/magazine counts run higher than
+first assumed — up to 11 barrels × 13 magazines = 143 combos on some
+weapons (see "Barrel/magazine count higher than estimate" below), not the
+flat ~4×4 guessed before real data was queried. Still nowhere near the
+unpruned 1–2 billion, and comfortably within what Postgres and static
+export handle: full unconditional rebuild (`DELETE` + bulk insert, one
+transaction) completes in ~50s total alongside the rest of `cmd/score`'s
+work, confirmed idempotent (identical checksums) across reruns.
 
 **This is also the entire fix for "only legal rows, not every possible
 combo"**: `roll_variant` rows are the only thing that's ever votable. Since

@@ -379,3 +379,125 @@ func TestWriteWeaponRankings(t *testing.T) {
 		expectMet(t, mock)
 	})
 }
+
+func TestBarrelsAndMagazines(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("happy path, combined columns", func(t *testing.T) {
+		mock, store := newMock(t)
+		mock.ExpectQuery("SELECT wp.weapon_id, wp.column_index").
+			WillReturnRows(pgxmock.NewRows([]string{"weapon_id", "column_index", "perk_id", "name"}).
+				AddRow(int64(1), 0, int64(10), "Full Bore").
+				AddRow(int64(1), 1, int64(20), "Tactical Mag"))
+
+		got, err := store.BarrelsAndMagazines(ctx)
+		if err != nil {
+			t.Fatalf("got err %v", err)
+		}
+		if len(got[1]) != 2 {
+			t.Errorf("got %+v", got[1])
+		}
+		expectMet(t, mock)
+	})
+
+	t.Run("query failure surfaces wrapped", func(t *testing.T) {
+		mock, store := newMock(t)
+		mock.ExpectQuery("SELECT wp.weapon_id, wp.column_index").WillReturnError(errBoom)
+		_, err := store.BarrelsAndMagazines(ctx)
+		if err == nil || !errors.Is(err, errBoom) {
+			t.Errorf("got %v", err)
+		}
+		expectMet(t, mock)
+	})
+
+	t.Run("scan failure surfaces wrapped", func(t *testing.T) {
+		mock, store := newMock(t)
+		mock.ExpectQuery("SELECT wp.weapon_id, wp.column_index").
+			WillReturnRows(pgxmock.NewRows([]string{"weapon_id", "column_index", "perk_id", "name"}).
+				AddRow(int64(1), 0, int64(10), "Full Bore").RowError(0, errBoom))
+		_, err := store.BarrelsAndMagazines(ctx)
+		if err == nil {
+			t.Fatal("want error")
+		}
+		expectMet(t, mock)
+	})
+}
+
+func TestWriteRollVariants(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("begin error", func(t *testing.T) {
+		mock, store := newMock(t)
+		mock.ExpectBegin().WillReturnError(errBoom)
+		err := store.WriteRollVariants(ctx, []RollVariantInsert{{RollID: 1}})
+		if !errors.Is(err, errBoom) {
+			t.Errorf("got %v", err)
+		}
+		expectMet(t, mock)
+	})
+
+	t.Run("delete error rolls back", func(t *testing.T) {
+		mock, store := newMock(t)
+		mock.ExpectBegin()
+		mock.ExpectExec("DELETE FROM roll_variant").WillReturnError(errBoom)
+		mock.ExpectRollback()
+		err := store.WriteRollVariants(ctx, []RollVariantInsert{{RollID: 1}})
+		if !errors.Is(err, errBoom) {
+			t.Errorf("got %v", err)
+		}
+		expectMet(t, mock)
+	})
+
+	t.Run("empty variants still clears the table and commits", func(t *testing.T) {
+		mock, store := newMock(t)
+		mock.ExpectBegin()
+		mock.ExpectExec("DELETE FROM roll_variant").WillReturnResult(pgxmock.NewResult("DELETE", 5))
+		mock.ExpectCommit()
+		if err := store.WriteRollVariants(ctx, nil); err != nil {
+			t.Errorf("got %v, want nil", err)
+		}
+		expectMet(t, mock)
+	})
+
+	t.Run("insert error rolls back", func(t *testing.T) {
+		mock, store := newMock(t)
+		mock.ExpectBegin()
+		mock.ExpectExec("DELETE FROM roll_variant").WillReturnResult(pgxmock.NewResult("DELETE", 0))
+		mock.ExpectExec("INSERT INTO roll_variant").
+			WithArgs(pgxmock.AnyArg(), pgxmock.AnyArg(), pgxmock.AnyArg(), pgxmock.AnyArg(), pgxmock.AnyArg(), pgxmock.AnyArg()).
+			WillReturnError(errBoom)
+		mock.ExpectRollback()
+		err := store.WriteRollVariants(ctx, []RollVariantInsert{{RollID: 1, PVE: 80, PVP: 60, Overall: 70}})
+		if !errors.Is(err, errBoom) {
+			t.Errorf("got %v", err)
+		}
+		expectMet(t, mock)
+	})
+
+	t.Run("happy path commits", func(t *testing.T) {
+		mock, store := newMock(t)
+		mock.ExpectBegin()
+		mock.ExpectExec("DELETE FROM roll_variant").WillReturnResult(pgxmock.NewResult("DELETE", 0))
+		mock.ExpectExec("INSERT INTO roll_variant").
+			WithArgs(pgxmock.AnyArg(), pgxmock.AnyArg(), pgxmock.AnyArg(), pgxmock.AnyArg(), pgxmock.AnyArg(), pgxmock.AnyArg()).
+			WillReturnResult(pgxmock.NewResult("INSERT", 1))
+		mock.ExpectCommit()
+		err := store.WriteRollVariants(ctx, []RollVariantInsert{{RollID: 1, PVE: 80, PVP: 60, Overall: 70}})
+		if err != nil {
+			t.Errorf("got %v, want nil", err)
+		}
+		expectMet(t, mock)
+	})
+
+	t.Run("commit error surfaces wrapped", func(t *testing.T) {
+		mock, store := newMock(t)
+		mock.ExpectBegin()
+		mock.ExpectExec("DELETE FROM roll_variant").WillReturnResult(pgxmock.NewResult("DELETE", 0))
+		mock.ExpectCommit().WillReturnError(errBoom)
+		err := store.WriteRollVariants(ctx, nil)
+		if !errors.Is(err, errBoom) {
+			t.Errorf("got %v", err)
+		}
+		expectMet(t, mock)
+	})
+}

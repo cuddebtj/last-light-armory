@@ -255,3 +255,99 @@ func (s *Store) WriteWeaponRankings(ctx context.Context, updates []WeaponRanking
 	}
 	return nil
 }
+
+// WeaponPerkColumn is one weapon_perk row limited to the barrel/magazine
+// columns (0 and 1) — the pool roll_variant expands top-N rolls across.
+type WeaponPerkColumn struct {
+	ColumnIndex int
+	PerkID      int64
+	Name        string
+}
+
+// BarrelsAndMagazines reads every weapon's raw barrel (column_index 0) and
+// magazine (column_index 1) perk options, keyed by weapon id, columns
+// combined — callers split by ColumnIndex and dedupe by Name (see
+// scoring.DedupeByName) before expanding, since the manifest sometimes
+// defines the same perk under multiple hashes.
+func (s *Store) BarrelsAndMagazines(ctx context.Context) (map[int64][]WeaponPerkColumn, error) {
+	rows, err := s.pool.Query(ctx, `
+		SELECT wp.weapon_id, wp.column_index, wp.perk_id, p.name
+		FROM weapon_perk wp
+		JOIN perk p ON p.id = wp.perk_id
+		WHERE wp.column_index IN (0, 1)
+		ORDER BY wp.weapon_id, wp.column_index, wp.perk_id`)
+	if err != nil {
+		return nil, fmt.Errorf("db: loading barrel/magazine perks: %w", err)
+	}
+	defer rows.Close()
+
+	out := map[int64][]WeaponPerkColumn{}
+	for rows.Next() {
+		var weaponID int64
+		var c WeaponPerkColumn
+		if err := rows.Scan(&weaponID, &c.ColumnIndex, &c.PerkID, &c.Name); err != nil {
+			return nil, fmt.Errorf("db: scanning barrel/magazine perk: %w", err)
+		}
+		out[weaponID] = append(out[weaponID], c)
+	}
+	return out, rows.Err()
+}
+
+// RollVariantInsert is one scored roll_variant row, ready to write.
+type RollVariantInsert struct {
+	RollID            int64
+	BarrelPerkID      *int64
+	MagazinePerkID    *int64
+	PVE, PVP, Overall float64
+}
+
+// WriteRollVariants replaces the ENTIRE roll_variant table with a fresh
+// set, in one transaction. cmd/score always recomputes every weapon's
+// top-N rolls every run (no partial/incremental runs — see CLAUDE.md's
+// "no version-check gate" design), so roll_variant's correct end state is
+// always "exactly this run's expansion, nothing else": a roll that
+// dropped out of some weapon's top N since the last run must not leave
+// its old variants behind, which a delete scoped to only the currently-
+// selected rolls would miss. The transaction avoids a window where the
+// table is empty if the process dies between clearing and inserting.
+func (s *Store) WriteRollVariants(ctx context.Context, variants []RollVariantInsert) error {
+	tx, err := s.pool.Begin(ctx)
+	if err != nil {
+		return fmt.Errorf("db: beginning roll_variant transaction: %w", err)
+	}
+	defer tx.Rollback(ctx) //nolint:errcheck // no-op after a successful Commit
+
+	if _, err := tx.Exec(ctx, `DELETE FROM roll_variant`); err != nil {
+		return fmt.Errorf("db: clearing roll variants: %w", err)
+	}
+
+	if len(variants) > 0 {
+		ids := make([]int64, len(variants))
+		barrels := make([]*int64, len(variants))
+		mags := make([]*int64, len(variants))
+		pve := make([]float64, len(variants))
+		pvp := make([]float64, len(variants))
+		overall := make([]float64, len(variants))
+		for i, v := range variants {
+			ids[i] = v.RollID
+			barrels[i] = v.BarrelPerkID
+			mags[i] = v.MagazinePerkID
+			pve[i] = v.PVE
+			pvp[i] = v.PVP
+			overall[i] = v.Overall
+		}
+
+		_, err := tx.Exec(ctx, `
+			INSERT INTO roll_variant (roll_id, barrel_perk_id, magazine_perk_id, pve_score, pvp_score, overall_score)
+			SELECT * FROM unnest($1::bigint[], $2::bigint[], $3::bigint[], $4::numeric[], $5::numeric[], $6::numeric[])`,
+			ids, barrels, mags, pve, pvp, overall)
+		if err != nil {
+			return fmt.Errorf("db: writing roll variants: %w", err)
+		}
+	}
+
+	if err := tx.Commit(ctx); err != nil {
+		return fmt.Errorf("db: committing roll variants: %w", err)
+	}
+	return nil
+}
