@@ -34,6 +34,8 @@ describe("data loaders", () => {
       element: expect.any(String),
       tier: expect.any(String),
       roll_count: expect.any(Number),
+      ammo_type: expect.any(String), // every real weapon has one (verified 2208/2208 in ingest)
+      columns: expect.any(Array),
     });
   });
 
@@ -46,6 +48,10 @@ describe("data loaders", () => {
       column: expect.any(Number),
       hash: expect.any(Number),
     });
+    // Real values from the scoring job, same weapon hand-verified there.
+    expect(weapon.ammo_type).toBe("Special");
+    expect(weapon.breaker_type).toBeNull();
+    expect(weapon.overall_score).toBe(50.55);
   });
 
   it("getWeapon rejects for an unknown hash", async () => {

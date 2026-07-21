@@ -366,51 +366,49 @@ unbounded, and it no longer is.
 - Zero environment variables related to Postgres or Bungie — this half of
   the repo has no secrets to manage at all
 
-### Advanced filtering (product direction, set 2026-07-20)
+### Advanced filtering (product direction set 2026-07-20, v1 shipped 2026-07-21)
 
 Target: answer loadout questions in one query — e.g. *"a Solar weapon, in
 the Energy slot, Primary ammo, that can roll Heal Clip + Incandescent,
 that's an SMG or Auto Rifle"* → the full list of qualifying weapons,
-ranked best to worst. Facets: element, slot, ammo type, weapon type
-(multi-select), frame/archetype, perks per column (1–5), champion/breaker
-capability. Current filter UI covers element/slot/type/tier only.
+ranked best to worst. Verified live against the real export as an e2e
+test (`e2e/home.spec.ts`, "answers a real loadout query") — this exact
+combination genuinely matches, among others, "The Summoner."
 
-Data gaps, with owners (do NOT build around these — fix them at the source):
+**v1 facets, all shipped**: name search, element, slot, tier, ammo type,
+weapon type (multi-select, chip-based), frame (a finer facet than weapon
+type/archetype — see the note above about 140rpm vs 180rpm Hand Cannons),
+champion mod / intrinsic breaker type, and perks (multi-select by name,
+matched against a weapon's full column pool — barrels/mags included, not
+just traits, since "can this weapon roll X" is a name-level question).
+Results are sortable by a new Score column (`weapon_ranking.overall_score`,
+nulls-last) alongside the existing name/type/element/RPM/roll-count
+columns — **weapon-level rank, not combo-level**, exactly the v1 scope
+this section originally called out as sufficient (see below). Perk
+selection is an AND across every selected name, computed client-side
+against `columns` (now on every `index.json` entry, not just detail docs)
+joined against `perks.json` by hash — no new export data needed for that
+part.
 
-- **Ammo type (Primary/Special/Heavy): missing entirely.** Not in ingest's
-  schema. Slot is NOT a proxy (Energy holds primaries and specials;
-  rocket-sidearms are Special-ammo sidearms; Eriana's Vow is a
-  Special-ammo hand cannon). Bungie's manifest carries it
-  (`equippingBlock.ammoType`) — this is a Bungie identity fact, so the
-  column belongs in **ingest** (`weapon.ammo_type`), then re-ingest,
-  re-export, publish.
-- **Champion/breaker capability: two distinct sources.** Intrinsic breaker
-  types (`breakerType` on the item definition — e.g. Wish-Ender's
-  anti-barrier) are Bungie facts → **ingest**. Perk-derived champion stuns
-  (Voltshot → jolt → anti-overload; Chill Clip → slow → anti-overload/
-  unstoppable; Incandescent → scorch → ignition → anti-unstoppable) are
-  curated verb knowledge → a small curated table in **this repo's scoring
-  job**, exported alongside scores. Verify what the frozen final-state
-  artifact means for champion mods during the ingest work — don't assume.
-- **Per-weapon perk pools aren't in `index.json`** (only in detail files) —
-  perk filtering needs them client-side. Export-shape change → **ingest's
-  `cmd/export`** (a slim per-weapon list of column→perk-hashes, joined
-  client-side against `perks.json` names; ~1–1.5 MB raw, gzips fine).
+**Not done, deliberately out of scope for v1**:
+- **Combo-level ranking** ("rank by the score of the best roll *containing
+  those perks*, not the weapon's overall best roll") — still needs
+  `scoring_config`'s weights/`base_blend` and `archetype_score` exported to
+  the client, which nothing does yet. Weapon-level rank was always the
+  sanctioned v1 fallback; this is the next real increment if it's wanted.
+- **Perk-derived champion-stun mapping** (Voltshot → jolt → anti-overload,
+  etc.) — the curated table this needs was never built. The champion-mod
+  facet only covers *intrinsic* breaker type (a Bungie fact, already
+  exported), not this second, perk-driven source.
 
-**Ranking semantics for filtered results** (the part worth getting right):
-when the user names specific perks, rank by the score of the best roll
-*containing those perks*, not the weapon's overall best roll — a weapon
-whose god roll is Heal Clip/Incandescent should outrank one where that
-combo is merely its 15th-best roll. Because the hybrid formula is linear
-(base_blend × archetype base + column-weighted perk scores + synergy),
-the client can compute the named combo's score directly from data already
-in the export (perk scores in `perks.json`, base + weights exported once)
-— no need to ship all 100k roll scores to the browser. v1 may launch on
-weapon-level rank; combo-level rank is the design goal and needs no extra
-export tonnage.
-
-Sequencing: scoring job first (ranked results are its output), then the
-ingest additions (ammo/breaker/export shape), then the filter UI.
+**Three data gaps this originally listed as blockers are now closed**,
+each in its own last-light-armory-ingest PR, verified live before merge:
+`weapon.ammo_type`/`weapon.breaker_type` (migration 000004, PR #2),
+per-weapon `columns` moved onto every `index.json` entry (also PR #2),
+and `weapon_ranking` scores exported for the first time at all (PR #3 —
+discovered as a real blocker only once this section's own work started:
+nothing had ever read or exported that table before, despite "v1 may
+launch on weapon-level rank" already assuming a score existed somewhere).
 
 ## Publish Flow (implemented 2026-07-19)
 

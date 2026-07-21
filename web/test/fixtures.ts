@@ -16,10 +16,17 @@ export function makeWeapon(
     rpm: 140,
     icon: "/common/destiny2_content/icons/test-icon.jpg",
     watermark: "/common/destiny2_content/icons/test-watermark.png",
+    ammo_type: "Primary",
+    breaker_type: null,
     craftable: false,
     enhanceable: true,
     obtainable: true,
     roll_count: 36,
+    columns: [],
+    overall_score: null,
+    pve_score: null,
+    pvp_score: null,
+    popularity_score: null,
     ...overrides,
   };
 }

@@ -1,4 +1,4 @@
-import type { Perk } from "./types";
+import type { Perk, WeaponColumn } from "./types";
 
 export type PerkMap = Map<number, Perk>;
 
@@ -30,4 +30,24 @@ export function dedupeByName(perks: Perk[]): Perk[] {
     seen.add(perk.name);
     return true;
   });
+}
+
+// The set of perk names a weapon can roll, across every column (barrel and
+// magazine included, not just traits) — "can this weapon roll X" is a
+// name-level question, matching dedupeByName's own rationale. A hash
+// missing from perkMap is skipped rather than thrown on: the filter UI
+// should degrade gracefully on a data mismatch, unlike resolvePerk's
+// stricter contract for actually rendering a perk.
+export function weaponPerkNames(
+  columns: WeaponColumn[],
+  perkMap: PerkMap,
+): Set<string> {
+  const names = new Set<string>();
+  for (const column of columns) {
+    for (const hash of column.perks) {
+      const perk = perkMap.get(hash);
+      if (perk) names.add(perk.name);
+    }
+  }
+  return names;
 }
