@@ -1,8 +1,10 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import WeaponBrowser from "./WeaponBrowser";
+import WeaponBrowser, {
+  compareNullableNumber,
+} from "./WeaponBrowser";
 import { makeWeapon } from "@/test/fixtures";
-import type { WeaponIndexEntry } from "@/lib/types";
+import type { Perk, WeaponIndexEntry } from "@/lib/types";
 
 vi.mock("next/image", async () => {
   const { createElement } = await import("react");
@@ -13,12 +15,52 @@ vi.mock("next/image", async () => {
   };
 });
 
+const perks: Perk[] = [
+  { hash: 1, name: "Explosive Payload", enhanced: false, icon: "/icons/ep.jpg", pve_score: null, pvp_score: null },
+  { hash: 2, name: "Firefly", enhanced: false, icon: "/icons/firefly.jpg", pve_score: null, pvp_score: null },
+  { hash: 3, name: "Rangefinder", enhanced: false, icon: "/icons/rf.jpg", pve_score: null, pvp_score: null },
+];
+
 const weapons: WeaponIndexEntry[] = [
-  makeWeapon({ name: "Austringer", type: "Hand Cannon", slot: "Kinetic", element: "Kinetic", tier: "Legendary", rpm: 140 }),
-  makeWeapon({ name: "Fatebringer", type: "Hand Cannon", slot: "Kinetic", element: "Arc", tier: "Legendary", rpm: 140 }),
-  makeWeapon({ name: "Cartesian Coordinate", type: "Fusion Rifle", slot: "Energy", element: "Solar", tier: "Legendary", rpm: 660 }),
-  makeWeapon({ name: "Gjallarhorn", type: "Rocket Launcher", slot: "Power", element: "Solar", tier: "Exotic", rpm: 15, roll_count: 1 }),
-  makeWeapon({ name: "Falling Guillotine", type: "Sword", slot: "Power", element: "Void", tier: "Legendary", rpm: null }),
+  makeWeapon({
+    name: "Austringer",
+    type: "Hand Cannon",
+    slot: "Kinetic",
+    element: "Kinetic",
+    tier: "Legendary",
+    rpm: 140,
+    ammo_type: "Primary",
+    columns: [{ index: 2, perks: [3] }], // Rangefinder
+    overall_score: 75.5,
+  }),
+  makeWeapon({
+    name: "Fatebringer",
+    type: "Hand Cannon",
+    slot: "Kinetic",
+    element: "Arc",
+    tier: "Legendary",
+    rpm: 140,
+    ammo_type: "Primary",
+    columns: [
+      { index: 2, perks: [1] }, // Explosive Payload
+      { index: 3, perks: [2] }, // Firefly
+    ],
+    overall_score: 91.2,
+  }),
+  makeWeapon({ name: "Cartesian Coordinate", type: "Fusion Rifle", slot: "Energy", element: "Solar", tier: "Legendary", rpm: 660, ammo_type: "Special" }),
+  makeWeapon({
+    name: "Gjallarhorn",
+    type: "Rocket Launcher",
+    slot: "Power",
+    element: "Solar",
+    tier: "Exotic",
+    rpm: 15,
+    roll_count: 1,
+    ammo_type: "Heavy",
+    breaker_type: "Shield Piercing",
+    frame: "Wolfpack Rounds",
+  }),
+  makeWeapon({ name: "Falling Guillotine", type: "Sword", slot: "Power", element: "Void", tier: "Legendary", rpm: null, ammo_type: "Special" }),
   // Unknown element/tier exercise the styling fallbacks; a second null rpm
   // (alongside Falling Guillotine's) exercises the both-null tie branch.
   makeWeapon({
@@ -32,7 +74,7 @@ const weapons: WeaponIndexEntry[] = [
 
 function setup() {
   const user = userEvent.setup();
-  render(<WeaponBrowser weapons={weapons} />);
+  render(<WeaponBrowser weapons={weapons} perks={perks} />);
   return user;
 }
 
@@ -44,8 +86,18 @@ function renderedHashOrder(): number[] {
     .map((href) => Number(href.replace("/weapons/", "")));
 }
 
+describe("compareNullableNumber", () => {
+  it("covers every null combination directly, since Array.sort's own comparison pattern isn't guaranteed to exercise all four", () => {
+    expect(compareNullableNumber(null, null, 1)).toBe(0);
+    expect(compareNullableNumber(null, 5, 1)).toBe(1); // a null -> sorts after
+    expect(compareNullableNumber(5, null, 1)).toBe(-1); // b null -> sorts after
+    expect(compareNullableNumber(10, 5, 1)).toBe(5); // ascending
+    expect(compareNullableNumber(10, 5, -1)).toBe(-5); // descending
+  });
+});
+
 describe("WeaponBrowser", () => {
-  it("renders every weapon with count, icons, frame, rpm, and roll count", () => {
+  it("renders every weapon with count, icons, frame, rpm, score, and roll count", () => {
     setup();
     expect(screen.getByText("6 of 6")).toBeInTheDocument();
     expect(screen.getByText("Austringer")).toBeInTheDocument();
@@ -57,8 +109,11 @@ describe("WeaponBrowser", () => {
       "https://www.bungie.net/common/destiny2_content/icons/test-icon.jpg",
     );
     expect(screen.getAllByText("Adaptive Frame").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("—")).toHaveLength(2); // two null-rpm weapons
+    // Two null-rpm weapons plus four null-overall_score weapons ("—" is
+    // shared by both columns).
+    expect(screen.getAllByText("—").length).toBe(6);
     expect(screen.getByText("660")).toBeInTheDocument();
+    expect(screen.getByText("91.2")).toBeInTheDocument();
   });
 
   it("derives the type filter options from the data, sorted", () => {
@@ -67,7 +122,7 @@ describe("WeaponBrowser", () => {
       .getByLabelText("Weapon type")
       .querySelectorAll("option");
     expect([...options].map((o) => o.textContent)).toEqual([
-      "All types",
+      "Add weapon type…",
       "Fusion Rifle",
       "Glaive",
       "Hand Cannon",
@@ -121,6 +176,91 @@ describe("WeaponBrowser", () => {
     expect(screen.getByText("Gjallarhorn")).toBeInTheDocument();
   });
 
+  it("filters by frame, a finer facet than weapon type", async () => {
+    const user = setup();
+    await user.selectOptions(screen.getByLabelText("Frame"), "Wolfpack Rounds");
+    expect(await screen.findByText("1 of 6")).toBeInTheDocument();
+    expect(screen.getByText("Gjallarhorn")).toBeInTheDocument();
+  });
+
+  it("filters by ammo type — slot is not a valid proxy", async () => {
+    const user = setup();
+    await user.selectOptions(screen.getByLabelText("Ammo type"), "Special");
+    expect(await screen.findByText("2 of 6")).toBeInTheDocument();
+    expect(screen.getByText("Cartesian Coordinate")).toBeInTheDocument();
+    expect(screen.getByText("Falling Guillotine")).toBeInTheDocument();
+  });
+
+  it("filters by champion mod (intrinsic breaker type)", async () => {
+    const user = setup();
+    await user.selectOptions(
+      screen.getByLabelText("Champion mod"),
+      "Shield Piercing",
+    );
+    expect(await screen.findByText("1 of 6")).toBeInTheDocument();
+    expect(screen.getByText("Gjallarhorn")).toBeInTheDocument();
+  });
+
+  it("filters to weapons that can roll a chosen perk, narrowing further as more are added", async () => {
+    const user = setup();
+    await user.selectOptions(
+      screen.getByLabelText("Add a perk filter"),
+      "Explosive Payload",
+    );
+    // Both Fatebringer (has it) and Austringer (doesn't) share every other
+    // facet — only the perk pool tells them apart.
+    expect(await screen.findByText("1 of 6")).toBeInTheDocument();
+    expect(screen.getByText("Fatebringer")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Explosive Payload/ })).toBeInTheDocument();
+
+    // A second perk Fatebringer also has: still 1 of 6, not 0 — this is an
+    // AND across selections, and Fatebringer satisfies both.
+    await user.selectOptions(screen.getByLabelText("Add a perk filter"), "Firefly");
+    expect(await screen.findByText("1 of 6")).toBeInTheDocument();
+
+    // A perk only Austringer has, on top of the above: no weapon can roll
+    // all three -> empty state.
+    await user.selectOptions(screen.getByLabelText("Add a perk filter"), "Rangefinder");
+    expect(await screen.findByText("0 of 6")).toBeInTheDocument();
+
+    // Removing the contradictory chip restores the match.
+    await user.click(screen.getByRole("button", { name: /Rangefinder/ }));
+    expect(await screen.findByText("1 of 6")).toBeInTheDocument();
+  });
+
+  it("already-selected types and perks are not offered again in their own add-select", async () => {
+    const user = setup();
+    await user.selectOptions(screen.getByLabelText("Weapon type"), "Hand Cannon");
+    const typeOptions = screen
+      .getByLabelText("Weapon type")
+      .querySelectorAll("option");
+    expect([...typeOptions].map((o) => o.textContent)).not.toContain(
+      "Hand Cannon",
+    );
+  });
+
+  it("removes a selected weapon type via its chip", async () => {
+    const user = setup();
+    await user.selectOptions(screen.getByLabelText("Weapon type"), "Hand Cannon");
+    await user.selectOptions(screen.getByLabelText("Weapon type"), "Sword");
+    expect(await screen.findByText("3 of 6")).toBeInTheDocument(); // 2 Hand Cannons + 1 Sword
+
+    await user.click(screen.getByRole("button", { name: /Sword/ }));
+    expect(await screen.findByText("2 of 6")).toBeInTheDocument(); // Sword chip removed
+  });
+
+  it("narrows the perk add-select's options as the perk search box is typed into", async () => {
+    const user = setup();
+    await user.type(screen.getByPlaceholderText("Search perks…"), "fire");
+    const options = screen
+      .getByLabelText("Add a perk filter")
+      .querySelectorAll("option");
+    expect([...options].map((o) => o.textContent)).toEqual([
+      "Add perk…",
+      "Firefly",
+    ]);
+  });
+
   it("links each row to its weapon detail page", () => {
     setup();
     expect(screen.getByRole("link", { name: /Austringer/ })).toHaveAttribute(
@@ -171,6 +311,24 @@ describe("WeaponBrowser", () => {
     expect(renderedHashOrder()[0]).toBe(byName("Gjallarhorn"));
   });
 
+  it("sorts numerically by Score (weapon-level rank) with nulls last", async () => {
+    const user = setup();
+    const byName = (n: string) => weapons.find((w) => w.name === n)!.hash;
+
+    await user.click(screen.getByRole("button", { name: "Sort by Score" }));
+    // Ascending: lowest real score first (Austringer 75.5, then Fatebringer
+    // 91.2), the four null-score weapons trail in original order.
+    const order = renderedHashOrder();
+    expect(order[0]).toBe(byName("Austringer"));
+    expect(order[1]).toBe(byName("Fatebringer"));
+
+    await user.click(screen.getByRole("button", { name: "Score, sorted ascending" }));
+    // Descending: highest real score first, nulls still last.
+    const desc = renderedHashOrder();
+    expect(desc[0]).toBe(byName("Fatebringer"));
+    expect(desc[1]).toBe(byName("Austringer"));
+  });
+
   it("sorts alphabetically by type and by element", async () => {
     const user = setup();
 
@@ -198,18 +356,25 @@ describe("WeaponBrowser", () => {
     ).toBeInTheDocument();
   });
 
-  it("shows Reset only when filters are active, and clears everything", async () => {
+  it("shows Reset only when filters are active, and clears everything including perks", async () => {
     const user = setup();
     expect(screen.queryByRole("button", { name: "Reset" })).not.toBeInTheDocument();
 
     await user.type(screen.getByPlaceholderText("Search weapons…"), "zzzz");
     expect(await screen.findByText("0 of 6")).toBeInTheDocument();
     await user.selectOptions(screen.getByLabelText("Slot"), "Energy");
+    await user.selectOptions(
+      screen.getByLabelText("Add a perk filter"),
+      "Firefly",
+    );
 
     await user.click(screen.getByRole("button", { name: "Reset" }));
     expect(await screen.findByText("6 of 6")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Search weapons…")).toHaveValue("");
     expect(screen.getByLabelText("Slot")).toHaveValue("");
+    expect(
+      screen.queryByRole("button", { name: /Firefly/ }),
+    ).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Reset" })).not.toBeInTheDocument();
   });
 });

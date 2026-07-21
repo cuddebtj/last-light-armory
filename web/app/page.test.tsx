@@ -17,6 +17,7 @@ vi.mock("@/lib/data", () => ({
     makeWeapon({ name: "Alpha Weapon" }),
     makeWeapon({ name: "Beta Weapon" }),
   ]),
+  getPerks: vi.fn(async () => []),
 }));
 
 describe("Home page", () => {

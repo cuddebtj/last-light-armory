@@ -66,6 +66,27 @@ test.describe("home page", () => {
     await expect(firstRowName()).toHaveText("Leviathan's Breath");
   });
 
+  test("answers a real loadout query: Solar, Energy, Primary ammo, Heal Clip + Incandescent, Auto Rifle or SMG", async ({ page }) => {
+    // The exact target query CLAUDE.md's advanced-filtering direction
+    // describes, run against the real committed export (not a fixture) —
+    // "The Summoner" is a genuine, well-known match for this combination.
+    await page.goto("/");
+    await page.getByLabel("Element", { exact: true }).selectOption("Solar");
+    await page.getByLabel("Slot", { exact: true }).selectOption("Energy");
+    await page.getByLabel("Ammo type", { exact: true }).selectOption("Primary");
+    await page.getByLabel("Weapon type", { exact: true }).selectOption("Auto Rifle");
+    await page.getByLabel("Weapon type", { exact: true }).selectOption("Submachine Gun");
+    await page.getByLabel("Add a perk filter", { exact: true }).selectOption("Heal Clip");
+    await page.getByLabel("Add a perk filter", { exact: true }).selectOption("Incandescent");
+
+    const count = await page.getByText(COUNT).textContent();
+    expect(count).not.toMatch(/^0 of/);
+    await expect(page.getByRole("link", { name: /The Summoner/i }).first()).toBeVisible();
+    // Fatebringer is a Kinetic-slot Hand Cannon — none of this query's
+    // facets match it.
+    await expect(page.getByRole("link", { name: /Fatebringer/i })).toHaveCount(0);
+  });
+
   test("renders correctly on a mobile viewport", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/");
