@@ -32,6 +32,9 @@ export function normalizeFrame(dbFrame: string): string {
   return f;
 }
 
+// Keyed by "weaponType|normalizedFrame" — build via toArchetypeMap, look up
+// via archetypeMapKey (normalize the weapon's own frame with normalizeFrame
+// first). Either side is null when that half has no measured data.
 export type ArchetypeMap = Map<string, { pve: number | null; pvp: number | null }>;
 
 function archetypeMapKey(weaponType: string, normalizedFrame: string): string {
@@ -46,6 +49,9 @@ export function toArchetypeMap(rows: ArchetypeScoreRow[]): ArchetypeMap {
   return map;
 }
 
+// Keyed order-independently (lower hash first) — build via toSynergyMap,
+// look up via synergyContribution. Empty today; perk_synergies has no
+// curated rows yet.
 export type SynergyMap = Map<string, { pve: number; pvp: number }>;
 
 function synergyMapKey(a: number, b: number): string {
@@ -60,6 +66,8 @@ export function toSynergyMap(rows: PerkSynergyRow[]): SynergyMap {
   return map;
 }
 
+// One perk's contribution to rollPerkScore's weighted average — which
+// column it's in (indexes weights) and its own 0-100 pve/pvp scores.
 export interface PerkContribution {
   columnIndex: number;
   pve: number;
@@ -124,6 +132,9 @@ export function overallScore(pve: number, pvp: number): number {
   return (pve + pvp) / 2;
 }
 
+// A fully-computed score: overall is always (pve + pvp) / 2, computed
+// from these two full-precision values, not from any already-rounded
+// display value.
 export interface RollScoreResult {
   pve: number;
   pvp: number;

@@ -44,6 +44,8 @@ export function compareNullableNumber(
   return sign * (a - b);
 }
 
+// Exported (alongside compareNullableNumber above) so both are directly
+// unit-testable without going through the full component/DOM.
 export function compareWeapons(
   a: WeaponIndexEntry,
   b: WeaponIndexEntry,
@@ -153,6 +155,13 @@ function ChipMultiSelect({
   );
 }
 
+// The whole weapon index page: search, every facet filter, sortable
+// columns, and combo-level ranking once perks are selected. weapons/perks
+// are ingest's export (see docs/DATA_SCHEMA.md); scoringConfig is
+// scoring's (weights/base_blend/archetype/synergy data — see
+// lib/scoring.ts). All filtering/sorting/scoring happens client-side over
+// data already fully loaded server-side; there's no pagination or
+// server round-trip as the user interacts with the filters.
 export default function WeaponBrowser({
   weapons,
   perks,

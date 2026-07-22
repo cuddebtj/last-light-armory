@@ -1,6 +1,8 @@
 // Shapes produced by last-light-armory-ingest's cmd/export. This app only
-// ever reads the committed JSON in web/data/ — never a database.
+// ever reads the committed JSON in web/data/ — never a database. Full
+// field-by-field reference, with real examples: ../../docs/DATA_SCHEMA.md.
 
+// meta.json
 export interface Meta {
   manifest_version: string;
   generated_at: string;
@@ -9,6 +11,7 @@ export interface Meta {
   roll_count: number;
 }
 
+// One perks.json entry.
 export interface Perk {
   hash: number;
   name: string;
@@ -18,6 +21,8 @@ export interface Perk {
   pvp_score: number | null;
 }
 
+// One weapons/index.json entry. WeaponDetail below is a strict superset —
+// this is also the base shape of every weapons/<hash>.json document.
 export interface WeaponIndexEntry {
   hash: number;
   name: string;
@@ -62,6 +67,7 @@ export interface Roll {
   overall_score: number | null;
 }
 
+// One weapons/<hash>.json document.
 export interface WeaponDetail extends WeaponIndexEntry {
   source?: string; // absent/empty for ~357 weapons
   rolls: Roll[]; // empty for 58 weapons
