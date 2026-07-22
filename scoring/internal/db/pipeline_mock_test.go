@@ -186,6 +186,59 @@ func TestPerkSynergies(t *testing.T) {
 	})
 }
 
+func TestPerkSynergiesByHash(t *testing.T) {
+	ctx := context.Background()
+
+	t.Run("happy path", func(t *testing.T) {
+		mock, store := newMock(t)
+		mock.ExpectQuery("SELECT pa.hash, pb.hash").
+			WillReturnRows(pgxmock.NewRows([]string{"a_hash", "b_hash", "pve", "pvp"}).
+				AddRow(int64(100), int64(200), 5.0, 2.0))
+
+		got, err := store.PerkSynergiesByHash(ctx)
+		if err != nil {
+			t.Fatalf("got err %v", err)
+		}
+		if len(got) != 1 || got[0] != (PerkSynergyExport{PerkAHash: 100, PerkBHash: 200, PVEBonus: 5, PVPBonus: 2}) {
+			t.Errorf("got %+v", got)
+		}
+		expectMet(t, mock)
+	})
+
+	t.Run("empty result is nil, not an error", func(t *testing.T) {
+		mock, store := newMock(t)
+		mock.ExpectQuery("SELECT pa.hash, pb.hash").
+			WillReturnRows(pgxmock.NewRows([]string{"a_hash", "b_hash", "pve", "pvp"}))
+		got, err := store.PerkSynergiesByHash(ctx)
+		if err != nil || got != nil {
+			t.Errorf("got %+v, %v", got, err)
+		}
+		expectMet(t, mock)
+	})
+
+	t.Run("query failure surfaces wrapped", func(t *testing.T) {
+		mock, store := newMock(t)
+		mock.ExpectQuery("SELECT pa.hash, pb.hash").WillReturnError(errBoom)
+		_, err := store.PerkSynergiesByHash(ctx)
+		if err == nil || !errors.Is(err, errBoom) {
+			t.Errorf("got %v", err)
+		}
+		expectMet(t, mock)
+	})
+
+	t.Run("scan failure surfaces wrapped", func(t *testing.T) {
+		mock, store := newMock(t)
+		mock.ExpectQuery("SELECT pa.hash, pb.hash").
+			WillReturnRows(pgxmock.NewRows([]string{"a_hash", "b_hash", "pve", "pvp"}).
+				AddRow(int64(100), int64(200), 5.0, 2.0).RowError(0, errBoom))
+		_, err := store.PerkSynergiesByHash(ctx)
+		if err == nil {
+			t.Fatal("want error")
+		}
+		expectMet(t, mock)
+	})
+}
+
 func TestScoringConfig(t *testing.T) {
 	ctx := context.Background()
 

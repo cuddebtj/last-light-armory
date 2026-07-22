@@ -366,7 +366,7 @@ unbounded, and it no longer is.
 - Zero environment variables related to Postgres or Bungie — this half of
   the repo has no secrets to manage at all
 
-### Advanced filtering (product direction set 2026-07-20, v1 shipped 2026-07-21)
+### Advanced filtering (product direction set 2026-07-20, v1 shipped 2026-07-21, combo-level ranking shipped 2026-07-21)
 
 Target: answer loadout questions in one query — e.g. *"a Solar weapon, in
 the Energy slot, Primary ammo, that can roll Heal Clip + Incandescent,
@@ -390,16 +390,45 @@ against `columns` (now on every `index.json` entry, not just detail docs)
 joined against `perks.json` by hash — no new export data needed for that
 part.
 
-**Not done, deliberately out of scope for v1**:
-- **Combo-level ranking** ("rank by the score of the best roll *containing
-  those perks*, not the weapon's overall best roll") — still needs
-  `scoring_config`'s weights/`base_blend` and `archetype_score` exported to
-  the client, which nothing does yet. Weapon-level rank was always the
-  sanctioned v1 fallback; this is the next real increment if it's wanted.
-- **Perk-derived champion-stun mapping** (Voltshot → jolt → anti-overload,
-  etc.) — the curated table this needs was never built. The champion-mod
-  facet only covers *intrinsic* breaker type (a Bungie fact, already
-  exported), not this second, perk-driven source.
+**Combo-level ranking, shipped 2026-07-21.** The Score column now reflects
+the best roll containing the user's *selected* perks, not the weapon's
+overall best roll, whenever any perk filter is active — falls back to
+weapon-level `overall_score` when none is selected (unchanged v1
+behavior). Needed two new pieces of data, both owned and exported by
+*this repo's scoring job*, not ingest: `scoring/cmd/export-config` (new)
+reads `scoring_config` (weights, `base_blend`) and `archetype_score` via
+`Store` methods `cmd/score` already had, plus a new `PerkSynergiesByHash`
+(the existing `PerkSynergies` keys by internal perk id, meaningless to a
+client that only knows Bungie hashes) — written to a new
+`scoring_config.json`, wired into `publish.sh` as a second export step
+alongside ingest's own. `web/lib/scoring.ts` is a deliberately faithful
+line-for-line port of `scoring/internal/scoring/formula.go` +
+`frame.go`, verified directly against that Go code's own already-hand-
+verified Fatebringer values.
+
+**A real discovery changed the algorithm mid-implementation**: the
+original plan ceiling-filled trait/origin columns the user didn't name a
+perk for (to simulate "the best full roll containing the selection").
+Building the Fatebringer parity test caught why that's wrong: Fatebringer
+predates Origin Traits, so its 5th WEAPON PERKS slot holds "Crucible
+Tracker"/"Kill Tracker" — cosmetic mods, not a real origin trait — and
+ceiling-filling it would have silently scored a tracker as if it were a
+roll perk. That trait/origin-vs-other classification only ever exists
+transiently inside ingest's manifest parsing; nothing persists or exports
+it. `comboScore` therefore only ever scores columns the user actually
+named a perk for — simpler than the original plan, and verifiably correct
+against real data rather than a guess. Verified live end-to-end
+(`e2e/home.spec.ts`, "combo-level ranking genuinely reorders results"):
+Forthcoming Deviance outranks Motion to Vacate by weapon-level
+`overall_score` (55.2 vs 52.67), but selecting "Swap Mag" alone flips it
+(51.1 vs 45.2) — a real reversal in the committed export, not a
+constructed example.
+
+**Still not done, deliberately out of scope**: perk-derived champion-stun
+mapping (Voltshot → jolt → anti-overload, etc.) — the curated table this
+needs was never built. The champion-mod facet only covers *intrinsic*
+breaker type (a Bungie fact, already exported), not this second,
+perk-driven source.
 
 **Three data gaps this originally listed as blockers are now closed**,
 each in its own last-light-armory-ingest PR, verified live before merge:
@@ -452,6 +481,7 @@ last-light-armory/
     data/                     // committed static JSON, consumed at build time
       meta.json
       perks.json
+      scoring_config.json      // weights/base_blend/archetype_score/perk_synergy — from scoring/cmd/export-config
       weapons/
         index.json
         <hash>.json
@@ -463,6 +493,7 @@ last-light-armory/
     cmd/
       score/
         main.go
+      export-config/            // read-only: scoring_config.json for the website
     internal/
       db/
       scoring/

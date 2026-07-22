@@ -87,6 +87,43 @@ test.describe("home page", () => {
     await expect(page.getByRole("link", { name: /Fatebringer/i })).toHaveCount(0);
   });
 
+  test("combo-level ranking genuinely reorders results relative to weapon-level rank", async ({ page }) => {
+    // Real, verified reversal in the committed export: Forthcoming
+    // Deviance (Glaive, hash 535198113) outranks Motion to Vacate
+    // (Shotgun, hash 1018777295) by weapon-level overall_score (55.2 vs
+    // 52.67), but selecting "Swap Mag" alone flips it — Motion to
+    // Vacate's combo score (51.1) beats Forthcoming Deviance's (45.2),
+    // because only one of them gets an archetype-base boost for that
+    // specific perk-holding column. Proves the Score column switches
+    // formulas, not just labels, once perks are selected. Matched by
+    // href, not name text — "Forthcoming Deviance (Adept)" is a distinct
+    // real weapon whose name would otherwise collide with a substring match.
+    const forthcomingHref = "/weapons/535198113";
+    const motionHref = "/weapons/1018777295";
+
+    await page.goto("/");
+    await page.getByPlaceholder("Search perks…").fill("Swap Mag");
+    await page.getByLabel("Add a perk filter", { exact: true }).selectOption("Swap Mag");
+    await expect(
+      page.getByText(/Score reflects the best roll containing your selected perks/),
+    ).toBeVisible();
+    await expect(page.locator(`a[href="${forthcomingHref}"]`)).toBeVisible();
+    await expect(page.locator(`a[href="${motionHref}"]`)).toBeVisible();
+
+    const hrefOrder = async () =>
+      page.getByRole("link").evaluateAll((links) => links.map((l) => l.getAttribute("href")));
+
+    await page.getByRole("button", { name: "Sort by Score" }).click(); // ascending
+    const asc = await hrefOrder();
+    // Ascending: lower combo score first — Forthcoming Deviance (45.2)
+    // before Motion to Vacate (51.1), the opposite of their overall_score order.
+    expect(asc.indexOf(forthcomingHref)).toBeLessThan(asc.indexOf(motionHref));
+
+    await page.getByRole("button", { name: "Score, sorted ascending" }).click(); // descending
+    const desc = await hrefOrder();
+    expect(desc.indexOf(motionHref)).toBeLessThan(desc.indexOf(forthcomingHref));
+  });
+
   test("renders correctly on a mobile viewport", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/");

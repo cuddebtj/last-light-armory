@@ -12,6 +12,8 @@
 # Env vars:
 #   INGEST_REPO      Path to last-light-armory-ingest. Default: sibling
 #                     directory ../last-light-armory-ingest.
+#   SCORING_REPO     Path to the scoring module. Default: ./scoring (this
+#                     repo, unlike INGEST_REPO which is a sibling).
 #   BASE_BRANCH       Branch this must be run from (and branches off of).
 #                     Default: dev.
 #   PUBLISH_NO_PUSH   If set (any value), do everything except the final
@@ -25,6 +27,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 INGEST_REPO="${INGEST_REPO:-$REPO_ROOT/../last-light-armory-ingest}"
+SCORING_REPO="${SCORING_REPO:-$REPO_ROOT/scoring}"
 BASE_BRANCH="${BASE_BRANCH:-dev}"
 
 log() { printf '==> %s\n' "$1"; }
@@ -41,6 +44,7 @@ command -v go >/dev/null 2>&1 || fail "go not found on PATH"
 command -v npm >/dev/null 2>&1 || fail "npm not found on PATH"
 [ -d "$INGEST_REPO" ] || fail "INGEST_REPO not found: $INGEST_REPO"
 [ -d "$INGEST_REPO/cmd/export" ] || fail "$INGEST_REPO doesn't look like last-light-armory-ingest (no cmd/export)"
+[ -d "$SCORING_REPO/cmd/export-config" ] || fail "SCORING_REPO doesn't look like the scoring module (no cmd/export-config): $SCORING_REPO"
 
 current_branch="$(git rev-parse --abbrev-ref HEAD)"
 [ "$current_branch" = "$BASE_BRANCH" ] ||
@@ -63,11 +67,15 @@ trap 'rm -rf "$tmp_export"' EXIT
 log "running ingest's cmd/export against the live database..."
 ( cd "$INGEST_REPO" && go run ./cmd/export -out "$tmp_export" )
 
+log "running scoring's cmd/export-config against the live database..."
+( cd "$SCORING_REPO" && go run ./cmd/export-config -out "$tmp_export" )
+
 # --- Copy into web/data/ ----------------------------------------------
 
 log "copying export into web/data/..."
 cp "$tmp_export/meta.json" web/data/meta.json
 cp "$tmp_export/perks.json" web/data/perks.json
+cp "$tmp_export/scoring_config.json" web/data/scoring_config.json
 # --delete so weapons removed/renamed upstream (hash changes) don't linger
 # as stale files that generateStaticParams would otherwise never revisit.
 if command -v rsync >/dev/null 2>&1; then
@@ -96,7 +104,7 @@ print('yes' if any(old.get(f) != new.get(f) for f in fields) else 'no')
 ")"
 
 if [ "$meta_changed" = "no" ] &&
-  [ -z "$(git status --porcelain -- web/data/weapons web/data/perks.json)" ]; then
+  [ -z "$(git status --porcelain -- web/data/weapons web/data/perks.json web/data/scoring_config.json)" ]; then
   # Nothing substantive changed — discard the meaningless generated_at
   # bump so the working tree stays clean.
   git checkout -- web/data/meta.json

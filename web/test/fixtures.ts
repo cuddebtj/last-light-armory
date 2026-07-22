@@ -1,4 +1,4 @@
-import type { Meta, WeaponIndexEntry } from "@/lib/types";
+import type { Meta, ScoringConfig, WeaponIndexEntry } from "@/lib/types";
 
 let nextHash = 1;
 
@@ -38,6 +38,18 @@ export function makeMeta(overrides: Partial<Meta> = {}): Meta {
     weapon_count: 2,
     perk_count: 3,
     roll_count: 4,
+    ...overrides,
+  };
+}
+
+export function makeScoringConfig(
+  overrides: Partial<ScoringConfig> = {},
+): ScoringConfig {
+  return {
+    weights: [0.1, 0.1, 0.3, 0.3, 0.2],
+    base_blend: 0.5,
+    archetype_scores: [],
+    perk_synergies: [],
     ...overrides,
   };
 }

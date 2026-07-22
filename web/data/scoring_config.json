@@ -1,0 +1,547 @@
+{
+  "weights": [
+    0.1,
+    0.1,
+    0.3,
+    0.3,
+    0.2
+  ],
+  "base_blend": 0.5,
+  "archetype_scores": [
+    {
+      "weapon_type": "Auto Rifle",
+      "frame": "Adaptive",
+      "pve_score": 5.67,
+      "pvp_score": 46.19
+    },
+    {
+      "weapon_type": "Auto Rifle",
+      "frame": "Balanced Heat",
+      "pve_score": null,
+      "pvp_score": 46.19
+    },
+    {
+      "weapon_type": "Auto Rifle",
+      "frame": "High-Impact",
+      "pve_score": 5.17,
+      "pvp_score": 38.57
+    },
+    {
+      "weapon_type": "Auto Rifle",
+      "frame": "Lightweight",
+      "pve_score": null,
+      "pvp_score": 57.74
+    },
+    {
+      "weapon_type": "Auto Rifle",
+      "frame": "Precision",
+      "pve_score": 4.36,
+      "pvp_score": 46.19
+    },
+    {
+      "weapon_type": "Auto Rifle",
+      "frame": "Rapid-Fire",
+      "pve_score": 7.19,
+      "pvp_score": 57.74
+    },
+    {
+      "weapon_type": "Auto Rifle",
+      "frame": "Support",
+      "pve_score": 4.96,
+      "pvp_score": 46.19
+    },
+    {
+      "weapon_type": "Combat Bow",
+      "frame": "High-Impact Longbow",
+      "pve_score": 1.82,
+      "pvp_score": 53.81
+    },
+    {
+      "weapon_type": "Combat Bow",
+      "frame": "Lightweight",
+      "pve_score": 0.81,
+      "pvp_score": 100
+    },
+    {
+      "weapon_type": "Combat Bow",
+      "frame": "Precision",
+      "pve_score": 0,
+      "pvp_score": 76.91
+    },
+    {
+      "weapon_type": "Fusion Rifle",
+      "frame": "Adaptive",
+      "pve_score": 52.18,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Fusion Rifle",
+      "frame": "Aggressive",
+      "pve_score": 53.8,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Fusion Rifle",
+      "frame": "High-Impact",
+      "pve_score": 60.28,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Fusion Rifle",
+      "frame": "Precision",
+      "pve_score": 53.5,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Fusion Rifle",
+      "frame": "Rapid-Fire",
+      "pve_score": 49.54,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Glaive",
+      "frame": "Adaptive",
+      "pve_score": 23.4,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Glaive",
+      "frame": "Aggressive",
+      "pve_score": 22.49,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Glaive",
+      "frame": "Rapid-Fire",
+      "pve_score": 30.8,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Grenade Launcher",
+      "frame": "Adaptive",
+      "pve_score": 95.75,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Grenade Launcher",
+      "frame": "Area Denial",
+      "pve_score": 1.93,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Grenade Launcher",
+      "frame": "Compressed Wave",
+      "pve_score": 71.3,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Grenade Launcher",
+      "frame": "Double Fire",
+      "pve_score": 32.22,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Grenade Launcher",
+      "frame": "Lightweight",
+      "pve_score": 21.58,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Grenade Launcher",
+      "frame": "Micro-Missile",
+      "pve_score": 32.73,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Grenade Launcher",
+      "frame": "Rapid-Fire",
+      "pve_score": 98.93,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Grenade Launcher",
+      "frame": "Wave",
+      "pve_score": 10.44,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Hand Cannon",
+      "frame": "Adaptive",
+      "pve_score": 0.61,
+      "pvp_score": 30.72
+    },
+    {
+      "weapon_type": "Hand Cannon",
+      "frame": "Aggressive",
+      "pve_score": 0.51,
+      "pvp_score": 0
+    },
+    {
+      "weapon_type": "Hand Cannon",
+      "frame": "Dynamic Heat",
+      "pve_score": null,
+      "pvp_score": 0
+    },
+    {
+      "weapon_type": "Hand Cannon",
+      "frame": "Heavy Burst",
+      "pve_score": 2.63,
+      "pvp_score": 15.47
+    },
+    {
+      "weapon_type": "Hand Cannon",
+      "frame": "Lightweight",
+      "pve_score": 0.61,
+      "pvp_score": 30.72
+    },
+    {
+      "weapon_type": "Hand Cannon",
+      "frame": "Precision",
+      "pve_score": 3.24,
+      "pvp_score": 0
+    },
+    {
+      "weapon_type": "Hand Cannon",
+      "frame": "Spread Shot",
+      "pve_score": 11.35,
+      "pvp_score": 92.38
+    },
+    {
+      "weapon_type": "Linear Fusion Rifle",
+      "frame": "Adaptive Burst",
+      "pve_score": 88.45,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Linear Fusion Rifle",
+      "frame": "Aggressive",
+      "pve_score": 23.51,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Linear Fusion Rifle",
+      "frame": "Precision",
+      "pve_score": 17.51,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Machine Gun",
+      "frame": "Adaptive",
+      "pve_score": 4.79,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Machine Gun",
+      "frame": "Aggressive",
+      "pve_score": 40.93,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Machine Gun",
+      "frame": "High-Impact",
+      "pve_score": 0,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Machine Gun",
+      "frame": "Rapid-Fire",
+      "pve_score": 14.05,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Pulse Rifle",
+      "frame": "Adaptive",
+      "pve_score": 4.15,
+      "pvp_score": 0
+    },
+    {
+      "weapon_type": "Pulse Rifle",
+      "frame": "Aggressive Burst",
+      "pve_score": 3.95,
+      "pvp_score": 61.66
+    },
+    {
+      "weapon_type": "Pulse Rifle",
+      "frame": "Balanced Heat",
+      "pve_score": null,
+      "pvp_score": 61.66
+    },
+    {
+      "weapon_type": "Pulse Rifle",
+      "frame": "Dynamic Heat",
+      "pve_score": null,
+      "pvp_score": 61.66
+    },
+    {
+      "weapon_type": "Pulse Rifle",
+      "frame": "Heavy Burst",
+      "pve_score": 5.78,
+      "pvp_score": 38.57
+    },
+    {
+      "weapon_type": "Pulse Rifle",
+      "frame": "High-Impact",
+      "pve_score": 2.53,
+      "pvp_score": 76.91
+    },
+    {
+      "weapon_type": "Pulse Rifle",
+      "frame": "Legacy PR-55",
+      "pve_score": 2.33,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Pulse Rifle",
+      "frame": "Lightweight",
+      "pve_score": 2.53,
+      "pvp_score": 30.72
+    },
+    {
+      "weapon_type": "Pulse Rifle",
+      "frame": "Micro-Missile",
+      "pve_score": 57.14,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Pulse Rifle",
+      "frame": "Rapid-Fire",
+      "pve_score": 5.27,
+      "pvp_score": 46.19
+    },
+    {
+      "weapon_type": "Rocket Launcher",
+      "frame": "Adaptive",
+      "pve_score": 88.94,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Rocket Launcher",
+      "frame": "Aggressive",
+      "pve_score": 100,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Rocket Launcher",
+      "frame": "High-Impact",
+      "pve_score": 65.35,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Rocket Launcher",
+      "frame": "Precision",
+      "pve_score": 42.95,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Scout Rifle",
+      "frame": "Aggressive",
+      "pve_score": 2.13,
+      "pvp_score": 0
+    },
+    {
+      "weapon_type": "Scout Rifle",
+      "frame": "Balanced Heat",
+      "pve_score": null,
+      "pvp_score": 15.47
+    },
+    {
+      "weapon_type": "Scout Rifle",
+      "frame": "High-Impact",
+      "pve_score": 2.63,
+      "pvp_score": 46.19
+    },
+    {
+      "weapon_type": "Scout Rifle",
+      "frame": "Lightweight",
+      "pve_score": 3.14,
+      "pvp_score": 23.09
+    },
+    {
+      "weapon_type": "Scout Rifle",
+      "frame": "Precision",
+      "pve_score": 2.94,
+      "pvp_score": 0
+    },
+    {
+      "weapon_type": "Scout Rifle",
+      "frame": "Rapid-Fire",
+      "pve_score": 4.56,
+      "pvp_score": 15.47
+    },
+    {
+      "weapon_type": "Shotgun",
+      "frame": "Aggressive",
+      "pve_score": 55.52,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Shotgun",
+      "frame": "Heavy Burst",
+      "pve_score": 100,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Shotgun",
+      "frame": "Lightweight",
+      "pve_score": 54.41,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Shotgun",
+      "frame": "Pinpoint Slug",
+      "pve_score": 44.07,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Shotgun",
+      "frame": "Precision",
+      "pve_score": 48.33,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Shotgun",
+      "frame": "Rapid-Fire",
+      "pve_score": 55.83,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Shotgun",
+      "frame": "Rapid-Fire Slug",
+      "pve_score": 61.8,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Sidearm",
+      "frame": "Adaptive",
+      "pve_score": 14.08,
+      "pvp_score": 92.38
+    },
+    {
+      "weapon_type": "Sidearm",
+      "frame": "Adaptive Burst",
+      "pve_score": 17.53,
+      "pvp_score": 61.66
+    },
+    {
+      "weapon_type": "Sidearm",
+      "frame": "Dynamic Heat",
+      "pve_score": null,
+      "pvp_score": 76.91
+    },
+    {
+      "weapon_type": "Sidearm",
+      "frame": "Heavy Burst",
+      "pve_score": 14.69,
+      "pvp_score": 61.66
+    },
+    {
+      "weapon_type": "Sidearm",
+      "frame": "Lightweight",
+      "pve_score": 13.68,
+      "pvp_score": 76.91
+    },
+    {
+      "weapon_type": "Sidearm",
+      "frame": "Micro-Missile",
+      "pve_score": 30.5,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Sidearm",
+      "frame": "Precision",
+      "pve_score": 13.98,
+      "pvp_score": 69.28
+    },
+    {
+      "weapon_type": "Sidearm",
+      "frame": "Rapid-Fire",
+      "pve_score": 14.79,
+      "pvp_score": 76.91
+    },
+    {
+      "weapon_type": "Sniper Rifle",
+      "frame": "Adaptive",
+      "pve_score": 59.68,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Sniper Rifle",
+      "frame": "Aggressive",
+      "pve_score": 60.99,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Sniper Rifle",
+      "frame": "Rapid-Fire",
+      "pve_score": 58.36,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Submachine Gun",
+      "frame": "Adaptive",
+      "pve_score": 11.75,
+      "pvp_score": 46.19
+    },
+    {
+      "weapon_type": "Submachine Gun",
+      "frame": "Aggressive",
+      "pve_score": 10.23,
+      "pvp_score": 57.74
+    },
+    {
+      "weapon_type": "Submachine Gun",
+      "frame": "Aggressive Burst",
+      "pve_score": null,
+      "pvp_score": 46.19
+    },
+    {
+      "weapon_type": "Submachine Gun",
+      "frame": "Balanced Heat",
+      "pve_score": null,
+      "pvp_score": 61.66
+    },
+    {
+      "weapon_type": "Submachine Gun",
+      "frame": "Lightweight",
+      "pve_score": 12.56,
+      "pvp_score": 61.66
+    },
+    {
+      "weapon_type": "Submachine Gun",
+      "frame": "Precision",
+      "pve_score": 9.83,
+      "pvp_score": 46.19
+    },
+    {
+      "weapon_type": "Sword",
+      "frame": "Adaptive",
+      "pve_score": 33.04,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Sword",
+      "frame": "Aggressive",
+      "pve_score": 21.44,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Sword",
+      "frame": "Lightweight",
+      "pve_score": 17.79,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Sword",
+      "frame": "Vortex",
+      "pve_score": 17.81,
+      "pvp_score": null
+    },
+    {
+      "weapon_type": "Trace Rifle",
+      "frame": "Adaptive",
+      "pve_score": 18.34,
+      "pvp_score": null
+    }
+  ],
+  "perk_synergies": []
+}
