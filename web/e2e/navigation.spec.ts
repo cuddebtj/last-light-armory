@@ -27,6 +27,34 @@ test("search, click through to a weapon's detail page, and back again", async ({
   await expect(page.getByPlaceholder("Search weapons…")).toBeVisible();
 });
 
+// Real reported bug: filtering/sorting, clicking into a weapon, then
+// hitting the browser's back button used to lose all of it and land back
+// on the unfiltered, default-sorted list — WeaponBrowser now persists its
+// state to sessionStorage precisely so this round trip survives.
+test("filters and sort survive a click-through to a weapon and back button navigation", async ({ page }) => {
+  await page.goto("/");
+  await page.getByPlaceholder("Search weapons…").fill("Fatebringer");
+  await page.getByRole("button", { name: "Sort by RPM" }).click();
+
+  const link = page
+    .getByRole("link")
+    .filter({ has: page.getByText("Fatebringer", { exact: true }) })
+    .first();
+  await link.click();
+  await expect(page).toHaveURL(/\/weapons\/\d+$/);
+
+  await page.goBack();
+  await expect(page).toHaveURL("/");
+  await expect(page.getByPlaceholder("Search weapons…")).toHaveValue("Fatebringer");
+  await expect(
+    page.getByRole("button", { name: "RPM, sorted ascending" }),
+  ).toBeVisible();
+  // Two real, distinct weapons both named exactly "Fatebringer" in the
+  // current export — not "1 of 2,208". The point here isn't the exact
+  // count, just that the filter genuinely persisted rather than resetting.
+  await expect(page.getByText("4 of 2,208")).toBeVisible();
+});
+
 test("visiting a weapon detail page directly (no client-side nav) renders its content", async ({ page }) => {
   // "Timelines' Vertex" — 3 perk columns, exercises the multi-column layout.
   await page.goto("/weapons/1006783454");

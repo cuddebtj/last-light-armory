@@ -1,8 +1,6 @@
-import { render, screen, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import WeaponBrowser, {
-  compareNullableNumber,
-} from "./WeaponBrowser";
+import { cleanup, render, screen, within } from "@testing-library/react";
+import userEvent, { type UserEvent } from "@testing-library/user-event";
+import WeaponBrowser from "./WeaponBrowser";
 import { makeScoringConfig, makeWeapon } from "@/test/fixtures";
 import type { Perk, WeaponIndexEntry } from "@/lib/types";
 
@@ -108,14 +106,22 @@ function renderedHashOrder(): number[] {
     .map((href) => Number(href.replace("/weapons/", "")));
 }
 
-describe("compareNullableNumber", () => {
-  it("covers every null combination directly, since Array.sort's own comparison pattern isn't guaranteed to exercise all four", () => {
-    expect(compareNullableNumber(null, null, 1)).toBe(0);
-    expect(compareNullableNumber(null, 5, 1)).toBe(1); // a null -> sorts after
-    expect(compareNullableNumber(5, null, 1)).toBe(-1); // b null -> sorts after
-    expect(compareNullableNumber(10, 5, 1)).toBe(5); // ascending
-    expect(compareNullableNumber(10, 5, -1)).toBe(-5); // descending
-  });
+// The new combobox (SearchableMultiSelect) replaced the old native <select>
+// for weapon type and perk filters: type into the labeled text input to
+// open its dropdown, then click the matching option button. Only one
+// dropdown is expected open at a time, so a bare getByRole("listbox")
+// unambiguously finds it.
+async function pickOption(user: UserEvent, label: string, value: string) {
+  const input = screen.getByLabelText(label);
+  await user.click(input);
+  await user.type(input, value);
+  await user.click(
+    within(screen.getByRole("listbox")).getByRole("button", { name: value }),
+  );
+}
+
+beforeEach(() => {
+  window.sessionStorage.clear();
 });
 
 describe("WeaponBrowser", () => {
@@ -138,13 +144,11 @@ describe("WeaponBrowser", () => {
     expect(screen.getByText("91.2")).toBeInTheDocument();
   });
 
-  it("derives the type filter options from the data, sorted", () => {
-    setup();
-    const options = screen
-      .getByLabelText("Weapon type")
-      .querySelectorAll("option");
-    expect([...options].map((o) => o.textContent)).toEqual([
-      "Add weapon type…",
+  it("derives the type filter options from the data, sorted", async () => {
+    const user = setup();
+    await user.click(screen.getByLabelText("Weapon type"));
+    const listbox = within(screen.getByRole("listbox"));
+    expect(listbox.getAllByRole("button").map((b) => b.textContent)).toEqual([
       "Fusion Rifle",
       "Glaive",
       "Hand Cannon",
@@ -176,7 +180,7 @@ describe("WeaponBrowser", () => {
 
   it("combines type, slot, element, and tier filters", async () => {
     const user = setup();
-    await user.selectOptions(screen.getByLabelText("Weapon type"), "Hand Cannon");
+    await pickOption(user, "Weapon type", "Hand Cannon");
     expect(await screen.findByText("2 of 6")).toBeInTheDocument();
 
     await user.selectOptions(screen.getByLabelText("Element"), "Arc");
@@ -225,10 +229,7 @@ describe("WeaponBrowser", () => {
 
   it("filters to weapons that can roll a chosen perk, narrowing further as more are added", async () => {
     const user = setup();
-    await user.selectOptions(
-      screen.getByLabelText("Add a perk filter"),
-      "Explosive Payload",
-    );
+    await pickOption(user, "Add a perk filter", "Explosive Payload");
     // Fatebringer and Cartesian Coordinate both have it (and, sharing
     // every other facet with Austringer, prove it's the perk pool doing
     // the narrowing here, not some other filter).
@@ -239,13 +240,13 @@ describe("WeaponBrowser", () => {
 
     // A second perk only Fatebringer also has: narrows to just it — this
     // is an AND across selections, not an OR.
-    await user.selectOptions(screen.getByLabelText("Add a perk filter"), "Firefly");
+    await pickOption(user, "Add a perk filter", "Firefly");
     expect(await screen.findByText("1 of 6")).toBeInTheDocument();
     expect(screen.getByText("Fatebringer")).toBeInTheDocument();
 
     // A perk only Austringer has, on top of the above: no weapon can roll
     // all three -> empty state.
-    await user.selectOptions(screen.getByLabelText("Add a perk filter"), "Rangefinder");
+    await pickOption(user, "Add a perk filter", "Rangefinder");
     expect(await screen.findByText("0 of 6")).toBeInTheDocument();
 
     // Removing the contradictory chip restores the match.
@@ -255,33 +256,31 @@ describe("WeaponBrowser", () => {
 
   it("already-selected types and perks are not offered again in their own add-select", async () => {
     const user = setup();
-    await user.selectOptions(screen.getByLabelText("Weapon type"), "Hand Cannon");
-    const typeOptions = screen
-      .getByLabelText("Weapon type")
-      .querySelectorAll("option");
-    expect([...typeOptions].map((o) => o.textContent)).not.toContain(
-      "Hand Cannon",
-    );
+    await pickOption(user, "Weapon type", "Hand Cannon");
+    await user.click(screen.getByLabelText("Weapon type"));
+    const listbox = within(screen.getByRole("listbox"));
+    expect(
+      listbox.queryByRole("button", { name: "Hand Cannon" }),
+    ).not.toBeInTheDocument();
   });
 
   it("removes a selected weapon type via its chip", async () => {
     const user = setup();
-    await user.selectOptions(screen.getByLabelText("Weapon type"), "Hand Cannon");
-    await user.selectOptions(screen.getByLabelText("Weapon type"), "Sword");
+    await pickOption(user, "Weapon type", "Hand Cannon");
+    await pickOption(user, "Weapon type", "Sword");
     expect(await screen.findByText("3 of 6")).toBeInTheDocument(); // 2 Hand Cannons + 1 Sword
 
     await user.click(screen.getByRole("button", { name: /Sword/ }));
     expect(await screen.findByText("2 of 6")).toBeInTheDocument(); // Sword chip removed
   });
 
-  it("narrows the perk add-select's options as the perk search box is typed into", async () => {
+  it("narrows the perk dropdown as its own search input is typed into", async () => {
     const user = setup();
-    await user.type(screen.getByPlaceholderText("Search perks…"), "fire");
-    const options = screen
-      .getByLabelText("Add a perk filter")
-      .querySelectorAll("option");
-    expect([...options].map((o) => o.textContent)).toEqual([
-      "Add perk…",
+    const input = screen.getByPlaceholderText("Search perks…");
+    await user.click(input);
+    await user.type(input, "fire");
+    const listbox = within(screen.getByRole("listbox"));
+    expect(listbox.getAllByRole("button").map((b) => b.textContent)).toEqual([
       "Firefly",
     ]);
   });
@@ -294,12 +293,21 @@ describe("WeaponBrowser", () => {
     );
   });
 
-  it("sorts by name ascending by default, regardless of input order", () => {
+  it("sorts by Score descending by default, with nulls last in original order", () => {
     setup();
-    const expected = [...weapons]
-      .sort((a, b) => a.name.localeCompare(b.name))
-      .map((w) => w.hash);
-    expect(renderedHashOrder()).toEqual(expected);
+    const byName = (n: string) => weapons.find((w) => w.name === n)!.hash;
+    expect(renderedHashOrder()).toEqual([
+      byName("Fatebringer"), // 91.2
+      byName("Austringer"), // 75.5
+      // Nulls last, tie order preserved (original array order).
+      byName("Cartesian Coordinate"),
+      byName("Gjallarhorn"),
+      byName("Falling Guillotine"),
+      byName("Future Weapon"),
+    ]);
+    expect(
+      screen.getByRole("button", { name: "Score, sorted descending" }),
+    ).toBeInTheDocument();
   });
 
   it("sorts numerically by RPM with nulls last in both directions, and toggles on repeat clicks", async () => {
@@ -340,24 +348,23 @@ describe("WeaponBrowser", () => {
     const user = setup();
     const byName = (n: string) => weapons.find((w) => w.name === n)!.hash;
 
-    await user.click(screen.getByRole("button", { name: "Sort by Score" }));
-    // Ascending: lowest real score first (Austringer 75.5, then Fatebringer
-    // 91.2), the four null-score weapons trail in original order.
-    const order = renderedHashOrder();
-    expect(order[0]).toBe(byName("Austringer"));
-    expect(order[1]).toBe(byName("Fatebringer"));
+    // Score is already the active default sort (descending): highest real
+    // score first, nulls trailing.
+    const initial = renderedHashOrder();
+    expect(initial[0]).toBe(byName("Fatebringer"));
+    expect(initial[1]).toBe(byName("Austringer"));
 
-    await user.click(screen.getByRole("button", { name: "Score, sorted ascending" }));
-    // Descending: highest real score first, nulls still last.
-    const desc = renderedHashOrder();
-    expect(desc[0]).toBe(byName("Fatebringer"));
-    expect(desc[1]).toBe(byName("Austringer"));
+    await user.click(screen.getByRole("button", { name: "Score, sorted descending" }));
+    // Ascending: lowest real score first, nulls still last.
+    const asc = renderedHashOrder();
+    expect(asc[0]).toBe(byName("Austringer"));
+    expect(asc[1]).toBe(byName("Fatebringer"));
   });
 
   it("Score column reflects the combo score, not the weapon's overall_score, once perks are selected", async () => {
     const user = setup();
-    await user.selectOptions(screen.getByLabelText("Add a perk filter"), "Explosive Payload");
-    await user.selectOptions(screen.getByLabelText("Add a perk filter"), "Firefly");
+    await pickOption(user, "Add a perk filter", "Explosive Payload");
+    await pickOption(user, "Add a perk filter", "Firefly");
     // Only Fatebringer has both.
     expect(await screen.findByText("1 of 6")).toBeInTheDocument();
     expect(
@@ -374,23 +381,32 @@ describe("WeaponBrowser", () => {
 
   it("sorts by combo score (not weapon overall_score) once perks are selected, using each weapon's own archetype match", async () => {
     const user = setup();
-    await user.selectOptions(screen.getByLabelText("Add a perk filter"), "Explosive Payload");
+    await pickOption(user, "Add a perk filter", "Explosive Payload");
     // Fatebringer (Hand Cannon, has an archetype match) and Cartesian
     // Coordinate (Fusion Rifle, no archetype match -> neutral base) both
     // qualify — same selected perk, genuinely different combo scores
     // (55 vs 50) because only one gets the archetype bonus.
     expect(await screen.findByText("2 of 6")).toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: "Sort by Score" }));
     const byName = (n: string) => weapons.find((w) => w.name === n)!.hash;
-    const order = renderedHashOrder();
-    expect(order[0]).toBe(byName("Cartesian Coordinate")); // 50, ascending
-    expect(order[1]).toBe(byName("Fatebringer")); // 55
+    // Score is already the active default sort (descending), now driven by
+    // combo scores since a perk is selected.
+    const initial = renderedHashOrder();
+    expect(initial[0]).toBe(byName("Fatebringer")); // 55, descending
+    expect(initial[1]).toBe(byName("Cartesian Coordinate")); // 50
 
-    await user.click(screen.getByRole("button", { name: "Score, sorted ascending" }));
-    const desc = renderedHashOrder();
-    expect(desc[0]).toBe(byName("Fatebringer")); // 55, descending
-    expect(desc[1]).toBe(byName("Cartesian Coordinate")); // 50
+    await user.click(screen.getByRole("button", { name: "Score, sorted descending" }));
+    const asc = renderedHashOrder();
+    expect(asc[0]).toBe(byName("Cartesian Coordinate")); // 50, ascending
+    expect(asc[1]).toBe(byName("Fatebringer")); // 55
+  });
+
+  it("sorts alphabetically by weapon name", async () => {
+    const user = setup();
+    await user.click(screen.getByRole("button", { name: "Sort by Weapon" }));
+    expect(renderedHashOrder()[0]).toBe(
+      weapons.find((w) => w.name === "Austringer")!.hash, // "A" sorts first
+    );
   });
 
   it("sorts alphabetically by type and by element", async () => {
@@ -427,10 +443,7 @@ describe("WeaponBrowser", () => {
     await user.type(screen.getByPlaceholderText("Search weapons…"), "zzzz");
     expect(await screen.findByText("0 of 6")).toBeInTheDocument();
     await user.selectOptions(screen.getByLabelText("Slot"), "Energy");
-    await user.selectOptions(
-      screen.getByLabelText("Add a perk filter"),
-      "Firefly",
-    );
+    await pickOption(user, "Add a perk filter", "Firefly");
 
     await user.click(screen.getByRole("button", { name: "Reset" }));
     expect(await screen.findByText("6 of 6")).toBeInTheDocument();
@@ -440,5 +453,57 @@ describe("WeaponBrowser", () => {
       screen.queryByRole("button", { name: /Firefly/ }),
     ).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Reset" })).not.toBeInTheDocument();
+  });
+
+  it("persists search, filters, and sort to sessionStorage, and restores them on remount", async () => {
+    const user = setup();
+    await user.type(screen.getByPlaceholderText("Search weapons…"), "Aust");
+    await pickOption(user, "Weapon type", "Hand Cannon");
+    await user.click(screen.getByRole("button", { name: "Sort by RPM" }));
+
+    const stored = JSON.parse(
+      window.sessionStorage.getItem("weapon-browser-state")!,
+    );
+    expect(stored.query).toBe("Aust");
+    expect(stored.selectedTypes).toEqual(["Hand Cannon"]);
+    expect(stored.sort).toEqual({ key: "rpm", dir: "asc" });
+
+    // Simulate navigating to a weapon detail page (unmounts this
+    // component) and hitting the browser back button (remounts it fresh)
+    // — a plain useState would reset to defaults here without the
+    // sessionStorage round trip.
+    cleanup();
+    render(
+      <WeaponBrowser weapons={weapons} perks={perks} scoringConfig={scoringConfig} />,
+    );
+    expect(screen.getByPlaceholderText("Search weapons…")).toHaveValue("Aust");
+    expect(screen.getByRole("button", { name: /Hand Cannon/ })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "RPM, sorted ascending" }),
+    ).toBeInTheDocument();
+  });
+
+  it("falls back to defaults when sessionStorage holds corrupt JSON", () => {
+    window.sessionStorage.setItem("weapon-browser-state", "{not json");
+    setup();
+    expect(screen.getByPlaceholderText("Search weapons…")).toHaveValue("");
+    expect(
+      screen.getByRole("button", { name: "Score, sorted descending" }),
+    ).toBeInTheDocument();
+  });
+
+  it.each([
+    ["an unrecognized sort key", { key: "bogus", dir: "sideways" }],
+    ["a recognized key but an invalid direction", { key: "rpm", dir: "sideways" }],
+    ["no sort field at all", undefined],
+  ])("falls back to the default sort when stored sort data has %s", (_label, sort) => {
+    window.sessionStorage.setItem(
+      "weapon-browser-state",
+      JSON.stringify({ sort }),
+    );
+    setup();
+    expect(
+      screen.getByRole("button", { name: "Score, sorted descending" }),
+    ).toBeInTheDocument();
   });
 });

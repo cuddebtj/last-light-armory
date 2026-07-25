@@ -5,6 +5,7 @@ import { getPerks, getWeaponIndex, getWeaponOrNull } from "@/lib/data";
 import { dedupeByName, resolvePerk, toPerkMap } from "@/lib/perks";
 import { bungieUrl } from "@/lib/bungie";
 import { ELEMENT_TEXT, TIER_BORDER, TIER_TEXT } from "@/lib/style";
+import RollsTable, { type RollRow } from "@/components/RollsTable";
 
 export async function generateStaticParams() {
   const weapons = await getWeaponIndex();
@@ -29,6 +30,17 @@ export default async function WeaponPage({ params }: { params: Params }) {
   }
 
   const perkMap = toPerkMap(await getPerks());
+
+  const rollRows: RollRow[] = weapon.rolls.map((roll) => ({
+    key: roll.key,
+    displayPerks: [...roll.perks]
+      .sort((a, b) => a.column - b.column)
+      .map(({ hash }) => resolvePerk(perkMap, hash).name)
+      .join(" / "),
+    pve_score: roll.pve_score,
+    pvp_score: roll.pvp_score,
+    overall_score: roll.overall_score,
+  }));
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 pb-16">
@@ -138,41 +150,7 @@ export default async function WeaponPage({ params }: { params: Params }) {
           <h2 className="text-sm font-medium tracking-wide text-muted uppercase">
             Rolls ({weapon.rolls.length.toLocaleString("en-US")})
           </h2>
-          <div className="mt-3 overflow-x-auto">
-            <table className="w-full border-collapse text-sm">
-              <thead>
-                <tr className="border-b border-edge text-left text-xs text-muted uppercase">
-                  <th className="py-2 font-medium">Perks</th>
-                  <th className="py-2 text-right font-medium">PvE</th>
-                  <th className="py-2 text-right font-medium">PvP</th>
-                  <th className="py-2 text-right font-medium">Overall</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-edge/60">
-                {weapon.rolls.map((roll) => (
-                  <tr key={roll.key}>
-                    <td className="py-2 pr-4">
-                      <span className="flex flex-wrap gap-x-2 gap-y-1">
-                        {[...roll.perks]
-                          .sort((a, b) => a.column - b.column)
-                          .map(({ hash }) => resolvePerk(perkMap, hash).name)
-                          .join(" / ")}
-                      </span>
-                    </td>
-                    <td className="py-2 text-right font-mono text-muted">
-                      {roll.pve_score ?? "—"}
-                    </td>
-                    <td className="py-2 text-right font-mono text-muted">
-                      {roll.pvp_score ?? "—"}
-                    </td>
-                    <td className="py-2 text-right font-mono text-muted">
-                      {roll.overall_score ?? "—"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <RollsTable rolls={rollRows} />
         </section>
       ) : (
         <p className="mt-8 text-sm text-muted">

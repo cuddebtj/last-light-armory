@@ -1,13 +1,16 @@
 "use client";
 
-import { useDeferredValue, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { bungieUrl } from "@/lib/bungie";
 import { toPerkMap, weaponPerkNames, dedupeByName } from "@/lib/perks";
 import { comboScore, toArchetypeMap, toSynergyMap } from "@/lib/scoring";
+import { compareNullableNumber } from "@/lib/sort";
 import { ELEMENT_TEXT, TIER_BORDER } from "@/lib/style";
 import type { Perk, ScoringConfig, WeaponIndexEntry } from "@/lib/types";
+import SortHeader from "./SortHeader";
+import SearchableMultiSelect from "./SearchableMultiSelect";
 
 const SLOTS = ["Kinetic", "Energy", "Power"] as const;
 const ELEMENTS = ["Kinetic", "Arc", "Solar", "Void", "Stasis", "Strand"] as const;
@@ -29,23 +32,72 @@ type SortKey =
   | "overall_score";
 type SortState = { key: SortKey; dir: "asc" | "desc" };
 
-// Nulls always sort last, in either direction (a weapon can lack an RPM or
-// a ranking). Direction must be applied inside the comparator, not by
-// reversing the sorted array afterward, or "last in ascending" becomes
-// "first in descending" for the null case.
-export function compareNullableNumber(
-  a: number | null,
-  b: number | null,
-  sign: number,
-): number {
-  if (a == null && b == null) return 0;
-  if (a == null) return 1;
-  if (b == null) return -1;
-  return sign * (a - b);
+const SORT_KEYS: SortKey[] = [
+  "name",
+  "type",
+  "element",
+  "rpm",
+  "roll_count",
+  "overall_score",
+];
+function isSortKey(value: unknown): value is SortKey {
+  return typeof value === "string" && (SORT_KEYS as string[]).includes(value);
 }
 
-// Exported (alongside compareNullableNumber above) so both are directly
-// unit-testable without going through the full component/DOM.
+// Filter/sort state, persisted to sessionStorage (see loadStoredState /
+// the sync effect below) so it survives navigating to a weapon detail page
+// and hitting the browser's back button — that navigation unmounts this
+// component, and a plain useState would otherwise reset to defaults on
+// remount. Scoped to sessionStorage (not localStorage or the URL) since
+// the ask was specifically "save for the session," not a shareable/
+// bookmarkable link.
+interface StoredState {
+  query: string;
+  selectedTypes: string[];
+  slot: string;
+  element: string;
+  tier: string;
+  frame: string;
+  ammoType: string;
+  breakerType: string;
+  selectedPerkNames: string[];
+  sort: SortState;
+}
+
+const STORAGE_KEY = "weapon-browser-state";
+
+function loadStoredState(): StoredState | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.sessionStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Partial<StoredState>;
+    return {
+      query: typeof parsed.query === "string" ? parsed.query : "",
+      selectedTypes: Array.isArray(parsed.selectedTypes) ? parsed.selectedTypes : [],
+      slot: typeof parsed.slot === "string" ? parsed.slot : "",
+      element: typeof parsed.element === "string" ? parsed.element : "",
+      tier: typeof parsed.tier === "string" ? parsed.tier : "",
+      frame: typeof parsed.frame === "string" ? parsed.frame : "",
+      ammoType: typeof parsed.ammoType === "string" ? parsed.ammoType : "",
+      breakerType: typeof parsed.breakerType === "string" ? parsed.breakerType : "",
+      selectedPerkNames: Array.isArray(parsed.selectedPerkNames)
+        ? parsed.selectedPerkNames
+        : [],
+      sort:
+        parsed.sort && isSortKey(parsed.sort.key) && (parsed.sort.dir === "asc" || parsed.sort.dir === "desc")
+          ? parsed.sort
+          : { key: "overall_score", dir: "desc" },
+    };
+  } catch {
+    // Corrupt or inaccessible storage (private browsing, a stale shape
+    // from an older build) — fall back to defaults rather than crash.
+    return null;
+  }
+}
+
+// Exported so both are directly unit-testable without going through the
+// full component/DOM.
 export function compareWeapons(
   a: WeaponIndexEntry,
   b: WeaponIndexEntry,
@@ -69,92 +121,6 @@ export function compareWeapons(
   }
 }
 
-function SortHeader({
-  label,
-  sortKey,
-  sort,
-  onSort,
-  align,
-}: {
-  label: string;
-  sortKey: SortKey;
-  sort: SortState;
-  onSort: (key: SortKey) => void;
-  align?: "right";
-}) {
-  const active = sort.key === sortKey;
-  return (
-    <button
-      type="button"
-      onClick={() => onSort(sortKey)}
-      aria-label={
-        active
-          ? `${label}, sorted ${sort.dir === "asc" ? "ascending" : "descending"}`
-          : `Sort by ${label}`
-      }
-      className={`flex items-center gap-1 hover:text-ink ${active ? "text-ink" : ""} ${align === "right" ? "w-full justify-end" : ""}`}
-    >
-      {label}
-      {active && (
-        <span aria-hidden="true">{sort.dir === "asc" ? "▲" : "▼"}</span>
-      )}
-    </button>
-  );
-}
-
-// A removable-chip list backed by an "add one more" select — used for both
-// weapon type and perk facets, where the underlying filter is "any of
-// several selected values" rather than one. Keeping this as a plain select
-// (not a custom combobox) matches the rest of the file's native-control
-// style; the `options` list narrows via the caller's own search input.
-function ChipMultiSelect({
-  label,
-  placeholder,
-  options,
-  selected,
-  onAdd,
-  onRemove,
-}: {
-  label: string;
-  placeholder: string;
-  options: string[];
-  selected: Set<string>;
-  onAdd: (value: string) => void;
-  onRemove: (value: string) => void;
-}) {
-  return (
-    <div className="flex flex-wrap items-center gap-1.5">
-      <select
-        // Always reset to the blank placeholder: a change event can only
-        // fire by picking a different (non-blank) option, so onAdd's value
-        // is never empty in practice.
-        value=""
-        onChange={(e) => onAdd(e.target.value)}
-        className={selectClass}
-        aria-label={label}
-      >
-        <option value="">{placeholder}</option>
-        {options.map((value) => (
-          <option key={value} value={value}>
-            {value}
-          </option>
-        ))}
-      </select>
-      {[...selected].map((value) => (
-        <button
-          key={value}
-          type="button"
-          onClick={() => onRemove(value)}
-          className="flex items-center gap-1 rounded-full border border-edge bg-surface px-2 py-1 text-xs text-ink hover:border-gold/60"
-        >
-          {value}
-          <span aria-hidden="true">×</span>
-        </button>
-      ))}
-    </div>
-  );
-}
-
 // The whole weapon index page: search, every facet filter, sortable
 // columns, and combo-level ranking once perks are selected. weapons/perks
 // are ingest's export (see docs/DATA_SCHEMA.md); scoringConfig is
@@ -171,21 +137,60 @@ export default function WeaponBrowser({
   perks: Perk[];
   scoringConfig: ScoringConfig;
 }) {
-  const [query, setQuery] = useState("");
-  const [selectedTypes, setSelectedTypes] = useState<Set<string>>(new Set());
-  const [slot, setSlot] = useState("");
-  const [element, setElement] = useState("");
-  const [tier, setTier] = useState("");
-  const [ammoType, setAmmoType] = useState("");
-  const [breakerType, setBreakerType] = useState("");
-  const [frame, setFrame] = useState("");
-  const [perkQuery, setPerkQuery] = useState("");
-  const [selectedPerkNames, setSelectedPerkNames] = useState<Set<string>>(
-    new Set(),
+  const [stored] = useState(loadStoredState);
+
+  const [query, setQuery] = useState(stored?.query ?? "");
+  const [selectedTypes, setSelectedTypes] = useState<Set<string>>(
+    () => new Set(stored?.selectedTypes ?? []),
   );
-  const [sort, setSort] = useState<SortState>({ key: "name", dir: "asc" });
+  const [slot, setSlot] = useState(stored?.slot ?? "");
+  const [element, setElement] = useState(stored?.element ?? "");
+  const [tier, setTier] = useState(stored?.tier ?? "");
+  const [ammoType, setAmmoType] = useState(stored?.ammoType ?? "");
+  const [breakerType, setBreakerType] = useState(stored?.breakerType ?? "");
+  const [frame, setFrame] = useState(stored?.frame ?? "");
+  const [selectedPerkNames, setSelectedPerkNames] = useState<Set<string>>(
+    () => new Set(stored?.selectedPerkNames ?? []),
+  );
+  // Score-descending by default (task feedback: lead with the ranking,
+  // not alphabetical order).
+  const [sort, setSort] = useState<SortState>(
+    stored?.sort ?? { key: "overall_score", dir: "desc" },
+  );
 
   const deferredQuery = useDeferredValue(query);
+
+  useEffect(() => {
+    const toStore: StoredState = {
+      query,
+      selectedTypes: [...selectedTypes],
+      slot,
+      element,
+      tier,
+      frame,
+      ammoType,
+      breakerType,
+      selectedPerkNames: [...selectedPerkNames],
+      sort,
+    };
+    try {
+      window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(toStore));
+    } catch {
+      // Storage can throw (private browsing, quota) — losing persisted
+      // filters isn't worth crashing the page over.
+    }
+  }, [
+    query,
+    selectedTypes,
+    slot,
+    element,
+    tier,
+    frame,
+    ammoType,
+    breakerType,
+    selectedPerkNames,
+    sort,
+  ]);
 
   const toggleSort = (key: SortKey) => {
     setSort((prev) =>
@@ -223,14 +228,10 @@ export default function WeaponBrowser({
     return map;
   }, [weapons, perkMap]);
 
-  const perkOptions = useMemo(() => {
-    const q = perkQuery.trim().toLowerCase();
-    return allPerkNames.filter(
-      (name) =>
-        !selectedPerkNames.has(name) &&
-        (!q || name.toLowerCase().includes(q)),
-    );
-  }, [allPerkNames, selectedPerkNames, perkQuery]);
+  const perkOptions = useMemo(
+    () => allPerkNames.filter((name) => !selectedPerkNames.has(name)),
+    [allPerkNames, selectedPerkNames],
+  );
 
   const typeOptions = useMemo(
     () => types.filter((t) => !selectedTypes.has(t)),
@@ -348,7 +349,6 @@ export default function WeaponBrowser({
     setFrame("");
     setAmmoType("");
     setBreakerType("");
-    setPerkQuery("");
     setSelectedPerkNames(new Set());
   };
 
@@ -361,10 +361,8 @@ export default function WeaponBrowser({
       return next;
     });
 
-  const addPerkName = (value: string) => {
+  const addPerkName = (value: string) =>
     setSelectedPerkNames((prev) => new Set(prev).add(value));
-    setPerkQuery("");
-  };
   const removePerkName = (value: string) =>
     setSelectedPerkNames((prev) => {
       const next = new Set(prev);
@@ -383,7 +381,7 @@ export default function WeaponBrowser({
             placeholder="Search weapons…"
             className={`${selectClass} w-full sm:w-64`}
           />
-          <ChipMultiSelect
+          <SearchableMultiSelect
             label="Weapon type"
             placeholder="Add weapon type…"
             options={typeOptions}
@@ -471,16 +469,9 @@ export default function WeaponBrowser({
           </span>
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-2">
-          <input
-            type="search"
-            value={perkQuery}
-            onChange={(e) => setPerkQuery(e.target.value)}
-            placeholder="Search perks…"
-            className={`${selectClass} w-full sm:w-48`}
-          />
-          <ChipMultiSelect
+          <SearchableMultiSelect
             label="Add a perk filter"
-            placeholder="Add perk…"
+            placeholder="Search perks…"
             options={perkOptions}
             selected={selectedPerkNames}
             onAdd={addPerkName}

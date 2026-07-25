@@ -1,6 +1,19 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 
 const COUNT = /^[\d,]+ of [\d,]+$/;
+
+// Weapon type and perk filters are a searchable combobox, not a native
+// <select> — type into the labeled input to open its dropdown, then click
+// the matching option button.
+async function pickOption(page: Page, label: string, value: string) {
+  const input = page.getByLabel(label, { exact: true });
+  await input.click();
+  await input.fill(value);
+  await page
+    .getByRole("listbox")
+    .getByRole("button", { name: value, exact: true })
+    .click();
+}
 
 test.describe("home page", () => {
   test("loads the full weapon list and shows manifest stats", async ({ page }) => {
@@ -21,7 +34,7 @@ test.describe("home page", () => {
 
   test("combines type/slot/element/tier filters down to an empty state", async ({ page }) => {
     await page.goto("/");
-    await page.getByLabel("Weapon type", { exact: true }).selectOption("Hand Cannon");
+    await pickOption(page, "Weapon type", "Hand Cannon");
     await page.getByLabel("Element", { exact: true }).selectOption("Void");
     const someMatches = await page.getByText(COUNT).textContent();
     expect(someMatches).not.toMatch(/^0 of/);
@@ -49,11 +62,16 @@ test.describe("home page", () => {
     await page.goto("/");
     const firstRowName = () => page.getByRole("link").first().locator("span.font-medium");
 
-    // Default sort is name-ascending.
+    // Default sort is Score-descending (task feedback: lead with the
+    // ranking, not alphabetical order).
+    await expect(
+      page.getByRole("button", { name: "Score, sorted descending" }),
+    ).toBeVisible();
+
+    // Weapon is not yet the active column — one click sorts ascending.
+    await page.getByRole("button", { name: "Sort by Weapon" }).click();
     await expect(firstRowName()).toHaveText("1000 Yard Stare");
 
-    // Weapon is already the active (default) column — its accessible
-    // name reflects that, so one click flips straight to descending.
     await page.getByRole("button", { name: "Weapon, sorted ascending" }).click();
     await expect(firstRowName()).toHaveText("Zephyr");
 
@@ -74,10 +92,10 @@ test.describe("home page", () => {
     await page.getByLabel("Element", { exact: true }).selectOption("Solar");
     await page.getByLabel("Slot", { exact: true }).selectOption("Energy");
     await page.getByLabel("Ammo type", { exact: true }).selectOption("Primary");
-    await page.getByLabel("Weapon type", { exact: true }).selectOption("Auto Rifle");
-    await page.getByLabel("Weapon type", { exact: true }).selectOption("Submachine Gun");
-    await page.getByLabel("Add a perk filter", { exact: true }).selectOption("Heal Clip");
-    await page.getByLabel("Add a perk filter", { exact: true }).selectOption("Incandescent");
+    await pickOption(page, "Weapon type", "Auto Rifle");
+    await pickOption(page, "Weapon type", "Submachine Gun");
+    await pickOption(page, "Add a perk filter", "Heal Clip");
+    await pickOption(page, "Add a perk filter", "Incandescent");
 
     const count = await page.getByText(COUNT).textContent();
     expect(count).not.toMatch(/^0 of/);
@@ -102,8 +120,7 @@ test.describe("home page", () => {
     const motionHref = "/weapons/1018777295";
 
     await page.goto("/");
-    await page.getByPlaceholder("Search perks…").fill("Swap Mag");
-    await page.getByLabel("Add a perk filter", { exact: true }).selectOption("Swap Mag");
+    await pickOption(page, "Add a perk filter", "Swap Mag");
     await expect(
       page.getByText(/Score reflects the best roll containing your selected perks/),
     ).toBeVisible();
@@ -113,15 +130,15 @@ test.describe("home page", () => {
     const hrefOrder = async () =>
       page.getByRole("link").evaluateAll((links) => links.map((l) => l.getAttribute("href")));
 
-    await page.getByRole("button", { name: "Sort by Score" }).click(); // ascending
-    const asc = await hrefOrder();
-    // Ascending: lower combo score first — Forthcoming Deviance (45.2)
-    // before Motion to Vacate (51.1), the opposite of their overall_score order.
-    expect(asc.indexOf(forthcomingHref)).toBeLessThan(asc.indexOf(motionHref));
-
-    await page.getByRole("button", { name: "Score, sorted ascending" }).click(); // descending
+    // Score is already the active default sort (descending): higher combo
+    // score first — Motion to Vacate (51.1) before Forthcoming Deviance
+    // (45.2), the opposite of their overall_score order.
     const desc = await hrefOrder();
     expect(desc.indexOf(motionHref)).toBeLessThan(desc.indexOf(forthcomingHref));
+
+    await page.getByRole("button", { name: "Score, sorted descending" }).click(); // ascending
+    const asc = await hrefOrder();
+    expect(asc.indexOf(forthcomingHref)).toBeLessThan(asc.indexOf(motionHref));
   });
 
   test("renders correctly on a mobile viewport", async ({ page }) => {
