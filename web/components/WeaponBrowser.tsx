@@ -137,30 +137,68 @@ export default function WeaponBrowser({
   perks: Perk[];
   scoringConfig: ScoringConfig;
 }) {
-  const [stored] = useState(loadStoredState);
-
-  const [query, setQuery] = useState(stored?.query ?? "");
+  // Always start from the same defaults the server rendered — reading
+  // sessionStorage synchronously here (client-only data, unavailable
+  // during SSR) would make the client's first render disagree with the
+  // server-rendered HTML and trip a React hydration error (#418) on every
+  // load where a prior session left non-default state behind. Restoring
+  // happens in the effect below instead, which only runs after hydration
+  // completes.
+  const [query, setQuery] = useState("");
   const [selectedTypes, setSelectedTypes] = useState<Set<string>>(
-    () => new Set(stored?.selectedTypes ?? []),
+    () => new Set<string>(),
   );
-  const [slot, setSlot] = useState(stored?.slot ?? "");
-  const [element, setElement] = useState(stored?.element ?? "");
-  const [tier, setTier] = useState(stored?.tier ?? "");
-  const [ammoType, setAmmoType] = useState(stored?.ammoType ?? "");
-  const [breakerType, setBreakerType] = useState(stored?.breakerType ?? "");
-  const [frame, setFrame] = useState(stored?.frame ?? "");
+  const [slot, setSlot] = useState("");
+  const [element, setElement] = useState("");
+  const [tier, setTier] = useState("");
+  const [ammoType, setAmmoType] = useState("");
+  const [breakerType, setBreakerType] = useState("");
+  const [frame, setFrame] = useState("");
   const [selectedPerkNames, setSelectedPerkNames] = useState<Set<string>>(
-    () => new Set(stored?.selectedPerkNames ?? []),
+    () => new Set<string>(),
   );
   // Score-descending by default (task feedback: lead with the ranking,
   // not alphabetical order).
-  const [sort, setSort] = useState<SortState>(
-    stored?.sort ?? { key: "overall_score", dir: "desc" },
-  );
+  const [sort, setSort] = useState<SortState>({
+    key: "overall_score",
+    dir: "desc",
+  });
 
   const deferredQuery = useDeferredValue(query);
 
+  // Runs once, after the initial (default-state) hydration pass, so the
+  // very first client render still matches the server-rendered HTML —
+  // seeding these from sessionStorage synchronously (in a lazy useState
+  // initializer, as this used to do) makes the client's first render
+  // disagree with the server-rendered HTML and trips a React hydration
+  // error. This is the standard, deliberate exception to "don't setState
+  // in an effect": a one-time restore from an external store (see
+  // https://react.dev/learn/you-might-not-need-an-effect), not derived
+  // state that could be computed during render.
+  const [hasRestored, setHasRestored] = useState(false);
   useEffect(() => {
+    const stored = loadStoredState();
+    if (stored) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setQuery(stored.query);
+      setSelectedTypes(new Set(stored.selectedTypes));
+      setSlot(stored.slot);
+      setElement(stored.element);
+      setTier(stored.tier);
+      setAmmoType(stored.ammoType);
+      setBreakerType(stored.breakerType);
+      setFrame(stored.frame);
+      setSelectedPerkNames(new Set(stored.selectedPerkNames));
+      setSort(stored.sort);
+    }
+    setHasRestored(true);
+  }, []);
+
+  useEffect(() => {
+    // Skip the very first (default-state) pass, and skip until the
+    // restore effect above has run — otherwise this would immediately
+    // overwrite a just-restored value with the pre-restore defaults.
+    if (!hasRestored) return;
     const toStore: StoredState = {
       query,
       selectedTypes: [...selectedTypes],
@@ -180,6 +218,7 @@ export default function WeaponBrowser({
       // filters isn't worth crashing the page over.
     }
   }, [
+    hasRestored,
     query,
     selectedTypes,
     slot,

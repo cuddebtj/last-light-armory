@@ -1,5 +1,7 @@
 import { test, expect } from "@playwright/test";
 
+const COUNT = /^[\d,]+ of [\d,]+$/;
+
 // Fatebringer is a well-known raid weapon, stable across manifest updates —
 // low risk of disappearing from a future export the way a seasonal/vendor
 // weapon might.
@@ -53,6 +55,47 @@ test("filters and sort survive a click-through to a weapon and back button navig
   // current export — not "1 of 2,208". The point here isn't the exact
   // count, just that the filter genuinely persisted rather than resetting.
   await expect(page.getByText("4 of 2,208")).toBeVisible();
+});
+
+// Real reported bug: the sessionStorage persistence above (added for the
+// back-button fix) originally read stored state synchronously during the
+// client's very first render. That disagreed with the server-rendered
+// HTML — which always encodes defaults, since sessionStorage doesn't
+// exist during SSR — and tripped a React hydration error on every load
+// where a prior session had left non-default state behind, after which
+// every filter on the page appeared inert. addInitScript seeds
+// sessionStorage before the page's own scripts run, simulating a real
+// returning visitor rather than a same-tab reload.
+test("a returning visitor with saved filters hits no hydration errors and can still filter", async ({ page }) => {
+  const pageErrors: string[] = [];
+  page.on("pageerror", (err) => pageErrors.push(err.message));
+
+  await page.addInitScript(() => {
+    sessionStorage.setItem(
+      "weapon-browser-state",
+      JSON.stringify({
+        query: "",
+        selectedTypes: [],
+        slot: "Energy",
+        element: "",
+        tier: "",
+        frame: "",
+        ammoType: "",
+        breakerType: "",
+        selectedPerkNames: [],
+        sort: { key: "overall_score", dir: "desc" },
+      }),
+    );
+  });
+
+  await page.goto("/");
+  await expect(page.getByLabel("Slot", { exact: true })).toHaveValue("Energy");
+
+  const beforeCount = await page.getByText(COUNT).textContent();
+  await page.getByLabel("Tier", { exact: true }).selectOption("Exotic");
+  await expect(page.getByText(COUNT)).not.toHaveText(beforeCount!);
+
+  expect(pageErrors).toEqual([]);
 });
 
 test("visiting a weapon detail page directly (no client-side nav) renders its content", async ({ page }) => {
