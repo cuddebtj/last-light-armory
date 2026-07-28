@@ -1,3 +1,4 @@
+import { promises as fs } from "node:fs";
 import {
   getMeta,
   getPerks,
@@ -6,9 +7,13 @@ import {
   getWeaponIndex,
   getWeaponOrNull,
 } from "./data";
+import { logger } from "./logger";
 
 // These run against the real committed export in web/data/ — the loaders'
-// whole job is reading those exact files.
+// whole job is reading those exact files. Only the one test below that
+// needs a forced non-ENOENT failure spies on fs.promises.readFile (the
+// same live object data.ts itself imports, so the spy is visible there
+// too) for that single call; every other test hits real files.
 describe("data loaders", () => {
   it("getMeta returns the export metadata", async () => {
     const meta = await getMeta();
@@ -83,7 +88,28 @@ describe("data loaders", () => {
     expect(weapon?.name).toBe("Timelines' Vertex");
   });
 
-  it("getWeaponOrNull resolves to null for an unknown hash", async () => {
+  it("getWeaponOrNull resolves to null for an unknown hash, silently (no log)", async () => {
+    const errorSpy = vi.spyOn(logger, "error").mockImplementation(() => {});
     await expect(getWeaponOrNull(999999999999)).resolves.toBeNull();
+    // ENOENT (a genuinely unknown hash) is an expected, handleable case —
+    // logging it would just be noise on every 404.
+    expect(errorSpy).not.toHaveBeenCalled();
+  });
+
+  it("getWeaponOrNull logs and resolves to null for a non-ENOENT failure (e.g. malformed JSON)", async () => {
+    const errorSpy = vi.spyOn(logger, "error").mockImplementation(() => {});
+    // A real SyntaxError from JSON.parse, not a fabricated one — the file
+    // read itself succeeds, but the content isn't valid JSON.
+    const readFileSpy = vi
+      .spyOn(fs, "readFile")
+      .mockResolvedValueOnce("{not valid json" as never);
+
+    await expect(getWeaponOrNull(1006783454)).resolves.toBeNull();
+
+    expect(errorSpy).toHaveBeenCalledWith(
+      "failed to load weapon detail data",
+      expect.objectContaining({ hash: 1006783454, error: expect.any(SyntaxError) }),
+    );
+    readFileSpy.mockRestore();
   });
 });

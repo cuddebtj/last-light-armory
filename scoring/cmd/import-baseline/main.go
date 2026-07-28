@@ -11,7 +11,11 @@
 //
 // Usage:
 //
-//	import-baseline [-env PATH]
+//	import-baseline [-env PATH] [-log-dir DIR] [-log-retention DURATION]
+//
+// Every run writes structured logs to both stdout and a timestamped file
+// under -log-dir (default logs/import-baseline), pruned automatically
+// after -log-retention (default 72h) — see internal/logging.
 //
 // Exit codes: 0 success, 1 any failure.
 package main
@@ -19,7 +23,6 @@ package main
 import (
 	"context"
 	"flag"
-	"log/slog"
 	"os"
 	"os/signal"
 	"syscall"
@@ -27,6 +30,7 @@ import (
 	"github.com/cuddebtj/last-light-armory/scoring/internal/baseline"
 	"github.com/cuddebtj/last-light-armory/scoring/internal/config"
 	"github.com/cuddebtj/last-light-armory/scoring/internal/db"
+	"github.com/cuddebtj/last-light-armory/scoring/internal/logging"
 )
 
 func main() {
@@ -35,9 +39,16 @@ func main() {
 
 func run() int {
 	envFile := flag.String("env", ".env", "path to .env file (\"\" to rely on real environment only)")
+	logDir := flag.String("log-dir", "logs/import-baseline", "directory for this run's log file (old ones pruned automatically, see -log-retention)")
+	logRetention := flag.Duration("log-retention", logging.DefaultRetention, "how long to keep old log files before they're pruned")
 	flag.Parse()
 
-	log := slog.New(slog.NewTextHandler(os.Stderr, nil))
+	log, closeLog, err := logging.Setup(*logDir, *logRetention)
+	if err != nil {
+		os.Stderr.WriteString("logging setup error: " + err.Error() + "\n")
+		return 1
+	}
+	defer closeLog()
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()

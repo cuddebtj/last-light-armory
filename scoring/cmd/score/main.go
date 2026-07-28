@@ -8,7 +8,12 @@
 //
 // Usage:
 //
-//	score [-env PATH]
+//	score [-env PATH] [-log-dir DIR] [-log-retention DURATION]
+//
+// Every run writes structured logs to both stdout and a timestamped file
+// under -log-dir (default logs/score), pruned automatically after
+// -log-retention (default 72h) — see internal/logging. A panic is caught,
+// logged, and turned into exit code 1 rather than a bare stack trace.
 //
 // Exit codes: 0 success, 1 any failure.
 package main
@@ -16,14 +21,16 @@ package main
 import (
 	"context"
 	"flag"
-	"log/slog"
 	"os"
 	"os/signal"
+	"runtime/debug"
 	"syscall"
+	"time"
 
 	"github.com/cuddebtj/last-light-armory/scoring/internal/baseline"
 	"github.com/cuddebtj/last-light-armory/scoring/internal/config"
 	"github.com/cuddebtj/last-light-armory/scoring/internal/db"
+	"github.com/cuddebtj/last-light-armory/scoring/internal/logging"
 	"github.com/cuddebtj/last-light-armory/scoring/internal/scoring"
 )
 
@@ -31,11 +38,35 @@ func main() {
 	os.Exit(run())
 }
 
-func run() int {
+func run() (exitCode int) {
 	envFile := flag.String("env", ".env", "path to .env file (\"\" to rely on real environment only)")
+	logDir := flag.String("log-dir", "logs/score", "directory for this run's log file (old ones pruned automatically, see -log-retention)")
+	logRetention := flag.Duration("log-retention", logging.DefaultRetention, "how long to keep old log files before they're pruned")
 	flag.Parse()
 
-	log := slog.New(slog.NewTextHandler(os.Stderr, nil))
+	log, closeLog, err := logging.Setup(*logDir, *logRetention)
+	if err != nil {
+		// Logging itself failed to start — nowhere structured left to
+		// report that to, so this is the one place a bare stderr message
+		// is the right call.
+		os.Stderr.WriteString("logging setup error: " + err.Error() + "\n")
+		return 1
+	}
+	defer closeLog()
+
+	// A panic anywhere below still needs to land in the log — otherwise
+	// an unattended cron run that panics leaves nothing but a bare stack
+	// trace, visible only if someone happened to be watching the
+	// terminal live when it happened.
+	defer func() {
+		if r := recover(); r != nil {
+			log.Error("panic", "error", r, "stack", string(debug.Stack()))
+			exitCode = 1
+		}
+	}()
+
+	start := time.Now()
+	log.Info("run started")
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
@@ -203,7 +234,8 @@ func run() int {
 		"weapons_ranked", len(rankings),
 		"weapons_total", len(weapons),
 		"rolls_with_archetype_match", archetypeHits,
-		"roll_variants_written", len(variantInserts))
+		"roll_variants_written", len(variantInserts),
+		"duration", time.Since(start).String())
 	return 0
 }
 

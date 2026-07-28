@@ -11,7 +11,11 @@
 //
 // Usage:
 //
-//	export-config [-env PATH] [-out DIR]
+//	export-config [-env PATH] [-out DIR] [-log-dir DIR] [-log-retention DURATION]
+//
+// Every run writes structured logs to both stdout and a timestamped file
+// under -log-dir (default logs/export-config), pruned automatically after
+// -log-retention (default 72h) — see internal/logging.
 //
 // Exit codes: 0 success, 1 any failure.
 package main
@@ -20,8 +24,6 @@ import (
 	"context"
 	"encoding/json"
 	"flag"
-	"fmt"
-	"log/slog"
 	"os"
 	"os/signal"
 	"path/filepath"
@@ -30,6 +32,7 @@ import (
 
 	"github.com/cuddebtj/last-light-armory/scoring/internal/config"
 	"github.com/cuddebtj/last-light-armory/scoring/internal/db"
+	"github.com/cuddebtj/last-light-armory/scoring/internal/logging"
 )
 
 // archetypeScoreOut is one archetype_score row, JSON-shaped for the
@@ -68,9 +71,16 @@ func main() {
 func run() int {
 	envFile := flag.String("env", ".env", "path to .env file (\"\" to rely on real environment only)")
 	outDir := flag.String("out", "export", "directory to write scoring_config.json into")
+	logDir := flag.String("log-dir", "logs/export-config", "directory for this run's log file (old ones pruned automatically, see -log-retention)")
+	logRetention := flag.Duration("log-retention", logging.DefaultRetention, "how long to keep old log files before they're pruned")
 	flag.Parse()
 
-	log := slog.New(slog.NewTextHandler(os.Stderr, nil))
+	log, closeLog, err := logging.Setup(*logDir, *logRetention)
+	if err != nil {
+		os.Stderr.WriteString("logging setup error: " + err.Error() + "\n")
+		return 1
+	}
+	defer closeLog()
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
@@ -148,7 +158,9 @@ func run() int {
 		return 1
 	}
 
-	fmt.Printf("exported scoring config to %s: %d archetype rows, %d perk synergies\n",
-		path, len(archetypeOut), len(synergyOut))
+	log.Info("scoring config exported",
+		"path", path,
+		"archetype_rows", len(archetypeOut),
+		"perk_synergies", len(synergyOut))
 	return 0
 }

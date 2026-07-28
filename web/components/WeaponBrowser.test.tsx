@@ -2,6 +2,7 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent, { type UserEvent } from "@testing-library/user-event";
 import WeaponBrowser from "./WeaponBrowser";
 import { makeScoringConfig, makeWeapon } from "@/test/fixtures";
+import { logger } from "@/lib/logger";
 import type { Perk, WeaponIndexEntry } from "@/lib/types";
 
 vi.mock("next/image", async () => {
@@ -483,13 +484,39 @@ describe("WeaponBrowser", () => {
     ).toBeInTheDocument();
   });
 
-  it("falls back to defaults when sessionStorage holds corrupt JSON", () => {
+  it("logs a warning (without crashing) when sessionStorage.setItem throws", async () => {
+    const warnSpy = vi.spyOn(logger, "warn").mockImplementation(() => {});
+    const setItemSpy = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new DOMException("QuotaExceededError");
+    });
+
+    const user = setup();
+    await user.type(screen.getByPlaceholderText("Search weapons…"), "Aust");
+
+    expect(warnSpy).toHaveBeenCalledWith(
+      "failed to persist session filters",
+      expect.objectContaining({ error: expect.any(DOMException) }),
+    );
+    // The page itself keeps working — this is a "best effort" persistence
+    // failure, not a crash.
+    expect(screen.getByPlaceholderText("Search weapons…")).toHaveValue("Aust");
+
+    setItemSpy.mockRestore();
+  });
+
+  it("falls back to defaults and logs a warning when sessionStorage holds corrupt JSON", () => {
+    const warnSpy = vi.spyOn(logger, "warn").mockImplementation(() => {});
     window.sessionStorage.setItem("weapon-browser-state", "{not json");
     setup();
     expect(screen.getByPlaceholderText("Search weapons…")).toHaveValue("");
     expect(
       screen.getByRole("button", { name: "Score, sorted descending" }),
     ).toBeInTheDocument();
+    expect(warnSpy).toHaveBeenCalledWith(
+      "failed to restore session filters, using defaults",
+      expect.objectContaining({ error: expect.any(SyntaxError) }),
+    );
+    warnSpy.mockRestore();
   });
 
   it.each([
