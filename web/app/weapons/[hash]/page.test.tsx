@@ -99,12 +99,28 @@ describe("WeaponPage", () => {
     ).toBeInTheDocument();
 
     const perkPool = within(screen.getByText("Perk Pool").closest("section")!);
-    expect(perkPool.getByText("Column 1")).toBeInTheDocument();
-    expect(perkPool.getByText("Column 2")).toBeInTheDocument();
-    expect(perkPool.getByText("Enh.")).toBeInTheDocument();
-    // Column 1 has two hashes named "Feeding Frenzy" (a real Destiny 2
+    // Column index -> semantic label, the fixed weapon_perk.column_index
+    // convention (0 barrel, 1 magazine, ...) — not raw "Column N".
+    expect(perkPool.getByText("Barrel")).toBeInTheDocument();
+    expect(perkPool.getByText("Magazine")).toBeInTheDocument();
+    // Column 0 has two hashes named "Feeding Frenzy" (a real Destiny 2
     // manifest quirk) — the pool dedupes to one visible entry.
     expect(perkPool.getAllByText("Feeding Frenzy")).toHaveLength(1);
+
+    const detailsEl = screen.getByText("Details").closest("div")!;
+    const details = within(detailsEl);
+    // "Deals Kinetic damage" is split across a <span> for the colored
+    // element name, so it's not one continuous text node — check the
+    // combined textContent instead of RTL's default per-node matcher.
+    expect(detailsEl.textContent).toContain("Deals Kinetic damage");
+    expect(details.getByText("Uses Primary ammo")).toBeInTheDocument();
+    expect(details.getByText("Kinetic weapon")).toBeInTheDocument();
+    expect(details.getByText("140 RPM")).toBeInTheDocument();
+
+    const weaponScore = within(screen.getByText("Weapon Score").closest("div")!);
+    expect(weaponScore.getByText("PvE")).toBeInTheDocument();
+    expect(weaponScore.getByText("PvP")).toBeInTheDocument();
+    expect(weaponScore.getByText("Overall")).toBeInTheDocument();
 
     expect(screen.getByText("Rolls (2)")).toBeInTheDocument();
     // Roll "a" sorts perks by column: Rewind Rounds (col 0) / Zen Moment (col 1)
@@ -159,9 +175,57 @@ describe("WeaponPage", () => {
       }),
     );
     await renderPage();
-    expect(screen.getByText("Mythic")).toHaveClass("text-muted");
-    expect(screen.getByText("Prismatic")).toHaveClass("text-muted");
+    // "Prismatic" now appears twice (header line + the Details sidebar's
+    // "Deals X damage" bullet) — scope to the header specifically, since
+    // that's what this test is about.
+    const header = screen.getByText("Mythic").closest("header")!;
+    expect(within(header).getByText("Mythic")).toHaveClass("text-muted");
+    expect(within(header).getByText("Prismatic")).toHaveClass("text-muted");
     expect(screen.getByText(/— RPM/)).toBeInTheDocument();
+    // The Details sidebar omits the RPM bullet entirely when null, rather
+    // than showing a redundant "— RPM" a second time. Scoped to the
+    // sidebar specifically — the header line above also ends in "RPM".
+    const details = within(screen.getByText("Details").closest("div")!);
+    expect(details.queryByText(/RPM$/)).not.toBeInTheDocument();
+  });
+
+  it("shows breaker-type properties in Details only when the weapon has one", async () => {
+    vi.mocked(getWeaponOrNull).mockResolvedValue(
+      fullWeapon({ breaker_type: "Shield Piercing" }),
+    );
+    await renderPage();
+    expect(
+      screen.getByText("Has Shield Piercing properties"),
+    ).toBeInTheDocument();
+  });
+
+  it("omits breaker-type properties in Details when the weapon has none", async () => {
+    vi.mocked(getWeaponOrNull).mockResolvedValue(
+      fullWeapon({ breaker_type: null }),
+    );
+    await renderPage();
+    const details = within(screen.getByText("Details").closest("div")!);
+    expect(details.queryByText(/properties$/)).not.toBeInTheDocument();
+  });
+
+  it("shows — in the Weapon Score card when the weapon has no ranking (e.g. zero rolls)", async () => {
+    vi.mocked(getWeaponOrNull).mockResolvedValue(
+      fullWeapon({ overall_score: null, pve_score: null, pvp_score: null }),
+    );
+    await renderPage();
+    const weaponScore = within(screen.getByText("Weapon Score").closest("div")!);
+    expect(weaponScore.getAllByText("—")).toHaveLength(3);
+  });
+
+  it("shows real weapon-level scores in the Weapon Score card when present", async () => {
+    vi.mocked(getWeaponOrNull).mockResolvedValue(
+      fullWeapon({ overall_score: 91.2, pve_score: 95.5, pvp_score: 88 }),
+    );
+    await renderPage();
+    const weaponScore = within(screen.getByText("Weapon Score").closest("div")!);
+    expect(weaponScore.getByText("95.5")).toBeInTheDocument();
+    expect(weaponScore.getByText("88")).toBeInTheDocument();
+    expect(weaponScore.getByText("91.2")).toBeInTheDocument();
   });
 
   it("calls notFound when the weapon does not exist", async () => {

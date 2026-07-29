@@ -20,16 +20,29 @@ export function resolvePerk(perkMap: PerkMap, hash: number): Perk {
 
 // Destiny 2's manifest often defines the same perk (identical name and
 // effect) under multiple hashes — e.g. distinct catalog entries for the
-// same barrel across sources. A "what's the pool of options" display
-// gains nothing from listing indistinguishable duplicates; specific rolls
-// still reference the exact hash, so no information is lost here.
+// same barrel across sources, or a craftable trait's base and enhanced
+// versions (221 names in the current export have both, identically
+// named). A "what's the pool of options" display gains nothing from
+// listing indistinguishable duplicates; specific rolls still reference
+// the exact hash, so no information is lost here.
+//
+// When a name has both an enhanced and a non-enhanced hash, the enhanced
+// one always wins — display treats every perk as if already at max
+// enhancement tier, so there's nothing left to badge or explain. Without
+// this rule, which hash "won" a name collision was really just whichever
+// happened to come first in a weapon's column array — arbitrary, not a
+// real signal, and the inconsistent result (some trait perks marked
+// "Enh.", never barrels/magazines/origins, which don't have enhanced
+// variants at all) was confusing rather than informative.
 export function dedupeByName(perks: Perk[]): Perk[] {
-  const seen = new Set<string>();
-  return perks.filter((perk) => {
-    if (seen.has(perk.name)) return false;
-    seen.add(perk.name);
-    return true;
-  });
+  const byName = new Map<string, Perk>();
+  for (const perk of perks) {
+    const existing = byName.get(perk.name);
+    if (!existing || (perk.enhanced && !existing.enhanced)) {
+      byName.set(perk.name, perk);
+    }
+  }
+  return [...byName.values()];
 }
 
 // The set of perk names a weapon can roll, across every column (barrel and

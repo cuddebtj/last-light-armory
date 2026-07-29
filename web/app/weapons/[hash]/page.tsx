@@ -2,10 +2,11 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { getPerks, getWeaponIndex, getWeaponOrNull } from "@/lib/data";
-import { dedupeByName, resolvePerk, toPerkMap } from "@/lib/perks";
+import { resolvePerk, toPerkMap } from "@/lib/perks";
 import { bungieUrl } from "@/lib/bungie";
 import { ELEMENT_TEXT, TIER_BORDER, TIER_TEXT } from "@/lib/style";
 import RollsTable, { type RollRow } from "@/components/RollsTable";
+import PerkPool from "@/components/PerkPool";
 
 export async function generateStaticParams() {
   const weapons = await getWeaponIndex();
@@ -43,33 +44,33 @@ export default async function WeaponPage({ params }: { params: Params }) {
   }));
 
   return (
-    <main className="mx-auto w-full max-w-3xl px-4 pb-16">
+    <main className="mx-auto w-full max-w-5xl px-4 pb-16">
       <p className="pt-6 pb-4 text-sm">
         <Link href="/" className="text-muted hover:text-ink">
           ← All Weapons
         </Link>
       </p>
 
-      <header className="flex items-start gap-4">
+      <header className="flex items-start gap-5">
         <span
-          className={`relative block h-20 w-20 shrink-0 overflow-hidden rounded border-l-2 ${TIER_BORDER[weapon.tier] ?? "border-edge"}`}
+          className={`relative block h-24 w-24 shrink-0 overflow-hidden rounded border-l-2 ${TIER_BORDER[weapon.tier] ?? "border-edge"}`}
         >
           <Image
             src={bungieUrl(weapon.icon)}
             alt={weapon.name}
-            width={80}
-            height={80}
+            width={96}
+            height={96}
           />
           <Image
             src={bungieUrl(weapon.watermark)}
             alt=""
-            width={80}
-            height={80}
+            width={96}
+            height={96}
             className="absolute inset-0"
           />
         </span>
         <div className="min-w-0">
-          <h1 className="text-2xl font-semibold tracking-tight">
+          <h1 className="text-3xl font-semibold tracking-tight">
             {weapon.name}
           </h1>
           <p
@@ -101,62 +102,88 @@ export default async function WeaponPage({ params }: { params: Params }) {
               </span>
             )}
           </p>
+          {weapon.source && (
+            <p className="mt-3 text-sm text-muted">{weapon.source}</p>
+          )}
         </div>
       </header>
 
-      {weapon.source && (
-        <p className="mt-4 text-sm text-muted">{weapon.source}</p>
-      )}
-
-      {weapon.columns.length > 0 && (
-        <section className="mt-8">
-          <h2 className="text-sm font-medium tracking-wide text-muted uppercase">
-            Perk Pool
-          </h2>
-          <div className="mt-3 grid gap-4 sm:grid-cols-2">
-            {weapon.columns.map((col) => (
-              <div key={col.index}>
-                <p className="text-xs text-muted">Column {col.index + 1}</p>
-                <ul className="mt-1 space-y-1">
-                  {dedupeByName(col.perks.map((hash) => resolvePerk(perkMap, hash))).map(
-                    (perk) => (
-                      <li
-                        key={perk.hash}
-                        className="flex items-center gap-2 text-sm"
-                      >
-                        <Image
-                          src={bungieUrl(perk.icon)}
-                          alt=""
-                          width={20}
-                          height={20}
-                          className="rounded"
-                        />
-                        {perk.name}
-                        {perk.enhanced && (
-                          <span className="text-xs text-gold">Enh.</span>
-                        )}
-                      </li>
-                    ),
-                  )}
-                </ul>
+      <div className="mt-8 grid gap-8 lg:grid-cols-3">
+        <div className="space-y-8 lg:col-span-2">
+          {weapon.columns.length > 0 && (
+            <section>
+              <h2 className="text-sm font-medium tracking-wide text-muted uppercase">
+                Perk Pool
+              </h2>
+              <div className="mt-3">
+                <PerkPool columns={weapon.columns} perkMap={perkMap} />
               </div>
-            ))}
-          </div>
-        </section>
-      )}
+            </section>
+          )}
 
-      {weapon.rolls.length > 0 ? (
-        <section className="mt-8">
-          <h2 className="text-sm font-medium tracking-wide text-muted uppercase">
-            Rolls ({weapon.rolls.length.toLocaleString("en-US")})
-          </h2>
-          <RollsTable rolls={rollRows} />
-        </section>
-      ) : (
-        <p className="mt-8 text-sm text-muted">
-          No curated rolls recorded for this weapon yet.
-        </p>
-      )}
+          {weapon.rolls.length > 0 ? (
+            <section>
+              <h2 className="text-sm font-medium tracking-wide text-muted uppercase">
+                Rolls ({weapon.rolls.length.toLocaleString("en-US")})
+              </h2>
+              <RollsTable rolls={rollRows} />
+            </section>
+          ) : (
+            <p className="text-sm text-muted">
+              No curated rolls recorded for this weapon yet.
+            </p>
+          )}
+        </div>
+
+        <aside className="space-y-4">
+          <div className="rounded-lg border border-edge bg-surface p-4">
+            <h2 className="text-xs font-medium tracking-wide text-muted uppercase">
+              Details
+            </h2>
+            <ul className="mt-3 space-y-2 text-sm text-ink">
+              <li>
+                Deals{" "}
+                <span className={ELEMENT_TEXT[weapon.element] ?? "text-muted"}>
+                  {weapon.element}
+                </span>{" "}
+                damage
+              </li>
+              {weapon.breaker_type && (
+                <li>Has {weapon.breaker_type} properties</li>
+              )}
+              {weapon.ammo_type && <li>Uses {weapon.ammo_type} ammo</li>}
+              <li>{weapon.slot} weapon</li>
+              {weapon.rpm != null && <li>{weapon.rpm} RPM</li>}
+            </ul>
+          </div>
+
+          <div className="rounded-lg border border-edge bg-surface p-4">
+            <h2 className="text-xs font-medium tracking-wide text-muted uppercase">
+              Weapon Score
+            </h2>
+            <dl className="mt-3 grid grid-cols-3 gap-2 text-center">
+              <div>
+                <dt className="text-xs text-muted">PvE</dt>
+                <dd className="mt-1 font-mono text-lg text-ink">
+                  {weapon.pve_score ?? "—"}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs text-muted">PvP</dt>
+                <dd className="mt-1 font-mono text-lg text-ink">
+                  {weapon.pvp_score ?? "—"}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs text-muted">Overall</dt>
+                <dd className="mt-1 font-mono text-lg text-gold">
+                  {weapon.overall_score ?? "—"}
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </aside>
+      </div>
     </main>
   );
 }

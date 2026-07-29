@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     <main className="mx-auto w-full max-w-6xl px-4 pb-16">
-      <header className="pt-10 pb-6">
+      <header className="pt-10 pb-6 text-center">
         <h1 className="text-3xl font-semibold tracking-tight">
           Last Light <span className="text-gold">Armory</span>
         </h1>

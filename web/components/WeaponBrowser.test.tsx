@@ -30,6 +30,13 @@ const weapons: WeaponIndexEntry[] = [
     rpm: 140,
     ammo_type: "Primary",
     columns: [{ index: 2, perks: [3] }], // Rangefinder
+    // pve/pvp deliberately ordered opposite each other (and both
+    // different from Fatebringer's) so PvE-descending, PvP-descending,
+    // and Overall-descending each produce a genuinely different order —
+    // proving the three columns read independent fields, not the same
+    // number three times.
+    pve_score: 95,
+    pvp_score: 40,
     overall_score: 75.5,
   }),
   makeWeapon({
@@ -44,6 +51,8 @@ const weapons: WeaponIndexEntry[] = [
       { index: 2, perks: [1] }, // Explosive Payload
       { index: 3, perks: [2] }, // Firefly
     ],
+    pve_score: 70,
+    pvp_score: 88,
     overall_score: 91.2,
   }),
   makeWeapon({
@@ -126,7 +135,7 @@ beforeEach(() => {
 });
 
 describe("WeaponBrowser", () => {
-  it("renders every weapon with count, icons, frame, rpm, score, and roll count", () => {
+  it("renders every weapon with count, icons, frame, rpm, and PvE/PvP/Overall scores", () => {
     setup();
     expect(screen.getByText("6 of 6")).toBeInTheDocument();
     expect(screen.getByText("Austringer")).toBeInTheDocument();
@@ -138,11 +147,17 @@ describe("WeaponBrowser", () => {
       "https://www.bungie.net/common/destiny2_content/icons/test-icon.jpg",
     );
     expect(screen.getAllByText("Adaptive Frame").length).toBeGreaterThan(0);
-    // Two null-rpm weapons plus four null-overall_score weapons ("—" is
-    // shared by both columns).
-    expect(screen.getAllByText("—").length).toBe(6);
     expect(screen.getByText("660")).toBeInTheDocument();
-    expect(screen.getByText("91.2")).toBeInTheDocument();
+    // Fatebringer's three score columns are genuinely different values —
+    // proves each column reads its own field, not one number repeated.
+    expect(screen.getByText("70")).toBeInTheDocument(); // pve_score
+    expect(screen.getByText("88")).toBeInTheDocument(); // pvp_score
+    expect(screen.getByText("91.2")).toBeInTheDocument(); // overall_score
+
+    // Cartesian Coordinate never had any of the three set — all three
+    // cells in its row show the null placeholder.
+    const cartesianRow = screen.getByText("Cartesian Coordinate").closest("a")!;
+    expect(within(cartesianRow).getAllByText("—")).toHaveLength(3);
   });
 
   it("derives the type filter options from the data, sorted", async () => {
@@ -294,12 +309,12 @@ describe("WeaponBrowser", () => {
     );
   });
 
-  it("sorts by Score descending by default, with nulls last in original order", () => {
+  it("sorts by PvE Score descending by default, with nulls last in original order", () => {
     setup();
     const byName = (n: string) => weapons.find((w) => w.name === n)!.hash;
     expect(renderedHashOrder()).toEqual([
-      byName("Fatebringer"), // 91.2
-      byName("Austringer"), // 75.5
+      byName("Austringer"), // pve_score 95
+      byName("Fatebringer"), // pve_score 70
       // Nulls last, tie order preserved (original array order).
       byName("Cartesian Coordinate"),
       byName("Gjallarhorn"),
@@ -307,7 +322,7 @@ describe("WeaponBrowser", () => {
       byName("Future Weapon"),
     ]);
     expect(
-      screen.getByRole("button", { name: "Score, sorted descending" }),
+      screen.getByRole("button", { name: "PvE Score, sorted descending" }),
     ).toBeInTheDocument();
   });
 
@@ -345,61 +360,89 @@ describe("WeaponBrowser", () => {
     expect(renderedHashOrder()[0]).toBe(byName("Gjallarhorn"));
   });
 
-  it("sorts numerically by Score (weapon-level rank) with nulls last", async () => {
+  it("sorts numerically by PvE Score (weapon-level rank, the default) with nulls last", async () => {
     const user = setup();
     const byName = (n: string) => weapons.find((w) => w.name === n)!.hash;
 
-    // Score is already the active default sort (descending): highest real
-    // score first, nulls trailing.
+    // PvE Score is already the active default sort (descending).
     const initial = renderedHashOrder();
-    expect(initial[0]).toBe(byName("Fatebringer"));
-    expect(initial[1]).toBe(byName("Austringer"));
+    expect(initial[0]).toBe(byName("Austringer")); // 95
+    expect(initial[1]).toBe(byName("Fatebringer")); // 70
 
-    await user.click(screen.getByRole("button", { name: "Score, sorted descending" }));
-    // Ascending: lowest real score first, nulls still last.
+    await user.click(screen.getByRole("button", { name: "PvE Score, sorted descending" }));
     const asc = renderedHashOrder();
-    expect(asc[0]).toBe(byName("Austringer"));
-    expect(asc[1]).toBe(byName("Fatebringer"));
+    expect(asc[0]).toBe(byName("Fatebringer")); // 70
+    expect(asc[1]).toBe(byName("Austringer")); // 95
   });
 
-  it("Score column reflects the combo score, not the weapon's overall_score, once perks are selected", async () => {
+  it("sorts numerically by PvP Score, independently of PvE Score", async () => {
+    const user = setup();
+    const byName = (n: string) => weapons.find((w) => w.name === n)!.hash;
+
+    // A fresh column starts ascending — Austringer's pvp_score (40) is
+    // lower than Fatebringer's (88), the *opposite* order from PvE.
+    await user.click(screen.getByRole("button", { name: "Sort by PvP Score" }));
+    const order = renderedHashOrder();
+    expect(order[0]).toBe(byName("Austringer")); // 40
+    expect(order[1]).toBe(byName("Fatebringer")); // 88
+  });
+
+  it("sorts numerically by Overall Score, independently of PvE/PvP Score", async () => {
+    const user = setup();
+    const byName = (n: string) => weapons.find((w) => w.name === n)!.hash;
+
+    await user.click(screen.getByRole("button", { name: "Sort by Overall Score" }));
+    const order = renderedHashOrder();
+    expect(order[0]).toBe(byName("Austringer")); // 75.5, ascending
+    expect(order[1]).toBe(byName("Fatebringer")); // 91.2
+  });
+
+  it("PvE/PvP/Overall Score columns each reflect the combo score, not the weapon's own stored scores, once perks are selected", async () => {
     const user = setup();
     await pickOption(user, "Add a perk filter", "Explosive Payload");
     await pickOption(user, "Add a perk filter", "Firefly");
     // Only Fatebringer has both.
     expect(await screen.findByText("1 of 6")).toBeInTheDocument();
     expect(
-      screen.getByText(/Score reflects the best roll containing your selected perks/),
+      screen.getByText(/Scores reflect the best roll containing your selected perks/),
     ).toBeInTheDocument();
 
     // Combo score for exactly {Explosive Payload, Firefly} on a Hand
     // Cannon/Adaptive weapon with this fixture's archetype (90/30) and
-    // weights (0.5 blend, columns 2/3 weight 0.3 each): 55 — genuinely
-    // different from Fatebringer's own overall_score fixture value (91.2).
+    // weights (0.5 blend, columns 2/3 weight 0.3 each): pve 82.5, pvp
+    // 27.5, overall 55 — genuinely different from Fatebringer's own
+    // stored scores (70 / 88 / 91.2).
+    expect(screen.getByText("82.5")).toBeInTheDocument();
+    expect(screen.getByText("27.5")).toBeInTheDocument();
     expect(screen.getByText("55")).toBeInTheDocument();
+    expect(screen.queryByText("70")).not.toBeInTheDocument();
+    expect(screen.queryByText("88")).not.toBeInTheDocument();
     expect(screen.queryByText("91.2")).not.toBeInTheDocument();
   });
 
-  it("sorts by combo score (not weapon overall_score) once perks are selected, using each weapon's own archetype match", async () => {
+  it("sorts by combo score (not the weapon's own stored score) once perks are selected, using each weapon's own archetype match", async () => {
     const user = setup();
     await pickOption(user, "Add a perk filter", "Explosive Payload");
     // Fatebringer (Hand Cannon, has an archetype match) and Cartesian
     // Coordinate (Fusion Rifle, no archetype match -> neutral base) both
-    // qualify — same selected perk, genuinely different combo scores
-    // (55 vs 50) because only one gets the archetype bonus.
+    // qualify — same selected perk, genuinely different combo overall
+    // scores (55 vs 50) because only one gets the archetype bonus.
     expect(await screen.findByText("2 of 6")).toBeInTheDocument();
 
     const byName = (n: string) => weapons.find((w) => w.name === n)!.hash;
-    // Score is already the active default sort (descending), now driven by
-    // combo scores since a perk is selected.
-    const initial = renderedHashOrder();
-    expect(initial[0]).toBe(byName("Fatebringer")); // 55, descending
-    expect(initial[1]).toBe(byName("Cartesian Coordinate")); // 50
-
-    await user.click(screen.getByRole("button", { name: "Score, sorted descending" }));
+    // A fresh column starts ascending — combo overall: Cartesian 50,
+    // Fatebringer 55.
+    await user.click(screen.getByRole("button", { name: "Sort by Overall Score" }));
     const asc = renderedHashOrder();
-    expect(asc[0]).toBe(byName("Cartesian Coordinate")); // 50, ascending
+    expect(asc[0]).toBe(byName("Cartesian Coordinate")); // 50
     expect(asc[1]).toBe(byName("Fatebringer")); // 55
+
+    await user.click(
+      screen.getByRole("button", { name: "Overall Score, sorted ascending" }),
+    );
+    const desc = renderedHashOrder();
+    expect(desc[0]).toBe(byName("Fatebringer")); // 55
+    expect(desc[1]).toBe(byName("Cartesian Coordinate")); // 50
   });
 
   it("sorts alphabetically by weapon name", async () => {
@@ -429,11 +472,11 @@ describe("WeaponBrowser", () => {
     await user.click(screen.getByRole("button", { name: "Sort by RPM" }));
     await user.click(screen.getByRole("button", { name: "RPM, sorted ascending" })); // now RPM desc
 
-    await user.click(screen.getByRole("button", { name: "Sort by Rolls" }));
-    const gjallarhorn = weapons.find((w) => w.name === "Gjallarhorn")!.hash;
-    expect(renderedHashOrder()[0]).toBe(gjallarhorn); // roll_count 1, lowest — ascending, not desc
+    await user.click(screen.getByRole("button", { name: "Sort by PvP Score" }));
+    const austringer = weapons.find((w) => w.name === "Austringer")!.hash;
+    expect(renderedHashOrder()[0]).toBe(austringer); // pvp_score 40, lowest — ascending, not desc
     expect(
-      screen.getByRole("button", { name: "Rolls, sorted ascending" }),
+      screen.getByRole("button", { name: "PvP Score, sorted ascending" }),
     ).toBeInTheDocument();
   });
 
@@ -510,7 +553,7 @@ describe("WeaponBrowser", () => {
     setup();
     expect(screen.getByPlaceholderText("Search weapons…")).toHaveValue("");
     expect(
-      screen.getByRole("button", { name: "Score, sorted descending" }),
+      screen.getByRole("button", { name: "PvE Score, sorted descending" }),
     ).toBeInTheDocument();
     expect(warnSpy).toHaveBeenCalledWith(
       "failed to restore session filters, using defaults",
@@ -530,7 +573,7 @@ describe("WeaponBrowser", () => {
     );
     setup();
     expect(
-      screen.getByRole("button", { name: "Score, sorted descending" }),
+      screen.getByRole("button", { name: "PvE Score, sorted descending" }),
     ).toBeInTheDocument();
   });
 });

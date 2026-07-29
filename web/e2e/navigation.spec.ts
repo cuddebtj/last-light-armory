@@ -99,12 +99,13 @@ test("a returning visitor with saved filters hits no hydration errors and can st
 });
 
 test("visiting a weapon detail page directly (no client-side nav) renders its content", async ({ page }) => {
-  // "Timelines' Vertex" — 3 perk columns, exercises the multi-column layout.
+  // "Timelines' Vertex" — 3 perk columns (indices 0/1/2), exercises the
+  // multi-column layout, labeled by real column semantics.
   await page.goto("/weapons/1006783454");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Timelines' Vertex");
-  await expect(page.getByText("Column 1")).toBeVisible();
-  await expect(page.getByText("Column 2")).toBeVisible();
-  await expect(page.getByText("Column 3")).toBeVisible();
+  await expect(page.getByText("Barrel", { exact: true })).toBeVisible();
+  await expect(page.getByText("Magazine", { exact: true })).toBeVisible();
+  await expect(page.getByText("Trait 1", { exact: true })).toBeVisible();
 });
 
 test("an unknown weapon hash renders the themed 404, not a crash", async ({ page }) => {

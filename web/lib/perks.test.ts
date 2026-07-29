@@ -23,11 +23,32 @@ describe("toPerkMap / resolvePerk", () => {
 });
 
 describe("dedupeByName", () => {
-  it("keeps the first occurrence of each name and drops later duplicates", () => {
+  it("keeps the first occurrence of each name when neither duplicate is enhanced", () => {
     const a = { ...perk, hash: 1, name: "Full Bore" };
     const b = { ...perk, hash: 2, name: "Full Bore" };
     const c = { ...perk, hash: 3, name: "Arrowhead Brake" };
     expect(dedupeByName([a, b, c])).toEqual([a, c]);
+  });
+
+  it("prefers the enhanced hash when the base version appears first", () => {
+    const base = { ...perk, hash: 1, name: "Firefly", enhanced: false };
+    const enh = { ...perk, hash: 2, name: "Firefly", enhanced: true };
+    // Display treats everything as already at max tier — the enhanced
+    // hash always wins a name collision, regardless of array order.
+    expect(dedupeByName([base, enh])).toEqual([enh]);
+  });
+
+  it("prefers the enhanced hash when the enhanced version appears first", () => {
+    const enh = { ...perk, hash: 1, name: "Firefly", enhanced: true };
+    const base = { ...perk, hash: 2, name: "Firefly", enhanced: false };
+    expect(dedupeByName([enh, base])).toEqual([enh]);
+  });
+
+  it("preserves each name's first-occurrence position, even when a later duplicate wins on enhancement", () => {
+    const base = { ...perk, hash: 1, name: "Firefly", enhanced: false };
+    const other = { ...perk, hash: 2, name: "Arrowhead Brake" };
+    const enh = { ...perk, hash: 3, name: "Firefly", enhanced: true };
+    expect(dedupeByName([base, other, enh])).toEqual([enh, other]);
   });
 });
 
