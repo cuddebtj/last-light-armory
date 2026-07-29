@@ -27,6 +27,10 @@ go.work.sum
 # env file
 .env
 
+# scoring/'s own rotating run logs (internal/logging) — runtime output,
+# never committed; retention is handled by the program itself, not git.
+/scoring/logs/
+
 # Editor/IDE
 # .idea/
 # .vscode/

@@ -1,6 +1,7 @@
 import "server-only";
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { logger } from "./logger";
 import type {
   Meta,
   Perk,
@@ -39,13 +40,20 @@ export function getWeapon(hash: number): Promise<WeaponDetail> {
 }
 
 // For route boundaries (a URL param) where "no such weapon" is an
-// expected, handleable case rather than an internal error.
+// expected, handleable case rather than an internal error. Only a missing
+// file (ENOENT — a genuinely unknown hash) is silent; anything else
+// (malformed JSON, a permissions error) still resolves to the same 404
+// UI for the visitor, but is logged rather than silently misclassified
+// as "this weapon doesn't exist."
 export async function getWeaponOrNull(
   hash: number,
 ): Promise<WeaponDetail | null> {
   try {
     return await getWeapon(hash);
-  } catch {
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code !== "ENOENT") {
+      logger.error("failed to load weapon detail data", { hash, error: err });
+    }
     return null;
   }
 }

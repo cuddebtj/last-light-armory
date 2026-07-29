@@ -45,8 +45,38 @@ literally the same command.
 
 ```cron
 # Mondays 10:00 — full recompute
-0 10 * * 1  cd /path/to/last-light-armory/scoring && ./score >> score.log 2>&1
+0 10 * * 1  cd /path/to/last-light-armory/scoring && ./score
 ```
+
+No `>> score.log 2>&1` needed anymore — see Logging below, which is the
+answer to "did last Monday's run actually happen, and did it succeed."
+
+## Logging
+
+All three commands (`internal/logging`) write structured `log/slog` records
+to both stdout and a dedicated, timestamped file per run — e.g.
+`logs/score/20260725-100000.log` — so an unattended cron run leaves a
+permanent, greppable record even if nobody was watching a terminal live.
+Old files are pruned automatically, keeping the directory bounded without
+a rotation library or a separate cleanup job:
+
+```sh
+go run ./cmd/score -log-dir logs/score -log-retention 72h   # both shown are the defaults
+```
+
+- `-log-dir` (default `logs/<command-name>`, e.g. `logs/score`) — each
+  command gets its own subdirectory so a shared parent doesn't mix runs
+  from different commands together.
+- `-log-retention` (default `72h`, ~3 days) — files older than this are
+  removed at the start of every run, based on file modification time.
+
+Every run starts with a `run started` entry and, on success, ends with a
+summary line carrying real metrics (`rolls_scored`, `duration`, etc. for
+`cmd/score`) — `grep` a log directory for `level=ERROR` or `msg=panic` to
+find a failed run, or just check whether a run happened at all: a gap in
+the timestamped filenames is a missed or crashed run. A panic anywhere in
+`cmd/score` is caught, logged with a stack trace, and turned into a clean
+exit code 1 — never a bare, unlogged crash.
 
 ## The formula
 
@@ -82,6 +112,7 @@ internal/
   scoring/          the formula itself — pure, no I/O (formula.go, frame.go, variant.go)
   baseline/         normalizes raw community sheet data into 0-100 scores
   config/           .env + environment loading and validation
+  logging/          structured log/slog setup: stdout + a pruned, timestamped file per run
 data/               committed, reviewable JSON snapshots of the community sheets
 migrations/         golang-migrate SQL — scoring_config, archetype_score,
                     perk_synergy, tier_cutoff, roll_variant

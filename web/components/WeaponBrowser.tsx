@@ -4,6 +4,7 @@ import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { bungieUrl } from "@/lib/bungie";
+import { logger } from "@/lib/logger";
 import { toPerkMap, weaponPerkNames, dedupeByName } from "@/lib/perks";
 import { comboScore, toArchetypeMap, toSynergyMap } from "@/lib/scoring";
 import { compareNullableNumber } from "@/lib/sort";
@@ -89,9 +90,10 @@ function loadStoredState(): StoredState | null {
           ? parsed.sort
           : { key: "overall_score", dir: "desc" },
     };
-  } catch {
+  } catch (err) {
     // Corrupt or inaccessible storage (private browsing, a stale shape
     // from an older build) — fall back to defaults rather than crash.
+    logger.warn("failed to restore session filters, using defaults", { error: err });
     return null;
   }
 }
@@ -213,9 +215,10 @@ export default function WeaponBrowser({
     };
     try {
       window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(toStore));
-    } catch {
+    } catch (err) {
       // Storage can throw (private browsing, quota) — losing persisted
       // filters isn't worth crashing the page over.
+      logger.warn("failed to persist session filters", { error: err });
     }
   }, [
     hasRestored,
