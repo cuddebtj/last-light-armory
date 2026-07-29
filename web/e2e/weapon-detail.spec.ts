@@ -5,12 +5,37 @@ import { test, expect } from "@playwright/test";
 // column 1 is a known real-world case. Regression coverage for the
 // dedupeByName fix in lib/perks.ts (unit-tested in isolation, but this
 // proves it holds against actual production data end to end).
-test("perk pool shows no duplicate perk names despite duplicate-hash entries", async ({ page }) => {
+test("perk pool shows no duplicate perk names despite duplicate-hash entries, labeled by real column semantics", async ({ page }) => {
   await page.goto("/weapons/2171478765");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Fatebringer");
 
   const perkPool = page.getByText("Perk Pool").locator("xpath=..");
   await expect(perkPool.getByText("Full Bore", { exact: true })).toHaveCount(1);
+  // weapon_perk.column_index 0/1 -> Barrel/Magazine, not raw "Column 1/2".
+  // exact: true — several real perk names (e.g. "Fluted Barrel") would
+  // otherwise substring-match the column label itself.
+  await expect(perkPool.getByText("Barrel", { exact: true })).toBeVisible();
+  await expect(perkPool.getByText("Magazine", { exact: true })).toBeVisible();
+
+  // Real weapon-level scores from the committed export, in the new
+  // sidebar — our own differentiator vs. a popularity-only view.
+  const weaponScore = page.getByText("Weapon Score").locator("xpath=..");
+  await expect(weaponScore.getByText("42.83", { exact: true })).toBeVisible();
+  await expect(weaponScore.getByText("45.31", { exact: true })).toBeVisible();
+  await expect(weaponScore.getByText("40.36", { exact: true })).toBeVisible();
+});
+
+// Malfeasance (hash 204878059): a real weapon with a non-null
+// breaker_type in the current export — exercises the Details sidebar's
+// conditional "Has X properties" bullet against real data, not a fixture.
+test("Details sidebar shows real breaker-type, ammo, and element facts", async ({ page }) => {
+  await page.goto("/weapons/204878059");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Malfeasance");
+
+  const details = page.getByText("Details").locator("xpath=..");
+  await expect(details.getByText("Has Stagger properties")).toBeVisible();
+  await expect(details.getByText("Uses Primary ammo")).toBeVisible();
+  await expect(details.getByText("Kinetic weapon")).toBeVisible();
 });
 
 test("renders the curated rolls table with perks and real scores", async ({ page }) => {

@@ -62,10 +62,10 @@ test.describe("home page", () => {
     await page.goto("/");
     const firstRowName = () => page.getByRole("link").first().locator("span.font-medium");
 
-    // Default sort is Score-descending (task feedback: lead with the
+    // Default sort is PvE Score-descending (task feedback: lead with the
     // ranking, not alphabetical order).
     await expect(
-      page.getByRole("button", { name: "Score, sorted descending" }),
+      page.getByRole("button", { name: "PvE Score, sorted descending" }),
     ).toBeVisible();
 
     // Weapon is not yet the active column — one click sorts ascending.
@@ -112,17 +112,18 @@ test.describe("home page", () => {
     // 52.67), but selecting "Swap Mag" alone flips it — Motion to
     // Vacate's combo score (51.1) beats Forthcoming Deviance's (45.2),
     // because only one of them gets an archetype-base boost for that
-    // specific perk-holding column. Proves the Score column switches
-    // formulas, not just labels, once perks are selected. Matched by
-    // href, not name text — "Forthcoming Deviance (Adept)" is a distinct
-    // real weapon whose name would otherwise collide with a substring match.
+    // specific perk-holding column. Proves the Overall Score column
+    // switches formulas, not just labels, once perks are selected.
+    // Matched by href, not name text — "Forthcoming Deviance (Adept)" is
+    // a distinct real weapon whose name would otherwise collide with a
+    // substring match.
     const forthcomingHref = "/weapons/535198113";
     const motionHref = "/weapons/1018777295";
 
     await page.goto("/");
     await pickOption(page, "Add a perk filter", "Swap Mag");
     await expect(
-      page.getByText(/Score reflects the best roll containing your selected perks/),
+      page.getByText(/Scores reflect the best roll containing your selected perks/),
     ).toBeVisible();
     await expect(page.locator(`a[href="${forthcomingHref}"]`)).toBeVisible();
     await expect(page.locator(`a[href="${motionHref}"]`)).toBeVisible();
@@ -130,15 +131,17 @@ test.describe("home page", () => {
     const hrefOrder = async () =>
       page.getByRole("link").evaluateAll((links) => links.map((l) => l.getAttribute("href")));
 
-    // Score is already the active default sort (descending): higher combo
-    // score first — Motion to Vacate (51.1) before Forthcoming Deviance
-    // (45.2), the opposite of their overall_score order.
-    const desc = await hrefOrder();
-    expect(desc.indexOf(motionHref)).toBeLessThan(desc.indexOf(forthcomingHref));
-
-    await page.getByRole("button", { name: "Score, sorted descending" }).click(); // ascending
+    // Overall Score is not the default column anymore (PvE Score is) —
+    // activate it explicitly. A fresh column starts ascending: lower
+    // combo overall first — Forthcoming Deviance (45.2) before Motion to
+    // Vacate (51.1), the opposite of their weapon-level overall_score order.
+    await page.getByRole("button", { name: "Sort by Overall Score" }).click();
     const asc = await hrefOrder();
     expect(asc.indexOf(forthcomingHref)).toBeLessThan(asc.indexOf(motionHref));
+
+    await page.getByRole("button", { name: "Overall Score, sorted ascending" }).click();
+    const desc = await hrefOrder();
+    expect(desc.indexOf(motionHref)).toBeLessThan(desc.indexOf(forthcomingHref));
   });
 
   test("renders correctly on a mobile viewport", async ({ page }) => {

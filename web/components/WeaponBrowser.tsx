@@ -1,12 +1,17 @@
 "use client";
 
-import { useDeferredValue, useEffect, useMemo, useState } from "react";
+import { useCallback, useDeferredValue, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { bungieUrl } from "@/lib/bungie";
 import { logger } from "@/lib/logger";
 import { toPerkMap, weaponPerkNames, dedupeByName } from "@/lib/perks";
-import { comboScore, toArchetypeMap, toSynergyMap } from "@/lib/scoring";
+import {
+  comboScore,
+  toArchetypeMap,
+  toSynergyMap,
+  type RollScoreResult,
+} from "@/lib/scoring";
 import { compareNullableNumber } from "@/lib/sort";
 import { ELEMENT_TEXT, TIER_BORDER } from "@/lib/style";
 import type { Perk, ScoringConfig, WeaponIndexEntry } from "@/lib/types";
@@ -19,7 +24,15 @@ const TIERS = ["Exotic", "Legendary", "Rare", "Uncommon", "Common"] as const;
 const AMMO_TYPES = ["Primary", "Special", "Heavy"] as const;
 // Bungie's own DestinyBreakerType enum (fixed, like ammo type) — the
 // champion-shield-piercing capability a weapon carries intrinsically.
-const BREAKER_TYPES = ["Shield Piercing", "Disruption", "Stagger"] as const;
+// Ordered and labeled by the Champion type each one counters (Barrier /
+// Unstoppable / Overload), not Bungie's own breaker-type name — that's
+// the vocabulary players actually think in.
+const BREAKER_TYPES = ["Shield Piercing", "Stagger", "Disruption"] as const;
+const BREAKER_TYPE_LABELS: Record<(typeof BREAKER_TYPES)[number], string> = {
+  "Shield Piercing": "Barrier",
+  Stagger: "Unstoppable",
+  Disruption: "Overload",
+};
 
 const selectClass =
   "rounded-md border border-edge bg-surface px-2.5 py-2 text-sm text-ink outline-none focus:border-gold/60";
@@ -29,7 +42,8 @@ type SortKey =
   | "type"
   | "element"
   | "rpm"
-  | "roll_count"
+  | "pve_score"
+  | "pvp_score"
   | "overall_score";
 type SortState = { key: SortKey; dir: "asc" | "desc" };
 
@@ -38,12 +52,14 @@ const SORT_KEYS: SortKey[] = [
   "type",
   "element",
   "rpm",
-  "roll_count",
+  "pve_score",
+  "pvp_score",
   "overall_score",
 ];
 function isSortKey(value: unknown): value is SortKey {
   return typeof value === "string" && (SORT_KEYS as string[]).includes(value);
 }
+const SCORE_SORT_KEYS = new Set<SortKey>(["pve_score", "pvp_score", "overall_score"]);
 
 // Filter/sort state, persisted to sessionStorage (see loadStoredState /
 // the sync effect below) so it survives navigating to a weapon detail page
@@ -88,7 +104,7 @@ function loadStoredState(): StoredState | null {
       sort:
         parsed.sort && isSortKey(parsed.sort.key) && (parsed.sort.dir === "asc" || parsed.sort.dir === "desc")
           ? parsed.sort
-          : { key: "overall_score", dir: "desc" },
+          : { key: "pve_score", dir: "desc" },
     };
   } catch (err) {
     // Corrupt or inaccessible storage (private browsing, a stale shape
@@ -110,10 +126,12 @@ export function compareWeapons(
   switch (key) {
     case "rpm":
       return compareNullableNumber(a.rpm, b.rpm, sign);
+    case "pve_score":
+      return compareNullableNumber(a.pve_score, b.pve_score, sign);
+    case "pvp_score":
+      return compareNullableNumber(a.pvp_score, b.pvp_score, sign);
     case "overall_score":
       return compareNullableNumber(a.overall_score, b.overall_score, sign);
-    case "roll_count":
-      return sign * (a.roll_count - b.roll_count);
     case "type":
       return sign * a.type.localeCompare(b.type);
     case "element":
@@ -159,10 +177,10 @@ export default function WeaponBrowser({
   const [selectedPerkNames, setSelectedPerkNames] = useState<Set<string>>(
     () => new Set<string>(),
   );
-  // Score-descending by default (task feedback: lead with the ranking,
-  // not alphabetical order).
+  // PvE Score-descending by default (task feedback: lead with the
+  // ranking, not alphabetical order).
   const [sort, setSort] = useState<SortState>({
-    key: "overall_score",
+    key: "pve_score",
     dir: "desc",
   });
 
@@ -325,16 +343,16 @@ export default function WeaponBrowser({
   );
 
   // Combo-level rank (CLAUDE.md's "ranking semantics for filtered
-  // results"): once the user has named specific perks, the Score column
-  // reflects the best roll containing *those* perks, not the weapon's
-  // overall best roll — a weapon whose god roll is exactly what the user
-  // asked for should outrank one where that combo is merely its 15th-best.
-  // Computed only over already-filtered weapons (every one is guaranteed
-  // to have all selected perks somewhere in its columns) and only when
-  // perks are actually selected — no wasted work on the common browse-
-  // without-filters path.
+  // results"): once the user has named specific perks, every score
+  // column (PvE/PvP/Overall) reflects the best roll containing *those*
+  // perks, not the weapon's overall best roll — a weapon whose god roll
+  // is exactly what the user asked for should outrank one where that
+  // combo is merely its 15th-best. Computed only over already-filtered
+  // weapons (every one is guaranteed to have all selected perks
+  // somewhere in its columns) and only when perks are actually selected
+  // — no wasted work on the common browse-without-filters path.
   const comboScoreByHash = useMemo(() => {
-    const map = new Map<number, number>();
+    const map = new Map<number, RollScoreResult>();
     if (selectedPerkNames.size === 0) return map;
     for (const w of filtered) {
       const result = comboScore(
@@ -345,7 +363,7 @@ export default function WeaponBrowser({
         synergyMap,
         scoringConfig,
       );
-      map.set(w.hash, result.overall);
+      map.set(w.hash, result);
     }
     return map;
   }, [filtered, selectedPerkNames, perkMap, archetypeMap, synergyMap, scoringConfig]);
@@ -353,22 +371,31 @@ export default function WeaponBrowser({
   // comboScoreByHash is always built from this same filtered/sorted
   // array (see its useMemo above), so a lookup for any weapon rendered or
   // sorted here is guaranteed present whenever perks are selected.
-  const displayScore = (w: WeaponIndexEntry): number | null =>
-    selectedPerkNames.size > 0 ? comboScoreByHash.get(w.hash)! : w.overall_score;
+  // useCallback'd (not a plain closure) since sorted's useMemo below
+  // calls it — a fresh reference every render would otherwise defeat
+  // that memoization or trip exhaustive-deps.
+  const displayValue = useCallback(
+    (
+      w: WeaponIndexEntry,
+      key: "pve_score" | "pvp_score" | "overall_score",
+    ): number | null => {
+      if (selectedPerkNames.size === 0) return w[key];
+      const result = comboScoreByHash.get(w.hash)!;
+      return key === "pve_score" ? result.pve : key === "pvp_score" ? result.pvp : result.overall;
+    },
+    [selectedPerkNames, comboScoreByHash],
+  );
 
   const sorted = useMemo(() => {
-    if (sort.key === "overall_score" && selectedPerkNames.size > 0) {
+    if (SCORE_SORT_KEYS.has(sort.key) && selectedPerkNames.size > 0) {
+      const key = sort.key as "pve_score" | "pvp_score" | "overall_score";
       const sign = sort.dir === "asc" ? 1 : -1;
       return [...filtered].sort((a, b) =>
-        compareNullableNumber(
-          comboScoreByHash.get(a.hash)!,
-          comboScoreByHash.get(b.hash)!,
-          sign,
-        ),
+        compareNullableNumber(displayValue(a, key), displayValue(b, key), sign),
       );
     }
     return [...filtered].sort((a, b) => compareWeapons(a, b, sort.key, sort.dir));
-  }, [filtered, sort, selectedPerkNames, comboScoreByHash]);
+  }, [filtered, sort, selectedPerkNames, displayValue]);
 
   const hasFilters = Boolean(
     query ||
@@ -415,14 +442,21 @@ export default function WeaponBrowser({
   return (
     <section>
       <div className="sticky top-0 z-10 -mx-4 border-b border-edge bg-bg/95 px-4 py-3 backdrop-blur">
-        <div className="flex flex-wrap items-center gap-2">
+        {/* Centered, width-constrained — a hero search bar, not a
+            full-width field lost among the facet rows below it. */}
+        <div className="flex justify-center">
           <input
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search weapons…"
-            className={`${selectClass} w-full sm:w-64`}
+            className={`${selectClass} w-full max-w-md`}
           />
+        </div>
+
+        {/* Row 1: what the weapon fundamentally is — type, slot, ammo,
+            element, tier. */}
+        <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
           <SearchableMultiSelect
             label="Weapon type"
             placeholder="Add weapon type…"
@@ -440,6 +474,17 @@ export default function WeaponBrowser({
             <option value="">All slots</option>
             {SLOTS.map((s) => (
               <option key={s}>{s}</option>
+            ))}
+          </select>
+          <select
+            value={ammoType}
+            onChange={(e) => setAmmoType(e.target.value)}
+            className={selectClass}
+            aria-label="Ammo type"
+          >
+            <option value="">All ammo types</option>
+            {AMMO_TYPES.map((a) => (
+              <option key={a}>{a}</option>
             ))}
           </select>
           <select
@@ -464,6 +509,11 @@ export default function WeaponBrowser({
               <option key={t}>{t}</option>
             ))}
           </select>
+        </div>
+
+        {/* Row 2: finer-grained/build-specific facets — frame, champion
+            mod, perks. */}
+        <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
           <select
             value={frame}
             onChange={(e) => setFrame(e.target.value)}
@@ -476,41 +526,18 @@ export default function WeaponBrowser({
             ))}
           </select>
           <select
-            value={ammoType}
-            onChange={(e) => setAmmoType(e.target.value)}
-            className={selectClass}
-            aria-label="Ammo type"
-          >
-            <option value="">All ammo types</option>
-            {AMMO_TYPES.map((a) => (
-              <option key={a}>{a}</option>
-            ))}
-          </select>
-          <select
             value={breakerType}
             onChange={(e) => setBreakerType(e.target.value)}
             className={selectClass}
             aria-label="Champion mod"
           >
-            <option value="">Any champion mod</option>
+            <option value="">Any Champion</option>
             {BREAKER_TYPES.map((b) => (
-              <option key={b}>{b}</option>
+              <option key={b} value={b}>
+                {BREAKER_TYPE_LABELS[b]}
+              </option>
             ))}
           </select>
-          {hasFilters && (
-            <button
-              onClick={reset}
-              className="rounded-md px-2.5 py-2 text-sm text-muted hover:text-ink"
-            >
-              Reset
-            </button>
-          )}
-          <span className="ml-auto text-sm text-muted">
-            {filtered.length.toLocaleString("en-US")} of{" "}
-            {weapons.length.toLocaleString("en-US")}
-          </span>
-        </div>
-        <div className="mt-2 flex flex-wrap items-center gap-2">
           <SearchableMultiSelect
             label="Add a perk filter"
             placeholder="Search perks…"
@@ -520,21 +547,37 @@ export default function WeaponBrowser({
             onRemove={removePerkName}
           />
         </div>
+
+        <div className="mt-2 flex items-center justify-center gap-3">
+          {hasFilters && (
+            <button
+              onClick={reset}
+              className="rounded-md px-2.5 py-2 text-sm text-muted hover:text-ink"
+            >
+              Reset
+            </button>
+          )}
+          <span className="text-sm text-muted">
+            {filtered.length.toLocaleString("en-US")} of{" "}
+            {weapons.length.toLocaleString("en-US")}
+          </span>
+        </div>
         {selectedPerkNames.size > 0 && (
-          <p className="mt-1 text-xs text-muted">
-            Score reflects the best roll containing your selected perks.
+          <p className="mt-1 text-center text-xs text-muted">
+            Scores reflect the best roll containing your selected perks.
           </p>
         )}
       </div>
 
-      <div className="mt-2 hidden grid-cols-[3.25rem_1fr_10rem_6.5rem_4.5rem_4.5rem_4.5rem] gap-x-3 px-3 py-2 text-xs uppercase tracking-wide text-muted sm:grid">
+      <div className="mt-2 hidden grid-cols-[3.25rem_1fr_9rem_6rem_4rem_4.5rem_4.5rem_5rem] gap-x-3 px-3 py-2 text-xs uppercase tracking-wide text-muted sm:grid">
         <span />
         <SortHeader label="Weapon" sortKey="name" sort={sort} onSort={toggleSort} />
         <SortHeader label="Type" sortKey="type" sort={sort} onSort={toggleSort} />
         <SortHeader label="Element" sortKey="element" sort={sort} onSort={toggleSort} />
         <SortHeader label="RPM" sortKey="rpm" sort={sort} onSort={toggleSort} align="right" />
-        <SortHeader label="Score" sortKey="overall_score" sort={sort} onSort={toggleSort} align="right" />
-        <SortHeader label="Rolls" sortKey="roll_count" sort={sort} onSort={toggleSort} align="right" />
+        <SortHeader label="PvE Score" sortKey="pve_score" sort={sort} onSort={toggleSort} align="right" />
+        <SortHeader label="PvP Score" sortKey="pvp_score" sort={sort} onSort={toggleSort} align="right" />
+        <SortHeader label="Overall Score" sortKey="overall_score" sort={sort} onSort={toggleSort} align="right" />
       </div>
 
       <ul className="divide-y divide-edge/60">
@@ -542,7 +585,7 @@ export default function WeaponBrowser({
           <li key={w.hash} className="weapon-row">
             <Link
               href={`/weapons/${w.hash}`}
-              className="grid grid-cols-[3.25rem_1fr_4.5rem] items-center gap-x-3 px-3 py-2 hover:bg-surface sm:grid-cols-[3.25rem_1fr_10rem_6.5rem_4.5rem_4.5rem_4.5rem]"
+              className="grid grid-cols-[3.25rem_1fr_4.5rem] items-center gap-x-3 px-3 py-2 hover:bg-surface sm:grid-cols-[3.25rem_1fr_9rem_6rem_4rem_4.5rem_4.5rem_5rem]"
             >
               <span
                 className={`relative block h-11 w-11 overflow-hidden rounded border-l-2 ${TIER_BORDER[w.tier] ?? "border-edge"}`}
@@ -579,10 +622,13 @@ export default function WeaponBrowser({
                 {w.rpm ?? "—"}
               </span>
               <span className="hidden text-right font-mono text-sm text-muted sm:block">
-                {displayScore(w) ?? "—"}
+                {displayValue(w, "pve_score") ?? "—"}
+              </span>
+              <span className="hidden text-right font-mono text-sm text-muted sm:block">
+                {displayValue(w, "pvp_score") ?? "—"}
               </span>
               <span className="text-right font-mono text-sm text-muted">
-                {w.roll_count.toLocaleString("en-US")}
+                {displayValue(w, "overall_score") ?? "—"}
               </span>
             </Link>
           </li>
